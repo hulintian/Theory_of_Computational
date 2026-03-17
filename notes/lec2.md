@@ -17,27 +17,19 @@
   
 - example:
 
-```dot
-digraph {
-    rankdir=LR;
-    q1 q2 q3 
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> q1
+    classDef accept fill:#fff,stroke:#111,stroke-width:3px
+    class q4 accept
+    q4: q4 (accept)
 
-    q4 [shape=doublecircle]
-
-    init [shape=circle, label=""]
-
-    init -> q1
-
-    q1 -> q1 [label="0,1"]
-
-    q1 -> q2 [label=1] 
-
-    q2-> q3 [label="0,\epsilon"]
-
-    q3 -> q4 [label=1] 
-
-    q4 -> q4 [label="0,1", ]
-}
+    q1 --> q1: 0,1
+    q1 --> q2: 1
+    q2 --> q3: 0,ε
+    q3 --> q4: 1
+    q4 --> q4: 0,1
 ```
 
 - 数学上的定义：
@@ -58,25 +50,18 @@ $$
 
 - example : 接受 {0,1} 构成的 string，倒数第三个是 1
 
-```dot
-digraph {
-    rankdir=LR;
-    q1 q2 q3 
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> q1
+    classDef accept fill:#fff,stroke:#111,stroke-width:3px
+    class q4 accept
+    q4: q4 (accept)
 
-    q4 [shape=doublecircle]
-
-    init [shape=circle, label=""]
-
-    init -> q1
-
-    q1 -> q1 [label="0,1"]
-
-    q1 -> q2 [label=1] 
-
-    q2 -> q3 [label="0,1"]
-
-    q3 -> q4 [label="0,1"] 
-}
+    q1 --> q1: 0,1
+    q1 --> q2: 1
+    q2 --> q3: 0,1
+    q3 --> q4: 0,1
 ```
 
 
@@ -86,27 +71,21 @@ digraph {
 
 - NFA
 
-```dot
-digraph {
-    rankdir=LR;
-    q1 q2 q3 q5
-
-    q1 -> q2 [label=1]
-    q1 -> q3 [label=1]
-    q1 -> q5 [label=1]
-}
+```mermaid
+stateDiagram-v2
+    direction LR
+    q1 --> q2: 1
+    q1 --> q3: 1
+    q1 --> q5: 1
 ```
 
 - NFA to DFA
 
-```dot
-digraph {
-    rankdir=LR;
-    q1 
-    q2 [label="q2, q3, q5"]
-
-    q1 -> q2 [label="1"]
-}
+```mermaid
+stateDiagram-v2
+    direction LR
+    state "q2, q3, q5" as q2
+    q1 --> q2: 1
 ```
 
 - 子集构造法 (hard way)

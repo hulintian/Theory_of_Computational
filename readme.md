@@ -10,3 +10,15 @@
 ## 题目
 
 用大模型解答，做题，人工批注
+
+## notes
+
+### chapter1
+
+- [lec1](notes/lec1.md)
+- [lec2](notes/lec2.md)
+- [lec3](notes/lec3.md)
+
+### chapter2
+
+- [lec3](notes/lec3_p2.md)

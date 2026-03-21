@@ -7,7 +7,7 @@
 ## text book
 - 《计算理论导引》 MIT
 
-## 题目
+## 作业题目
 
 用大模型解答，做题，人工批注
 
@@ -22,3 +22,4 @@
 ### chapter2
 
 - [lec3](notes/lec3_p2.md)
+- [lec4](notes/lec4.md)

@@ -11,6 +11,8 @@
 
 用大模型解答，做题，人工批注
 
+- 作业: [homework](hws/homework/homework.pdf)
+
 ## notes
 
 ### chapter1

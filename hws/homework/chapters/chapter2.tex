@@ -1,0 +1,124 @@
+\section{Chapter 2: Context-Free Languages}
+
+\subsection*{2.4}
+
+Give context-free grammars that generate the following languages. In all parts, the alphabet $\Sigma$ is \{0,1\}.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item \{w| w contains at least three 1s\}
+
+\item \{w| w starts and ends with the same symbol\}
+
+\item \{w| the length of w is odd\}
+
+\item \{w| the length of w is odd and its middle symbol is a 0\}
+
+\item \{w| w = wR , that is, w is a palindrome\}
+
+\item The empty set
+
+\end{enumerate}
+
+
+\subsection*{2.6}
+
+Give context-free grammars generating the following languages.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item The set of strings over the alphabet \{a,b\} with more a's than b's
+
+\item The complement of the language \{an bn | n $\ge$ 0\}
+
+\item \{w\#x| wR is a substring of x for w, x $\in$ \{0,1\}$\ast$ \}
+
+\item \{x1 \#x2 \# · · · \#xk | k $\ge$ 1, each xi $\in$ \{a, b\}$\ast$ , and for some i and j, xi = xR j \}
+
+\end{enumerate}
+
+
+\subsection*{2.8}
+
+Show that the string the girl touches the boy with the flower has two different leftmost derivations in grammar G2 on page 103. Describe in English the two different meanings of this sentence.
+
+
+\subsection*{2.10}
+
+Give an informal description of a pushdown automaton that recognizes the language A in Exercise 2.9.
+
+
+\subsection*{2.14}
+
+Convert the following CFG into an equivalent CFG in Chomsky normal form, using the procedure given in Theorem 2.9.
+
+A $\to$ BAB | B | $\varepsilon$ B $\to$ 00 | $\varepsilon$
+
+
+\subsection*{2.16}
+
+Show that the class of context-free languages is closed under the regular operations, union, concatenation, and star.
+
+
+\subsection*{2.18}
+
+Consider the following CFG G:
+
+S $\to$ SS | T T $\to$ aT b | ab
+
+Describe L(G) and show that G is ambiguous. Give an unambiguous grammar H where L(H) = L(G) and sketch a proof that H is unambiguous.
+
+
+\subsection*{2.19}
+
+We defined the rotational closure of language A to be RC(A) = \{yx| xy $\in$ A\}. Show that the class of CFLs is closed under rotational closure.
+
+
+\subsection*{2.22}
+
+Show that every DCFG generates a prefix-free language.
+
+
+\subsection*{2.24}
+
+Let G be the following grammar:
+
+S $\to$ Ta T $\to$ T aT b | T bT a | $\varepsilon$
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item Show that L(G) = \{wa | w contains equal numbers of a's and b's\}. Use a proof by induction on the length of w.
+
+\item Use the DK -test to show that G is a DCFG.
+
+\item Describe a DPDA that recognizes L(G).
+
+\end{enumerate}
+
+
+\subsection*{2.26}
+
+Let A = L(G1 ) where G1 is defined in Problem 2.25. Show that A is not a DCFL. (Hint: Assume that A is a DCFL and consider its DPDA P . Modify P so that its input alphabet is \{a, b, c\}. When it first enters an accept state, it pretends that c's are b's in the input from that point on. What language would the modified P accept?)
+
+
+\subsection*{2.32}
+
+Let A/B = \{w| wx $\in$ A for some x $\in$ B\}. Show that if A is context free and B is regular, then A/B is context free.
+
+
+\subsection*{2.33}
+
+Let $\Sigma$ = \{a,b\}. Give a CFG generating the language of strings with twice as many a's as b's. Prove that your grammar is correct.
+
+
+\subsection*{2.44}
+
+Let $\Sigma$ = \{1, 2, 3, 4\} and C = \{w $\in$ $\Sigma$$\ast$ | in w, the number of 1s equals the number of 2s, and the number of 3s equals the number of 4s\}. Show that C is not context free.
+
+
+\subsection*{2.45}
+
+Show that F = \{ai bj | i = kj for some positive integer k\} is not context free.
+
+
+\clearpage

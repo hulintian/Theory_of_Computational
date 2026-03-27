@@ -1,0 +1,242 @@
+\section{Chapter 1: Regular Languages}
+
+\subsection*{1.4}
+
+Each of the following languages is the intersection of two simpler languages. In each part, construct DFAs for the simpler languages, then combine them using the construction discussed in footnote 3 (page 46) to give the state diagram of a DFA for the language given. In all parts, $\Sigma$ = \{a, b\}.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item \{w| w has at least three a's and at least two b's\}
+
+\item \{w| w has exactly two a's and at least two b's\}
+
+\item \{w| w has an even number of a's and one or two b's\}
+
+\item \{w| w has an even number of a's and each a is followed by at least one b\}
+
+\item \{w| w starts with an a and has at most one b\}
+
+\item \{w| w has an odd number of a's and ends with a b\}
+
+\item \{w| w has even length and an odd number of a's\}
+
+\end{enumerate}
+
+
+\subsection*{1.5}
+
+Each of the following languages is the complement of a simpler language. In each part, construct a DFA for the simpler language, then use it to give the state diagram of a DFA for the language given. In all parts, $\Sigma$ = \{a, b\}.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item \{w| w does not contain the substring ab\}
+
+\item \{w| w does not contain the substring baba\}
+
+\item \{w| w contains neither the substrings ab nor ba\}
+
+\item \{w| w is any string not in a$\ast$ b$\ast$ \}
+
+\item \{w| w is any string not in (ab+ )$\ast$ \}
+
+\item \{w| w is any string not in a$\ast$ $\cup$ b$\ast$ \}
+
+\item \{w| w is any string that doesn't contain exactly two a's\}
+
+\item \{w| w is any string except a and b\}
+
+\end{enumerate}
+
+
+\subsection*{1.6}
+
+Give state diagrams of DFAs recognizing the following languages. In all parts, the alphabet is \{0,1\}.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item \{w| w begins with a 1 and ends with a 0\}
+
+\item \{w| w contains at least three 1s\}
+
+\item \{w| w contains the substring 0101 (i.e., w = x0101y for some x and y)\}
+
+\item \{w| w has length at least 3 and its third symbol is a 0\}
+
+\item \{w| w starts with 0 and has odd length, or starts with 1 and has even length\}
+
+\item \{w| w doesn't contain the substring 110\}
+
+\item \{w| the length of w is at most 5\}
+
+\item \{w| w is any string except 11 and 111\}
+
+\item \{w| every odd position of w is a 1\}
+
+\item \{w| w contains at least two 0s and at most one 1\}
+
+\item \{$\varepsilon$, 0\}
+
+\item \{w| w contains an even number of 0s, or contains exactly two 1s\}
+
+\item The empty set
+
+\item All strings except the empty string
+
+\end{enumerate}
+
+
+\subsection*{1.7}
+
+Give state diagrams of NFAs with the specified number of states recognizing each of the following languages. In all parts, the alphabet is \{0,1\}.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item The language \{w| w ends with 00\} with three states
+
+\item The language of Exercise 1.6c with five states
+
+\item The language of Exercise 1.6l with six states
+
+\item The language \{0\} with two states
+
+\item The language 0$\ast$ 1$\ast$ 0+ with three states
+
+\item The language 1$\ast$ (001+ )$\ast$ with three states
+
+\item The language \{$\varepsilon$\} with one state
+
+\item The language 0$\ast$ with one state
+
+\end{enumerate}
+
+
+\subsection*{1.11}
+
+Prove that every NFA can be converted to an equivalent one that has a single accept state.
+
+
+\subsection*{1.13}
+
+Let F be the language of all strings over \{0,1\} that do not contain a pair of 1s that are separated by an odd number of symbols. Give the state diagram of a DFA with five states that recognizes F . (You may find it helpful first to find a 4-state NFA for the complement of F .)
+
+
+\subsection*{1.14}
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item Show that if M is a DFA that recognizes language B, swapping the accept and nonaccept states in M yields a new DFA recognizing the complement of B. Conclude that the class of regular languages is closed under complement.
+
+\item Show by giving an example that if M is an NFA that recognizes language C, swapping the accept and nonaccept states in M doesn't necessarily yield a new NFA that recognizes the complement of C. Is the class of languages recognized by NFAs closed under complement? Explain your answer.
+
+\end{enumerate}
+
+
+\subsection*{1.15}
+
+Give a counterexample to show that the following construction fails to prove Theorem 1.49, the closure of the class of regular languages under the star operation.7 Let N1 = (Q1 , $\Sigma$, $\delta$1 , q1 , F1 ) recognize A1 . Construct N = (Q1 , $\Sigma$, $\delta$, q1 , F ) as follows. N is supposed to recognize A$\ast$1 .
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item The states of N are the states of N1 .
+
+\item The start state of N is the same as the start state of N1 .
+
+\item F = \{q1 \} $\cup$ F1 . The accept states F are the old accept states plus its start state.
+
+\item Define $\delta$ so that for any q $\in$ Q1 and any a $\in$ $\Sigma$$\varepsilon$ , ( $\delta$1 (q, a) q $\notin$ F1 or a $\neq$ $\varepsilon$ $\delta$(q, a) = $\delta$1 (q, a) $\cup$ \{q1 \} q $\in$ F1 and a = $\varepsilon$.
+
+(Suggestion: Show this construction graphically, as in Figure 1.50.)
+
+7In other words, you must present a finite automaton, N , for which the constructed 1 automaton N does not recognize the star of N1 's language.
+
+\end{enumerate}
+
+
+\subsection*{1.17}
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item Give an NFA recognizing the language (01 $\cup$ 001 $\cup$ 010)$\ast$ .
+
+\item Convert this NFA to an equivalent DFA. Give only the portion of the DFA that is reachable from the start state.
+
+\end{enumerate}
+
+
+\subsection*{1.19}
+
+Use the procedure described in Lemma 1.55 to convert the following regular expressions to nondeterministic finite automata.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item (0 $\cup$ 1)$\ast$ 000(0 $\cup$ 1)$\ast$
+
+\item (((00)$\ast$ (11)) $\cup$ 01)$\ast$
+
+\item $\varnothing$$\ast$
+
+\end{enumerate}
+
+
+\subsection*{1.30}
+
+Describe the error in the following "proof" that 0$\ast$ 1$\ast$ is not a regular language. (An error must exist because 0$\ast$ 1$\ast$ is regular.) The proof is by contradiction. Assume that 0$\ast$ 1$\ast$ is regular. Let p be the pumping length for 0$\ast$ 1$\ast$ given by the pumping lemma. Choose s to be the string 0p 1p . You know that s is a member of 0$\ast$ 1$\ast$ , but Example 1.73 shows that s cannot be pumped. Thus you have a contradiction. So 0$\ast$ 1$\ast$ is not regular.
+
+
+\subsection*{1.32}
+
+For languages A and B, let the shuffle of A and B be the language
+
+\{w| w = a1 b1 · · · ak bk , where a1 · · · ak $\in$ A and b1 · · · bk $\in$ B, each ai , bi $\in$ $\Sigma$$\ast$ \}.
+
+Show that the class of regular languages is closed under shuffle.
+
+
+\subsection*{1.34}
+
+Let B and C be languages over $\Sigma$ = \{0, 1\}. Define 1 B ← C = \{w $\in$ B| for some y $\in$ C, strings w and y contain equal numbers of 1s\}. 1 Show that the class of regular languages is closed under the ← operation.
+
+
+\subsection*{1.35}
+
+Let A/B = \{w| wx $\in$ A for some x $\in$ B\}. Show that if A is regular and B is any language, then A/B is regular.
+
+
+\subsection*{1.36}
+
+For any string w = w1 w2 · · · wn , the reverse of w, written wR , is the string w in reverse order, wn · · · w2 w1 . For any language A, let AR = \{wR | w $\in$ A\}. Show that if A is regular, so is AR .
+
+
+\subsection*{1.40}
+
+Let $\Sigma$2 be the same as in Problem 1.38. Consider the top and bottom rows to be strings of 0s and 1s, and let
+
+E = \{w $\in$ $\Sigma$$\ast$2 | the bottom row of w is the reverse of the top row of w\}.
+
+Show that E is not regular.
+
+
+\subsection*{1.42}
+
+Let Cn = \{x| x is a binary number that is a multiple of n\}. Show that for each n $\ge$ 1, the language Cn is regular.
+
+
+\subsection*{1.52}
+
+Let $\Sigma$ = \{1, \#\} and let
+
+Y = \{w| w = x1 \#x2 \# · · · \#xk for k $\ge$ 0, each xi $\in$ 1$\ast$ , and xi $\neq$ xj for i = 6 j\}.
+
+Prove that Y is not regular.
+
+
+\subsection*{1.53}
+
+Let $\Sigma$ = \{0,1\} and let
+
+D = \{w| w contains an equal number of occurrences of the substrings 01 and 10\}.
+
+Thus 101 $\in$ D because 101 contains a single 01 and a single 10, but 1010 $\notin$ D because 1010 contains two 10s and one 01. Show that D is a regular language.
+
+
+\clearpage

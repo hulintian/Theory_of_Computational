@@ -1,0 +1,70 @@
+\section{Chapter 8: Space Complexity}
+
+\subsection*{8.1}
+
+Show that for any function f : N -$\to$ R+ , where f (n) $\ge$ n, the space complexity class SPACE(f (n)) is the same whether you define the class by using the singletape TM model or the two-tape read-only input TM model.
+
+
+\subsection*{8.3}
+
+Consider the following generalized geography game wherein the start node is the one with the arrow pointing in from nowhere. Does Player I have a winning strategy? Does Player II? Give reasons for your answers.
+
+
+\subsection*{8.6}
+
+Show that any PSPACE-hard language is also NP-hard.
+
+
+\subsection*{8.10}
+
+For any positive integer x, let xR be the integer whose binary representation is the reverse of the binary representation of x. (Assume no leading 0s in the binary representation of x.) Define the function R+ : N -$\to$N where R+ (x) = x + xR .
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item Let A2 = \{hx, yi| R+ (x) = y\}. Show A2 $\in$ L.
+
+\item Let A3 = \{hx, yi| R+ (R+ (x)) = y\}. Show A3 $\in$ L.
+
+\end{enumerate}
+
+
+\subsection*{8.13}
+
+For each n, exhibit two regular expressions, R and S, of length poly(n), where L(R) $\neq$ L(S), but where the first string on which they differ is exponentially long. In other words, L(R) and L(S) must be different, yet agree on all strings of length up to $2^{\varepsilon n}$ for some constant $\varepsilon > 0$.
+
+
+\subsection*{8.20}
+
+Show that 2SAT is NL-complete.
+
+
+\subsection*{8.21}
+
+Let $CNF\text{-}H_1$ be the language of satisfiable cnf-formulas $\varphi$ where each clause contains any number of positive literals and at most one negated literal, and each negated literal has at most one occurrence in $\varphi$. Show that $CNF\text{-}H_1$ is NL-complete.
+
+
+\subsection*{8.24}
+
+Let EQ REX = \{hR, Si| R and S are equivalent regular expressions\}. Show that EQ REX $\in$ PSPACE.
+
+
+\subsection*{8.28}
+
+Show that TQBF restricted to formulas where the part following the quantifiers is in conjunctive normal form is still PSPACE-complete.
+
+
+\subsection*{8.30}
+
+The cat-and-mouse game is played by two players, "Cat" and "Mouse," on an arbitrary undirected graph. At a given point, each player occupies a node of the graph. The players take turns moving to a node adjacent to the one that they currently occupy. A special node of the graph is called "Hole." Cat wins if the two players ever occupy the same node. Mouse wins if it reaches the Hole before the preceding happens. The game is a draw if a situation repeats (i.e., the two players simultaneously occupy positions that they simultaneously occupied previously, and it is the same player's turn to move).
+
+HAPPY-CAT = \{hG, c, m, hi| G, c, m, h are respectively a graph, and positions of the Cat, Mouse, and Hole, such that Cat has a winning strategy if Cat moves first\}.
+
+Show that HAPPY-CAT is in P. (Hint: The solution is not complicated and doesn't depend on subtle details in the way the game is defined. Consider the entire game tree. It is exponentially big, but you can search it in polynomial time.)
+
+
+\subsection*{8.33}
+
+Let A be the language of properly nested parentheses. For example, (()) and (()(()))() are in A, but )( is not. Show that A is in L.
+
+
+\clearpage

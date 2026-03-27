@@ -1,0 +1,82 @@
+\section{Chapter 9: Intractability}
+
+\subsection*{9.2}
+
+Prove that TIME(2n ) ( TIME(22n ).
+
+
+\subsection*{9.7}
+
+Give regular expressions with exponentiation that generate the following languages over the alphabet \{0,1\}.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item All strings of length 500
+
+\item All strings of length 500 or less
+
+\item All strings of length 500 or more
+
+\item All strings of length different than 500
+
+\item All strings that contain exactly 500 1s
+
+\item All strings that contain at least 500 1s
+
+\item All strings that contain at most 500 1s
+
+\item All strings of length 500 or more that contain a 0 in the 500th position
+
+\item All strings that contain two 0s that have at least 500 symbols between them
+
+\end{enumerate}
+
+
+\subsection*{9.8}
+
+If R is a regular expression, let R\{m,n\} represent the expression
+
+Rm $\cup$ Rm+1 $\cup$ · · · $\cup$ Rn .
+
+Show how to implement the R\{m,n\} operator, using the ordinary exponentiation operator, but without "· · · ".
+
+
+\subsection*{9.9}
+
+Show that if NP = PSAT, then NP = coNP.
+
+
+\subsection*{9.12}
+
+Recall that you may consider circuits that output strings over \{0,1\} by designating several output gates. Let add n : \{0,1\}2n -$\to$\{0,1\}n+1 take two n bit binary integers and produce the n + 1 bit sum. Show that you can compute the add n function with O(n) size circuits.
+
+
+\subsection*{9.16}
+
+Prove that an oracle C exists for which NPC $\neq$ coNPC .
+
+
+\subsection*{9.19}
+
+Let EREX↑ = \{hRi| R is a regular expression with exponentiation and L(R) = $\varnothing$\}. Show that EREX↑ $\in$ P.
+
+
+\subsection*{9.23}
+
+Define pad as in Problem 9.21.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item Prove that for every A and natural number k, A $\in$ P iff pad (A, nk ) $\in$ P.
+
+\item Prove that P $\neq$ SPACE(n).
+
+\end{enumerate}
+
+
+\subsection*{9.25}
+
+Read the definition of a 2DFA (two-headed finite automaton) given in Problem 5.14. Prove that P contains a language that is not recognizable by a 2DFA.
+
+
+\clearpage

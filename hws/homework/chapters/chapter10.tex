@@ -1,0 +1,46 @@
+\section{Chapter 10: Advanced Topics in Complexity Theory}
+
+\subsection*{10.2}
+
+Show that 12 is not pseudoprime because it fails some Fermat test.
+
+
+\subsection*{10.4}
+
+Show that the parity function with n inputs can be computed by a branching program that has O(n) nodes.
+
+
+\subsection*{10.7}
+
+Show that BPP $\subseteq$ PSPACE.
+
+
+\subsection*{10.8}
+
+Let BPL be the collection of languages that are decided by probabilistic log space Turing machines with error probability 31 . Prove that BPL $\subseteq$ P.
+
+
+\subsection*{10.10}
+
+Define a ZPP-machine to be a probabilistic Turing machine that is permitted three types of output on each of its branches: accept, reject, and ?. A ZPP-machine M decides a language A if M outputs the correct answer on every input string w (accept if w $\in$ A and reject if w $\notin$ A) with probability at least 23 , and M never outputs the wrong answer. On every input, M may output ? with probability at most 13 . Furthermore, the average running time over all branches of M on w must be bounded by a polynomial in the length of w. Show that RP $\cap$ coRP = ZPP, where ZPP is the collection of languages that are recognized by ZPP-machines.
+
+
+\subsection*{10.13}
+
+Prove that if A is a language in L, a family of branching programs (B1 , B2 , . . .) exists wherein each Bn accepts exactly the strings in A of length n and is bounded in size by a polynomial in n.
+
+
+\subsection*{10.19}
+
+Let M be a probabilistic polynomial time Turing machine, and let C be a language where for some fixed $0 < \varepsilon_1 < \varepsilon_2 < 1$,
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item $w \notin C$ implies $\Pr[M \text{ accepts } w] \le \varepsilon_1$, and
+
+\item $w \in C$ implies $\Pr[M \text{ accepts } w] \ge \varepsilon_2$. Show that $C \in$ BPP. (Hint: Use the result of Lemma 10.5.)
+
+\end{enumerate}
+
+
+\clearpage

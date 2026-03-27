@@ -1,0 +1,65 @@
+\section{Chapter 5: Reducibility}
+
+\subsection*{5.2}
+
+Show that EQ CFG is co-Turing-recognizable.
+
+
+\subsection*{5.5}
+
+Show that ATM is not mapping reducible to ETM . In other words, show that no computable function reduces ATM to ETM . (Hint: Use a proof by contradiction, and facts you already know about ATM and ETM .)
+
+
+\subsection*{5.9}
+
+Let AMBIGCFG = \{hGi| G is an ambiguous CFG\}. Show that AMBIGCFG is undecidable. (Hint: Use a reduction from PCP. Given an instance $\langle t_1, b_1\rangle, \langle t_2, b_2\rangle, \ldots, \langle t_k, b_k\rangle$ of the Post Correspondence Problem, construct a CFG G with the rules
+
+S $\to$ T |B T $\to$ t1 T a1 | · · · | tk T ak | t1 a1 | · · · | tk ak B $\to$ b1 Ba1 | · · · | bk Bak | b1 a1 | · · · | bk ak ,
+
+where a1 , . . . , ak are new terminal symbols. Prove that this reduction works.)
+
+
+\subsection*{5.13}
+
+Give an example of an undecidable language B, where B $\le$m B.
+
+
+\subsection*{5.17}
+
+Show that both conditions in Problem 5.16 are necessary for proving that P is undecidable.
+
+
+\subsection*{5.21}
+
+Consider the problem of determining whether a PDA accepts some string of the form \{ww| w $\in$ \{0,1\}$\ast$ \} . Use the computation history method to show that this problem is undecidable.
+
+
+\subsection*{5.22}
+
+Let X = \{hM, wi| M is a single-tape TM that never modifies the portion of the tape that contains the input w\}. Is X decidable? Prove your answer.
+
+
+\subsection*{5.24}
+
+Say that a CFG is minimal if none of its rules can be removed without changing the language generated. Let MIN CFG = \{hGi| G is a minimal CFG\}.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item Show that MIN CFG is T-recognizable.
+
+\item Show that MIN CFG is undecidable.
+
+\end{enumerate}
+
+
+\subsection*{5.28}
+
+Consider the problem of determining whether a single-tape Turing machine ever writes a blank symbol over a nonblank symbol during the course of its computation on any input string. Formulate this problem as a language and show that it is undecidable.
+
+
+\subsection*{5.33}
+
+Show that the Post Correspondence Problem is decidable over the unary alphabet $\Sigma$ = \{1\}.
+
+
+\clearpage

@@ -1,0 +1,58 @@
+\section{Chapter 3: The Church--Turing Thesis}
+
+\subsection*{3.6}
+
+In Theorem 3.21, we showed that a language is Turing-recognizable iff some enumerator enumerates it. Why didn't we use the following simpler algorithm for the forward direction of the proof? As before, s1 , s2 , . . . is a list of all strings in $\Sigma$$\ast$ . E = "Ignore the input. 1. Repeat the following for i = 1, 2, 3, . . . . 2. Run M on si . 3. If it accepts, print out si ."
+
+
+\subsection*{3.8}
+
+Give implementation-level descriptions of Turing machines that decide the following languages over the alphabet \{0,1\}.
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item \{w| w contains an equal number of 0s and 1s\}
+
+\item \{w| w contains twice as many 0s as 1s\}
+
+\item \{w| w does not contain twice as many 0s as 1s\}
+
+\end{enumerate}
+
+
+\subsection*{3.10}
+
+Let c1 xn + c2 xn-1 + · · · + cn x + cn+1 be a polynomial with a root at x = x0 . Let cmax be the largest absolute value of a ci . Show that cmax |x0 | < (n + 1) . |c1 |
+
+
+\subsection*{3.12}
+
+Show that every infinite Turing-recognizable language has an infinite decidable subset.
+
+
+\subsection*{3.15}
+
+Show that the collection of Turing-recognizable languages is closed under the operation of
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+
+\item union. d. intersection.
+
+\item concatenation. e. homomorphism.
+
+\item star.
+
+\end{enumerate}
+
+
+\subsection*{3.18}
+
+A Turing machine with doubly infinite tape is similar to an ordinary Turing machine, but its tape is infinite to the left as well as to the right. The tape is initially filled with blanks except for the portion that contains the input. Computation is defined as usual except that the head never encounters an end to the tape as it moves leftward. Show that this type of Turing machine recognizes the class of Turing-recognizable languages.
+
+
+\subsection*{3.20}
+
+A Turing machine with stay put instead of left is similar to an ordinary Turing machine, but the transition function has the form $\delta$ : Q $\times$ $\Gamma$-$\to$ Q $\times$ $\Gamma$ $\times$ \{R, S\}. At each point, the machine can move its head right or let it stay in the same position. Show that this Turing machine variant is not equivalent to the usual version. What class of languages do these machines recognize?
+
+
+\clearpage

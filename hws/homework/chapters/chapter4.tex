@@ -1,0 +1,65 @@
+\section{Chapter 4: Decidability}
+
+\subsection*{4.3}
+
+Let ALLDFA = \{hAi| A is a DFA and L(A) = $\Sigma$$\ast$ \}. Show that ALLDFA is decidable.
+
+
+\subsection*{4.4}
+
+Let A$\varepsilon$CFG = \{hGi| G is a CFG that generates $\varepsilon$\}. Show that A$\varepsilon$CFG is decidable.
+
+
+\subsection*{4.6}
+\begingroup
+\small
+\ttfamily
+\obeylines
+\obeyspaces
+Let X be the set \{1, 2, 3, 4, 5\} and Y be the set \{6, 7, 8, 9, 10\}. We describe the
+                      functions f : X-$\to$Y and g : X-$\to$Y in the following tables. Answer each part
+                      and give a reason for each negative answer.
+                                                                n        f (n)                                             n        g(n)
+                                                                1          6                                               1         10
+                                                                2          7                                               2         9
+                                                                3          6                                               3         8
+                                                                4          7                                               4         7
+                                                                5          6                                               5         6
+
+                            A                                                                             A
+                              a. Is f one-to-one?                                                             d. Is g one-to-one?
+                              b. Is f onto?                                                                   e. Is g onto?
+                              c. Is f a correspondence?                                                       f. Is g a correspondence?
+\endgroup
+
+\subsection*{4.10}
+
+The proof of Lemma 2.41 says that (q, x) is a looping situation for a DPDA P if when P is started in state q with x $\in$ $\Gamma$ on the top of the stack, it never pops anything below x and it never reads an input symbol. Show that F is decidable, where F = \{hP, q, xi| (q, x) is a looping situation for P \}.
+
+
+\subsection*{4.12}
+
+Let A be a Turing-recognizable language consisting of descriptions of Turing machines, \{hM1 i, hM2 i, . . .\}, where every Mi is a decider. Prove that some decidable language D is not decided by any decider Mi whose description appears in A. (Hint: You may find it helpful to consider an enumerator for A.)
+
+
+\subsection*{4.15}
+
+Let E = \{hM i| M is a DFA that accepts some string with more 1s than 0s\}. Show that E is decidable. (Hint: Theorems about CFLs are helpful here.)
+
+
+\subsection*{4.17}
+
+Let BALDFA = \{hM i| M is a DFA that accepts some string containing an equal number of 0s and 1s\}. Show that BALDFA is decidable. (Hint: Theorems about CFLs are helpful here.)
+
+
+\subsection*{4.23}
+
+Prove that the class of decidable languages is not closed under homomorphism.
+
+
+\subsection*{4.27}
+
+Show that the problem of determining whether a CFG generates all strings in 1$\ast$ is decidable. In other words, show that \{hGi| G is a CFG over \{0,1\} and 1$\ast$ $\subseteq$ L(G)\} is a decidable language.
+
+
+\clearpage

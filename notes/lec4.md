@@ -26,7 +26,7 @@ $$
   - 允许 $S \rightarrow \epsilon$ 起始变元产生空串
   - S 不能在右边
 
-- 程序化的转换（6步）
+- 程序化的转换（4步）
   1. step1: 增加新的起始变元 $S_{0}$ 和 规则 $S_{0} \rightarrow S$ 
   > 避免S出现在推导右边的情况
   2. step2: 删除 所有 $A\rightarrow \epsilon$ 规则

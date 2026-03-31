@@ -14,3 +14,21 @@ TM is a 7-tuple $(Q, \Sigma, \Gamma, \delta, q_{0}, q_{acc}, a_{rej})$
   1. 状态控制器当前的状态
   2. 当前带子上的内容
   3. 读写头的位置
+
+- Configuration of TM (图灵机的格局)，example：
+  - `aqb`：状态`q`，读写头在`b`上
+  - init: $q_{0}w$
+  - accept: $uq_{accept}v$
+  - reject: $uq_{reject}v$
+
+- TM 接受：
+  - 存在格局序列$C_{1}C_{2}\cdots C_{k}$,
+
+> let A is a language
+
+- Turning 可识别 （Turning-recognizable）
+  - $a \in A$ accept
+  - $a \notin A$ reject or loop
+
+- 图灵可判断(Turning Decidable)：接受、拒绝，
+> 不管怎么样都停机 -- **判定**，完备 $\sqcup$

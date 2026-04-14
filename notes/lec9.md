@@ -23,7 +23,11 @@ $A \le B$：假设B有解，则A有解
 
 - 问题A映射规约为B,记为$A \le_{m} B$ 如果：
 
-$\exists f: \Sigma^{*} \rightarrow \Sigma^{*} $
+$$\exists f: \Sigma^{*} \rightarrow \Sigma^{*}$$
+- require:
+  - if w in A iff f(w) in B 
+  - if w not in A, iff f(w) not in B
+
 
 > 存在一个可计算函数，把A中的字符串，转换成一个在B中的字符串
 

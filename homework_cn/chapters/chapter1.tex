@@ -3,17 +3,304 @@
 
 \subsection*{1.4}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_4.png}
+  \caption{}
+  \label{fig:hw_1_4}
+\end{figure}
+
+% ============================================================
+% 小题 a:至少 3 个 a 且至少 2 个 b
+% ============================================================
+\subsubsection*{(a) $\{w \mid w$ 含至少 3 个 a 和至少 2 个 b$\}$}
+
+状态 $(i,j)$:$i$ = a 的计数(3 饱和),$j$ = b 的计数(2 饱和)。接受态 $(3, \ge 2)$。
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=1.9cm, on grid]
+    \matrix (m) [matrix of nodes,
+                 nodes={state},
+                 row sep=1.7cm, column sep=2.1cm] {
+        $0,0$ & $0,1$ & $0,{\geq}2$ \\
+        $1,0$ & $1,1$ & $1,{\geq}2$ \\
+        $2,0$ & $2,1$ & $2,{\geq}2$ \\
+        $3,0$ & $3,1$ & |[state, accepting]| $3,{\geq}2$ \\
+    };
+    % 起始箭头
+    \draw[->] ([xshift=-1cm]m-1-1.west) -- (m-1-1.west);
+    % 水平箭头 (b)
+    \foreach \r in {1,2,3,4} {
+        \draw[->] (m-\r-1) -- node {b} (m-\r-2);
+        \draw[->] (m-\r-2) -- node {b} (m-\r-3);
+    }
+    % 垂直箭头 (a)
+    \foreach \c in {1,2,3} {
+        \draw[->] (m-1-\c) -- node[swap] {a} (m-2-\c);
+        \draw[->] (m-2-\c) -- node[swap] {a} (m-3-\c);
+        \draw[->] (m-3-\c) -- node[swap] {a} (m-4-\c);
+    }
+    % b 饱和自环(第 3 列)
+    \foreach \r in {1,2,3,4} {
+        \draw[->] (m-\r-3) edge[loop right] node {b} ();
+    }
+    % a 饱和自环(第 4 行)
+    \foreach \c in {1,2,3} {
+        \draw[->] (m-4-\c) edge[loop below] node {a} ();
+    }
+\end{tikzpicture}
+\end{center}
+
+% ============================================================
+% 小题 b:恰好 2 个 a 且至少 2 个 b
+% ============================================================
+\subsubsection*{(b) $\{w \mid w$ 含正好 2 个 a 和至少 2 个 b$\}$}
+
+第 4 行 $(\ge 3, \cdot)$ 为死状态(红色),接受态仅 $(2, \ge 2)$。
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=1.9cm, on grid]
+    \matrix (m) [matrix of nodes,
+                 nodes={state},
+                 row sep=1.7cm, column sep=2.1cm] {
+        $0,0$ & $0,1$ & $0,{\geq}2$ \\
+        $1,0$ & $1,1$ & $1,{\geq}2$ \\
+        $2,0$ & $2,1$ & |[state, accepting]| $2,{\geq}2$ \\
+        |[state, dead]| ${\geq}3,0$ & |[state, dead]| ${\geq}3,1$ & |[state, dead]| ${\geq}3,{\geq}2$ \\
+    };
+    \draw[->] ([xshift=-1cm]m-1-1.west) -- (m-1-1.west);
+    \foreach \r in {1,2,3,4} {
+        \draw[->] (m-\r-1) -- node {b} (m-\r-2);
+        \draw[->] (m-\r-2) -- node {b} (m-\r-3);
+    }
+    \foreach \c in {1,2,3} {
+        \draw[->] (m-1-\c) -- node[swap] {a} (m-2-\c);
+        \draw[->] (m-2-\c) -- node[swap] {a} (m-3-\c);
+        \draw[->] (m-3-\c) -- node[swap] {a} (m-4-\c);
+    }
+    \foreach \r in {1,2,3,4} {
+        \draw[->] (m-\r-3) edge[loop right] node {b} ();
+    }
+    \foreach \c in {1,2,3} {
+        \draw[->] (m-4-\c) edge[loop below] node {a} ();
+    }
+\end{tikzpicture}
+\end{center}
+
+% ============================================================
+% 小题 c:偶数个 a 且 1 或 2 个 b
+% ============================================================
+\subsubsection*{(c) $\{w \mid w$ 含偶数个 a 和 1 个或 2 个 b$\}$}
+
+行:a 奇偶(E/O);列:b 计数 0, 1, 2, $\ge 3$(死)。接受态 $(E,1)$ 和 $(E,2)$。
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=1.9cm, on grid]
+    \matrix (m) [matrix of nodes,
+                 nodes={state},
+                 row sep=1.8cm, column sep=2cm] {
+        $E,0$ & |[state, accepting]| $E,1$ & |[state, accepting]| $E,2$ & |[state, dead]| $E,{\geq}3$ \\
+        $O,0$ & $O,1$ & $O,2$ & |[state, dead]| $O,{\geq}3$ \\
+    };
+    \draw[->] ([xshift=-1cm]m-1-1.west) -- (m-1-1.west);
+    % 水平 (b)
+    \foreach \r in {1,2} {
+        \draw[->] (m-\r-1) -- node {b} (m-\r-2);
+        \draw[->] (m-\r-2) -- node {b} (m-\r-3);
+        \draw[->] (m-\r-3) -- node {b} (m-\r-4);
+    }
+    % 垂直双向 (a 翻转奇偶)
+    \foreach \c in {1,2,3,4} {
+        \draw[->] (m-1-\c) edge[bend left=15]  node {a}       (m-2-\c);
+        \draw[->] (m-2-\c) edge[bend left=15]  node {a}       (m-1-\c);
+    }
+    % 死状态自环
+    \draw[->] (m-1-4) edge[loop right] node {a,b} ();
+    \draw[->] (m-2-4) edge[loop right] node {a,b} ();
+\end{tikzpicture}
+\end{center}
+
+\textit{注:死列箭头 $a$ 实际指向另一行的死态,本图已用两条双向箭头覆盖。}
+
+% ============================================================
+% 小题 d:偶数个 a 且每个 a 后跟至少一个 b
+% ============================================================
+\subsubsection*{(d) $\{w \mid w$ 含偶数个 a 且每个 a 后跟至少一个 b$\}$}
+
+行:a 奇偶 E/O;列:$B_0$ (可接受)、$B_1$ (刚读 a 等 b)、$B_d$死。唯一接受 $(E, B_0)$。
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, on grid]
+    \node[state, initial, accepting]  (EB0)                    {$E,B_0$};
+    \node[state]                      (OB1) [right=of EB0]     {$O,B_1$};
+    \node[state, dead]                (EDd) [right=of OB1]     {$E,B_d$};
+    \node[state]                      (OB0) [below=of EB0]     {$O,B_0$};
+    \node[state]                      (EB1) [right=of OB0]     {$E,B_1$};
+    \node[state, dead]                (ODd) [right=of EB1]     {$O,B_d$};
+
+    \path[->]
+        (EB0) edge [bend left=10]    node        {a} (OB1)
+        (EB0) edge [loop above]      node        {b} ()
+        (OB1) edge [bend left=10]    node        {b} (EB0)
+        (OB1) edge                   node        {a} (EDd)
+        (OB0) edge [bend left=10]    node        {a} (EB1)
+        (OB0) edge [loop below]      node        {b} ()
+        (EB1) edge [bend left=10]    node        {b} (OB0)
+        (EB1) edge                   node        {a} (ODd)
+        (EDd) edge [bend left=10]    node        {a} (ODd)
+        (ODd) edge [bend left=10]    node        {a} (EDd)
+        (EDd) edge [loop above]      node        {b} ()
+        (ODd) edge [loop below]      node        {b} ();
+\end{tikzpicture}
+\end{center}
+
+% ============================================================
+% 小题 e:以 a 开头且最多 1 个 b
+% ============================================================
+\subsubsection*{(e) $\{w \mid w$ 从 a 开始且最多 1 个 b$\}$}
+
+只绘从起始态可达的 6 个状态。接受态 $(S_a, 0)$ 和 $(S_a, 1)$。
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=2.8cm, on grid]
+    \node[state, initial]         (S0)                     {$S_0,0$};
+    \node[state, accepting]       (Sa0) [below=of S0]      {$S_a,0$};
+    \node[state, accepting]       (Sa1) [right=of Sa0]     {$S_a,1$};
+    \node[state, dead]            (SaD) [right=of Sa1]     {$S_a,{\geq}2$};
+    \node[state, dead]            (Sd1) [right=3cm of S0]  {$S_d,1$};
+    \node[state, dead]            (SdD) [right=of Sd1]     {$S_d,{\geq}2$};
+
+    \path[->]
+        (S0)  edge                 node {a}   (Sa0)
+        (S0)  edge                 node {b}   (Sd1)
+        (Sa0) edge [loop left]     node {a}   ()
+        (Sa0) edge                 node {b}   (Sa1)
+        (Sa1) edge [loop above]    node {a}   ()
+        (Sa1) edge                 node {b}   (SaD)
+        (SaD) edge [loop right]    node {a,b} ()
+        (Sd1) edge [loop above]    node {a}   ()
+        (Sd1) edge                 node {b}   (SdD)
+        (SdD) edge [loop right]    node {a,b} ();
+\end{tikzpicture}
+\end{center}
+
+% ============================================================
+% 小题 f:奇数个 a 且以 b 结尾
+% ============================================================
+\subsubsection*{(f) $\{w \mid w$ 含奇数个 a 且以 b 结束$\}$}
+
+状态:$(\text{a 奇偶}, \text{末字符})$。起始态 $(E,a)$(空串归此类)。接受态 $(O,b)$。
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=3cm, on grid]
+    \node[state, initial]      (Ea)                  {$E,a$};
+    \node[state]               (Oa) [right=of Ea]    {$O,a$};
+    \node[state]               (Eb) [below=of Ea]    {$E,b$};
+    \node[state, accepting]    (Ob) [right=of Eb]    {$O,b$};
+
+    \path[->]
+        (Ea) edge [bend left=15] node        {a} (Oa)
+        (Oa) edge [bend left=15] node        {a} (Ea)
+        (Ea) edge                node        {b} (Eb)
+        (Oa) edge                node        {b} (Ob)
+        (Eb) edge [bend left=15] node        {a} (Oa)
+        (Ob) edge [bend left=15] node[swap]  {a} (Ea)
+        (Eb) edge [loop left]    node        {b} ()
+        (Ob) edge [loop right]   node        {b} ();
+\end{tikzpicture}
+\end{center}
+
+% ============================================================
+% 小题 g:长度为偶数且奇数个 a
+% ============================================================
+\subsubsection*{(g) $\{w \mid |w|$ 为偶数且 $w$ 有奇数个 a$\}$}
+
+状态:(长度奇偶, a 奇偶)。任何字符都翻转长度;a 额外翻转 a 计数。接受态 $(L_e, A_o)$。
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=3.5cm, on grid]
+    \node[state, initial]      (EE)                  {$L_e,A_e$};
+    \node[state, accepting]    (EO) [right=of EE]    {$L_e,A_o$};
+    \node[state]               (OE) [below=of EE]    {$L_o,A_e$};
+    \node[state]               (OO) [right=of OE]    {$L_o,A_o$};
+
+    \path[->]
+        (EE) edge [bend left=15]  node        {a} (OO)
+        (OO) edge [bend left=15]  node        {a} (EE)
+        (EE) edge [bend left=15]  node        {b} (OE)
+        (OE) edge [bend left=15]  node        {b} (EE)
+        (EO) edge [bend left=15]  node        {a} (OE)
+        (OE) edge [bend left=15]  node        {a} (EO)
+        (EO) edge [bend right=15] node[swap]  {b} (OO)
+        (OO) edge [bend right=15] node[swap]  {b} (EO);
+\end{tikzpicture}
+\end{center}
+
+\vspace{2em}
+\textbf{观察:}由 $|w| = \#_a + \#_b$,$|w|$ 偶且 $\#_a$ 奇 $\Longleftrightarrow \#_b$ 亦为奇数,
+所以此语言等价于 $\{w \mid \#_a, \#_b$ 均为奇数$\}$。
+
+\paragraph{案：}“和”、“并且”等表示的是
+
 \subsection*{1.5}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_5_p1.png}
+  \caption{}
+  \label{fig:hw_1_5_p1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_5_p2.png}
+  \caption{}
+  \label{fig:hw_1_5_p2}
+\end{figure}
 
 \subsection*{1.6}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_6.png}
+  \caption{}
+  \label{fig:hw_1_6}
+\end{figure}
 \subsection*{1.7}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_7.png}
+  \caption{}
+  \label{fig:hw_1_7}
+\end{figure}
 
 \subsection*{1.11}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_11.png}
+  \caption{}
+  \label{fig:hw_1_11}
+\end{figure}
+
 \subsection*{1.13}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_13.png}
+  \caption{}
+  \label{fig:hw_1_13}
+\end{figure}
+
 \subsection*{1.14}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_14.png}
+  \caption{}
+  \label{fig:hw_1_14}
+\end{figure}
 
 \subsection*{1.15}
 

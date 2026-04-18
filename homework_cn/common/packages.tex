@@ -27,4 +27,13 @@
 \usepackage{lmodern}
 \usepackage{tcolorbox}
 \usepackage{tikz}
+
+\usetikzlibrary{positioning, automata, arrows.meta, matrix, fit, backgrounds}
 \usepackage{float}
+
+% ----- 通用样式 -----
+\tikzset{
+    every state/.style = {draw, circle, minimum size=1.05cm, inner sep=1pt, font=\small},
+    dead/.style        = {fill=red!15},
+    >={Stealth[round]}
+}

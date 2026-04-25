@@ -3,17 +3,269 @@
 
 \subsection*{7.1}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_1.png}
+  \caption{}
+  \label{fig:hw_7_1}
+\end{figure}
+
+\subsubsection*{解答}
+ 
+\paragraph{(a) $2n = O(n)$ —— \textbf{真}.}
+取常数 $c = 2$,$n_0 = 1$。对所有 $n \geq n_0$,有
+\[
+    2n \leq 2 \cdot n = c \cdot n,
+\]
+因此 $2n = O(n)$。
+ 
+\paragraph{(b) $n^2 = O(n)$ —— \textbf{假}.}
+假设存在常数 $c > 0$ 和 $n_0$ 使得对所有 $n \geq n_0$ 有 $n^2 \leq c n$。
+两边同除以 $n$(此处 $n > 0$),得
+\[
+    n \leq c,
+\]
+但 $n$ 可以任意大,这与 $c$ 为固定常数矛盾。故 $n^2 \neq O(n)$。
+ 
+\paragraph{(c) $n^2 = O(n \log^2 n)$ —— \textbf{假}.}
+考察极限
+\[
+    \lim_{n \to \infty} \frac{n^2}{n \log^2 n}
+    \;=\; \lim_{n \to \infty} \frac{n}{\log^2 n}
+    \;=\; +\infty.
+\]
+比值趋于无穷,说明不存在常数 $c$ 使得 $n^2 \leq c \cdot n \log^2 n$ 对足够大的 $n$ 恒成立。故 $n^2 \neq O(n \log^2 n)$。
+ 
+\paragraph{(d) $n \log n = O(n^2)$ —— \textbf{真}.}
+对所有 $n \geq 1$,有 $\log n \leq n$,因此
+\[
+    n \log n \;\leq\; n \cdot n \;=\; n^2.
+\]
+取 $c = 1$,$n_0 = 1$ 即可。故 $n \log n = O(n^2)$。
+ 
+\paragraph{(e) $3^n = 2^{O(n)}$ —— \textbf{真}.}
+利用换底公式
+\[
+    3^n \;=\; \left(2^{\log_2 3}\right)^n \;=\; 2^{\,n \log_2 3}.
+\]
+由于 $\log_2 3 \approx 1.585$ 是常数,故 $n \log_2 3 = O(n)$,即存在常数 $c = \log_2 3$ 使得
+$n \log_2 3 \leq c n$。因此 $3^n = 2^{O(n)}$。
+ 
+\paragraph{(f) $2^{2^n} = O(2^{2^n})$ —— \textbf{真}.}
+任何函数 $f(n)$ 都满足 $f(n) = O(f(n))$:取 $c = 1$,$n_0 = 1$,显然
+\[
+    2^{2^n} \;\leq\; 1 \cdot 2^{2^n}.
+\]
+故 $2^{2^n} = O(2^{2^n})$。
+ 
+\paragraph{案：} 结合Big-O和Small-O记号的定义，可无惑。
+
 \subsection*{7.2}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_2.png}
+  \caption{}
+  \label{fig:hw_7_2}
+\end{figure}
+
+\paragraph{小 $o$ 的定义回顾.}
+$f(n) = o\bigl(g(n)\bigr)$ 当且仅当
+\[
+    \lim_{n \to \infty} \frac{f(n)}{g(n)} = 0.
+\]
+也就是说,$f$ 相对于 $g$ 是“真正可忽略”的;仅仅相差常数倍并不满足小 $o$ 关系。
+ 
+\subsubsection*{解答}
+ 
+\paragraph{(a) $n = o(2n)$ —— \textbf{假}.}
+\[
+    \lim_{n \to \infty} \frac{n}{2n} \;=\; \frac{1}{2} \;\neq\; 0.
+\]
+$n$ 与 $2n$ 只相差常数因子,属于同阶,不满足小 $o$ 关系。
+ 
+\paragraph{(b) $2n = o(n^2)$ —— \textbf{真}.}
+\[
+    \lim_{n \to \infty} \frac{2n}{n^2} \;=\; \lim_{n \to \infty} \frac{2}{n} \;=\; 0.
+\]
+故 $2n = o(n^2)$。
+ 
+\paragraph{(c) $2^n = o(3^n)$ —— \textbf{真}.}
+\[
+    \lim_{n \to \infty} \frac{2^n}{3^n}
+    \;=\; \lim_{n \to \infty} \left(\frac{2}{3}\right)^n
+    \;=\; 0,
+\]
+因为底数 $2/3 < 1$。故 $2^n = o(3^n)$。
+ 
+\paragraph{(d) $1 = o(n)$ —— \textbf{真}.}
+\[
+    \lim_{n \to \infty} \frac{1}{n} \;=\; 0.
+\]
+故 $1 = o(n)$。
+ 
+\paragraph{(e) $n = o(\log n)$ —— \textbf{假}.}
+由洛必达法则(或基本增长速度比较)
+\[
+    \lim_{n \to \infty} \frac{n}{\log n} \;=\; +\infty.
+\]
+比值发散而非趋于 $0$,故 $n \neq o(\log n)$。
+事实上关系恰好相反:$\log n = o(n)$。
+ 
+\paragraph{(f) $1 = o(1/n)$ —— \textbf{假}.}
+\[
+    \lim_{n \to \infty} \frac{1}{\,1/n\,} \;=\; \lim_{n \to \infty} n \;=\; +\infty.
+\]
+比值发散,故 $1 \neq o(1/n)$。
+正确的关系是 $1/n = o(1)$。
+ 
+\paragraph{案：} 结合Big-O和Small-O记号的定义，可无惑。
 
 \subsection*{7.5}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_5.png}
+  \caption{}
+  \label{fig:hw_7_5}
+\end{figure}
+
+\subsubsection*{解答}
+ 
+\paragraph{枚举验证.}
+只有两个变量 $x, y$,共有 $2^2 = 4$ 种真值赋值。
+下表枚举全部可能:
+ 
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|c|c||c|c|c|c||c|}
+\hline
+$x$ & $y$ & $x \vee y$ & $x \vee \bar{y}$ & $\bar{x} \vee y$ & $\bar{x} \vee \bar{y}$ & $\varphi$ \\
+\hline\hline
+0 & 0 & \textbf{0} & 1 & 1 & 1 & \textbf{0} \\
+\hline
+0 & 1 & 1 & \textbf{0} & 1 & 1 & \textbf{0} \\
+\hline
+1 & 0 & 1 & 1 & \textbf{0} & 1 & \textbf{0} \\
+\hline
+1 & 1 & 1 & 1 & 1 & \textbf{0} & \textbf{0} \\
+\hline
+\end{tabular}
+\end{center}
+ 
+\noindent 对于每一组赋值,总能找到至少一个子句的取值为 $0$,于是整个合取式为 $0$。
+ 
+\paragraph{结构化解释.}
+两变量的二元析取子句一共恰好有 $4$ 个,而每个子句 $(\ell_1 \vee \ell_2)$ 只在令 $\ell_1, \ell_2$ 同时为假时取 $0$,即恰好排除 $\{0,1\}^2$ 中的一个赋值:
+\[
+    \begin{array}{l@{\;:\;}l}
+        (x \vee y)                 & \text{排除 } (x,y)=(0,0), \\
+        (x \vee \bar{y})           & \text{排除 } (x,y)=(0,1), \\
+        (\bar{x} \vee y)           & \text{排除 } (x,y)=(1,0), \\
+        (\bar{x} \vee \bar{y})     & \text{排除 } (x,y)=(1,1).
+    \end{array}
+\]
+这四个子句合取起来,恰把 $\{0,1\}^2$ 的全部四种赋值全部排除,因此没有任何赋值能令公式为真。
+ 
+\paragraph{结论.}
+\[
+    \varphi \,\equiv\, \mathbf{0},
+\]
+即 $\varphi$ 是一个矛盾式,\textbf{不可满足}(unsatisfiable)。
+ 
+
 \subsection*{7.7}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_7.png}
+  \caption{}
+  \label{fig:hw_7_7}
+\end{figure}
+
+ 
+即:若 $A, B \in \mathbf{NP}$,则 $A \cup B \in \mathbf{NP}$ 且 $A \circ B \in \mathbf{NP}$。
+ 
+\paragraph{总体思路.}
+由 $A, B \in \mathbf{NP}$,存在非确定型图灵机 $N_A$ 和 $N_B$,分别在多项式时间内判定 $A$ 和 $B$。
+设 $N_A$ 的运行时间为 $O(n^{k_1})$,$N_B$ 的运行时间为 $O(n^{k_2})$,其中 $k_1, k_2$ 为常数。
+我们分别构造两个非确定型图灵机 $N_\cup$ 与 $N_\circ$ 判定 $A \cup B$ 与 $A \circ B$。
+ 
+\subsubsection*{第一部分:并封闭}
+ 
+\paragraph{构造 $N_\cup$.} 对输入 $w$:
+\begin{enumerate}
+    \item 非确定地在以下两个分支中选择其一:
+    \begin{itemize}
+        \item \textbf{分支 1}:在 $w$ 上模拟 $N_A$;若 $N_A$ 接受则接受,否则拒绝。
+        \item \textbf{分支 2}:在 $w$ 上模拟 $N_B$;若 $N_B$ 接受则接受,否则拒绝。
+    \end{itemize}
+\end{enumerate}
+ 
+\paragraph{正确性.}
+\[
+    w \in A \cup B 
+    \;\Longleftrightarrow\; w \in A \text{ 或 } w \in B 
+    \;\Longleftrightarrow\; N_A \text{ 接受 } w \text{ 或 } N_B \text{ 接受 } w.
+\]
+而 $N_\cup$ 接受 $w$ 当且仅当其某个非确定分支接受 $w$,因此 $N_\cup$ 恰好判定 $A \cup B$。
+ 
+\paragraph{时间分析.}
+每个分支的运行时间为 $O(n^{k_1})$ 或 $O(n^{k_2})$,因此 $N_\cup$ 的运行时间为 $O(n^{\max(k_1, k_2)})$,
+仍为多项式。故 $A \cup B \in \mathbf{NP}$。
+ 
+\subsubsection*{第二部分:连接封闭}
+ 
+回忆连接的定义
+\[
+    A \circ B \;=\; \{\, xy \mid x \in A \text{ 且 } y \in B \,\}.
+\]
+ 
+\paragraph{构造 $N_\circ$.} 对输入 $w = w_1 w_2 \cdots w_n$:
+\begin{enumerate}
+    \item \textbf{非确定地猜切分点} $i \in \{0, 1, \ldots, n\}$,
+          令 $x = w_1 w_2 \cdots w_i$,$y = w_{i+1} w_{i+2} \cdots w_n$
+          (当 $i = 0$ 时 $x = \varepsilon$;当 $i = n$ 时 $y = \varepsilon$)。
+    \item 在 $x$ 上模拟 $N_A$。
+    \item 在 $y$ 上模拟 $N_B$。
+    \item 若 $N_A$ 接受 $x$ \textbf{且} $N_B$ 接受 $y$,则接受;否则在此分支拒绝。
+\end{enumerate}
+ 
+\paragraph{正确性.}
+$w \in A \circ B$ 当且仅当存在切分 $w = xy$ 使 $x \in A$ 且 $y \in B$。
+由非确定性,$N_\circ$ 的某条分支恰能猜到正确的 $i$;
+而在该分支里 $N_A$ 有接受路径判定 $x \in A$,$N_B$ 有接受路径判定 $y \in B$。
+综合三重非确定性(切分点 + $N_A$ 的分支 + $N_B$ 的分支),
+$N_\circ$ 接受 $w$ 当且仅当 $w \in A \circ B$。
+ 
+\paragraph{时间分析.}
+猜切分点的代价为 $O(\log n)$(记录一个 $\{0, \ldots, n\}$ 之间的整数),
+可放宽记为 $O(n)$。
+模拟 $N_A$ 于 $x$ 的代价为 $|x|^{k_1} \leq n^{k_1}$,
+模拟 $N_B$ 于 $y$ 的代价为 $|y|^{k_2} \leq n^{k_2}$。
+因此 $N_\circ$ 总运行时间为
+\[
+    O\bigl(n + n^{k_1} + n^{k_2}\bigr) \;=\; O\bigl(n^{\max(k_1, k_2)}\bigr),
+\]
+仍为多项式。故 $A \circ B \in \mathbf{NP}$。
+\hfill$\blacksquare$
 
 \subsection*{7.9}
 
+无向图中的三角形是一个3团。证明 $TRIANGLE \in P$ ，其中 $TRIANGLE=\{<G>|G$ 包含一个三角形 $\}$ 。
+
 \subsection*{7.10}
 
+证明 $ALL_{DFA}$ 属于 $P$ 。
+
 \subsection*{7.14}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_14.png}
+  \caption{}
+  \label{fig:hw_7_14}
+\end{figure}
 
 \subsection*{7.17}
 

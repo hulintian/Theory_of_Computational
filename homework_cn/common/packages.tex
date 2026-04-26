@@ -20,16 +20,33 @@
 \usepackage{subfigure}
 \usepackage{tabularx}
 \usepackage[sort&compress,numbers]{natbib}
-% \usepackage[boxed,linesnumbered,algochapter]{algorithm2e}
-\usepackage[ruled,linesnumbered]{algorithm2e}
-% \usepackage{algorithmic}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 \usepackage{listings}
 \usepackage{lmodern}
 \usepackage{tcolorbox}
 \usepackage{tikz}
 
+
 \usetikzlibrary{positioning, automata, arrows.meta, matrix, fit, backgrounds}
 \usepackage{float}
+
+\newcounter{myalgo}
+\renewcommand{\themyalgo}{\arabic{myalgo}}
+\newenvironment{myalgo}[1]{%
+    \refstepcounter{myalgo}%
+    \par\medskip
+    \noindent\hrule
+    \smallskip
+    \noindent\textbf{Algorithm \themyalgo}\quad #1\par
+    \smallskip
+    \noindent\hrule
+    \smallskip
+}{%
+    \smallskip
+    \noindent\hrule
+    \medskip
+}
 
 % ----- 通用样式 -----
 \tikzset{

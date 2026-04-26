@@ -254,13 +254,167 @@ $N_\circ$ 接受 $w$ 当且仅当 $w \in A \circ B$。
 
 无向图中的三角形是一个3团。证明 $TRIANGLE \in P$ ，其中 $TRIANGLE=\{<G>|G$ 包含一个三角形 $\}$ 。
 
+\subsubsection*{证明}
+ 
+要证明 $\textsc{Triangle} \in P$，只需构造一个确定性多项式时间算法，能够正确判定任意无向图 $G$ 是否包含三角形。
+ 
+\subsubsection*{算法构造}
+ 
+设输入无向图 $G = (V, E)$，其中 $|V| = n$，$|E| = m$。以邻接矩阵表示 $G$，则边的存在性查询为 $O(1)$。
+ 
+\begin{myalgo}{判定 $G$ 是否包含三角形的算法 $M$}
+\begin{algorithmic}[1]
+  \Require 无向图 $G = (V, E)$ 的邻接矩阵表示
+  \Ensure 若 $G$ 包含三角形则接受，否则拒绝
+  \ForAll{互不相同的顶点三元组 $(u, v, w) \in V^3$，$u < v < w$}
+    \If{$(u,v) \in E$ \textbf{且} $(v,w) \in E$ \textbf{且} $(u,w) \in E$}
+      \State \textbf{接受}
+    \EndIf
+  \EndFor
+  \State \textbf{拒绝}
+\end{algorithmic}
+\end{myalgo}
+ 
+\subsubsection*{正确性证明}
+ 
+\paragraph{（$\Rightarrow$）充分性：}
+若 $G$ 包含三角形，设该三角形的三个顶点为 $u, v, w \in V$，则由三角形定义知：
+\[
+  (u,v) \in E, \quad (v,w) \in E, \quad (u,w) \in E.
+\]
+算法在枚举三元组时必然枚举到 $(u, v, w)$，此时三个条件全部成立，算法\textbf{接受}。
+ 
+\paragraph{（$\Leftarrow$）必要性：}
+若算法接受，则存在某三元组 $(u, v, w)$ 使得三条边：
+\[
+  (u,v) \in E, \quad (v,w) \in E, \quad (u,w) \in E
+\]
+均成立。由三角形的定义，$\{u, v, w\}$ 构成 $G$ 中的一个三角形。
+ 
+综合两方面，算法正确判定 $\textsc{Triangle}$。
+ 
+\subsection*{时间复杂度分析}
+ 
+\begin{itemize}
+  \item \textbf{枚举三元组：} 从 $n$ 个顶点中选取 $3$ 个互不相同的顶点，共有
+  \[
+    \binom{n}{3} = \frac{n(n-1)(n-2)}{6} = O(n^3)
+  \]
+  个三元组。
+ 
+  \item \textbf{单次检查：} 对每个三元组，使用邻接矩阵检查三条边是否存在，每次查询为 $O(1)$，三条边共 $O(1)$。
+ 
+  \item \textbf{总复杂度：} 算法总时间复杂度为
+  \[
+    O(n^3) \cdot O(1) = O(n^3).
+  \]
+\end{itemize}
+ 
+$O(n^3)$ 是关于输入规模 $n$ 的多项式，故算法 $M$ 是一个\textbf{确定性多项式时间算法}。
+
+\paragraph{案：} 证明问题属于P，即能够给出一个多项式时间的算法，并分析时间负责度。
+
 \subsection*{7.10}
 
 证明 $ALL_{DFA}$ 属于 $P$ 。
 
+\subsubsection*{证明}
+
+记
+\[
+    \textsc{All}_{DFA}
+    =
+    \{\langle A \rangle \mid A \text{ 是一个 DFA，且 } L(A) = \Sigma^*\}.
+\]
+要证明 $\textsc{All}_{DFA} \in P$，只需构造一个确定性多项式时间判定算法。
+
+\paragraph{关键思路：将问题转化为图的可达性问题.}
+设
+\[
+    A = (Q,\Sigma,\delta,q_0,F)
+\]
+是一个 DFA。注意到
+\[
+    L(A) = \Sigma^*
+    \iff
+    A \text{ 接受每一个字符串}
+    \iff
+    A \text{ 没有任何可达的拒绝状态}.
+\]
+等价地，
+\[
+    L(A) \neq \Sigma^*
+    \iff
+    \text{存在某个状态 } q \in Q \setminus F
+    \text{，使得 } q \text{ 从 } q_0 \text{ 可达}.
+\]
+将状态转移函数 $\delta$ 视为一张有向图 $G_A$：顶点集为 $Q$，对每个 $q \in Q$ 和每个 $a \in \Sigma$，从 $q$ 向 $\delta(q,a)$ 连一条边。于是，判定 $\langle A \rangle \in \textsc{All}_{DFA}$ 就等价于判断：是否存在一个从 $q_0$ 可达且不属于 $F$ 的顶点。
+
+\subsubsection*{算法构造}
+
+\begin{myalgo}{判定 $\langle A \rangle \in \textsc{All}_{DFA}$ 的算法 $M$}
+\begin{algorithmic}[1]
+  \Require DFA $A = (Q, \Sigma, \delta, q_0, F)$
+  \Ensure 若 $L(A) = \Sigma^*$ 则接受，否则拒绝
+  \State \textbf{标记}初始状态 $q_0$
+  \Repeat
+    \State 对每个已标记状态 $q$ 和每个字符 $a \in \Sigma$，\textbf{标记}状态 $\delta(q,a)$
+  \Until{没有新状态被标记}
+  \If{存在某个已标记状态 $q \notin F$}
+    \State \textbf{拒绝} \Comment{存在可达的拒绝状态}
+  \Else
+    \State \textbf{接受} \Comment{所有可达状态均为接受状态}
+  \EndIf
+\end{algorithmic}
+\end{myalgo}
+
+\subsubsection*{正确性证明}
+
+\paragraph{（$\Rightarrow$）充分性：}
+步骤 1--2 计算出从 $q_0$ 出发在图 $G_A$ 中可达的全部状态集合，记为 $R \subseteq Q$。若 $L(A) = \Sigma^*$，则对任意 $w \in \Sigma^*$，都有
+\[
+    \delta^*(q_0,w) \in F.
+\]
+因此从 $q_0$ 可达的每个状态都属于 $F$，即 $R \subseteq F$。于是步骤 3 中不存在已标记的拒绝状态，算法接受。
+
+\paragraph{（$\Leftarrow$）必要性：}
+若 $L(A) \neq \Sigma^*$，则存在某个字符串 $w \in \Sigma^*$ 被 $A$ 拒绝。令
+\[
+    q = \delta^*(q_0,w),
+\]
+则 $q \notin F$，且 $q$ 由字符串 $w$ 从 $q_0$ 可达，所以 $q \in R$。因此步骤 3 一定会发现某个已标记的拒绝状态并拒绝。故算法接受当且仅当 $L(A) = \Sigma^*$，算法正确。
+
+\subsubsection*{时间复杂度分析}
+
+设 $n = |Q|$，$k = |\Sigma|$。
+
+\begin{itemize}
+  \item \textbf{步骤 1：} 标记初始状态 $q_0$，耗时 $O(1)$。
+
+  \item \textbf{步骤 2：} 每轮至多检查 $n$ 个已标记状态与 $k$ 个字符的组合，共 $O(nk)$ 次转移查询；而轮数至多为 $n$，因为每轮若继续执行，至少会新增一个已标记状态。因此这一步总耗时为
+  \[
+      O(n^2k).
+  \]
+
+  \item \textbf{步骤 3：} 扫描全部已标记状态并判断是否属于 $F$，耗时 $O(n)$。
+
+  \item \textbf{总复杂度：}
+  \[
+      O(1) + O(n^2k) + O(n) = O(n^2k),
+  \]
+  这是关于输入规模的多项式时间。
+\end{itemize}
+
+因此，算法 $M$ 是一个确定性多项式时间算法，能够正确判定 $\textsc{All}_{DFA}$。故
+\[
+    \textsc{All}_{DFA} \in \mathbf{P}.
+\]
+
+\paragraph{案：} 先把问题翻译成“是否存在可达的拒绝状态”，再在状态图上做可达性搜索。由于状态数和字母表大小都是有限的，整个过程在多项式时间内完成。
+
 \subsection*{7.14}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{chapters/imgs/hw_7_14.png}
   \caption{}
@@ -269,26 +423,120 @@ $N_\circ$ 接受 $w$ 当且仅当 $w \in A \circ B$。
 
 \subsection*{7.17}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_17.png}
+  \caption{}
+  \label{fig:hw_7_17}
+\end{figure}
+
 \subsection*{7.23}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_23.png}
+  \caption{}
+  \label{fig:hw_7_23}
+\end{figure}
 
 \subsection*{7.27}
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{/home/hlt/Documents/Course_master_s2/Theory_of_Computation/homework_cn/chapters/imgs/hw_7_27.png}
+  \caption{}
+  \label{fig:hw_7_27}
+\end{figure}
+
 \subsection*{7.28}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_28.png}
+  \caption{}
+  \label{fig:hw_7_28}
+\end{figure}
 
 \subsection*{7.29}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_29.png}
+  \caption{}
+  \label{fig:hw_7_29}
+\end{figure}
+
 \subsection*{7.30}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_30.png}
+  \caption{}
+  \label{fig:hw_7_30}
+\end{figure}
 
 \subsection*{7.32}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_32.png}
+  \caption{}
+  \label{fig:hw_7_32}
+\end{figure}
+
 \subsection*{7.34}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_34.png}
+  \caption{}
+  \label{fig:hw_7_34}
+\end{figure}
 
 \subsection*{7.36}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_7_36.png}
+  \caption{}
+  \label{fig:hw_7_36}
+\end{figure}
+
 \subsection*{7.39}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_7_39.png}
+  \caption{}
+  \label{fig:hw_7_39}
+\end{figure}
 
 \subsection*{7.40}
 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_7_40_p1.png}
+  \caption{}
+  \label{fig:hw_7_40_p1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_7_40_p2.png}
+  \caption{}
+  \label{fig:hw_7_40_p2}
+\end{figure}
+
 \subsection*{7.42}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_42.png}
+  \caption{}
+  \label{fig:hw_7_42}
+\end{figure}
 
 \clearpage

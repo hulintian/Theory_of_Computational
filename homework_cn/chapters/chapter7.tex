@@ -421,6 +421,157 @@ $O(n^3)$ 是关于输入规模 $n$ 的多项式，故算法 $M$ 是一个\textbf
   \label{fig:hw_7_14}
 \end{figure}
 
+\subsubsection*{证明}
+
+我们证明：若 $A \in \mathbf{P}$，则 $A^* \in \mathbf{P}$。
+
+设 $A \in \mathbf{P}$，则存在一个确定性多项式时间判定机 $M_A$，对任意长度为 $m$ 的输入，都能在时间 $O(m^c)$ 内判定其是否属于 $A$，其中 $c$ 是某个固定常数。下面构造一个确定性多项式时间算法判定 $A^*$。
+
+\paragraph{关键思路：动态规划.}
+设输入字符串为
+\[
+    y = y_1 y_2 \cdots y_n,
+\]
+其中每个 $y_i \in \Sigma$。当 $n=0$ 时，$y=\varepsilon$，而 $\varepsilon \in A^*$ 恒成立，因此可直接接受。
+
+对非空输入，我们建立一个布尔表 $T$。对任意 $1 \le i \le j \le n$，定义
+\[
+    T[i][j] =
+    \begin{cases}
+        \mathbf{true}, & \text{若子串 } y_i y_{i+1} \cdots y_j \in A^*, \\
+        \mathbf{false}, & \text{否则。}
+    \end{cases}
+\]
+最后只需检查 $T[1][n]$ 是否为真。
+
+\paragraph{递推关系.}
+子串 $y_i \cdots y_j$ 属于 $A^*$，当且仅当它可以写成
+\[
+    (y_i \cdots y_{k-1})(y_k \cdots y_j),
+\]
+其中前半段属于 $A^*$，后半段属于 $A$。这里允许前半段为空串；当 $k=i$ 时，前半段就是 $\varepsilon$，显然属于 $A^*$。
+
+因此，对每个 $i \le j$ 有
+\[
+    T[i][j]
+    =
+    \bigvee_{k=i}^{j}
+    \Bigl(
+        \bigl(k=i \text{ 或 } T[i][k-1]\bigr)
+        \wedge
+        (y_k \cdots y_j \in A)
+    \Bigr).
+\]
+
+\subsubsection*{算法构造}
+
+\begin{myalgo}{判定 $A^*$ 的算法 $M^*$}
+\begin{algorithmic}[1]
+  \Require 输入字符串 $y = y_1 y_2 \cdots y_n$
+  \Ensure 若 $y \in A^*$ 则接受，否则拒绝
+  \If{$n = 0$}
+    \State \textbf{接受}
+  \EndIf
+  \State 建立一个 $n \times n$ 的布尔表 $T$，初值全为 \textbf{false}
+  \For{$\ell = 1$ \textbf{to} $n$}
+    \For{$i = 1$ \textbf{to} $n-\ell+1$}
+      \State $j \gets i+\ell-1$
+      \For{$k = i$ \textbf{to} $j$}
+        \If{$k=i$}
+          \State $left \gets \mathbf{true}$
+        \Else
+          \State $left \gets T[i][k-1]$
+        \EndIf
+        \If{$left = \mathbf{true}$ \textbf{and} $M_A$ 接受子串 $y_k \cdots y_j$}
+          \State $T[i][j] \gets \mathbf{true}$
+          \State \textbf{break}
+        \EndIf
+      \EndFor
+    \EndFor
+  \EndFor
+  \If{$T[1][n] = \mathbf{true}$}
+    \State \textbf{接受}
+  \Else
+    \State \textbf{拒绝}
+  \EndIf
+\end{algorithmic}
+\end{myalgo}
+
+\subsubsection*{正确性证明}
+
+对长度 $\ell = j-i+1$ 做归纳，证明算法算出的每个 $T[i][j]$ 都正确刻画了子串 $y_i \cdots y_j$ 是否属于 $A^*$。
+
+\paragraph{基础情形：$\ell=1$.}
+此时子串只有一个字符 $y_i$。算法会检查唯一的分割点 $k=i$，此时前半段为空串，自动视为属于 $A^*$；因此
+\[
+    T[i][i] = \mathbf{true}
+    \iff
+    M_A \text{ 接受 } y_i
+    \iff
+    y_i \in A.
+\]
+而长度为 $1$ 的字符串属于 $A^*$，只能是它本身就属于 $A$，故此时结论成立。
+
+\paragraph{归纳步骤：$\ell \ge 2$.}
+假设所有长度小于 $\ell$ 的子串对应的表项都已被正确计算。考虑任意长度为 $\ell$ 的子串 $y_i \cdots y_j$。
+
+根据算法，$T[i][j]$ 被置为 \textbf{true} 当且仅当存在某个 $k \in [i,j]$，使得
+\[
+    \bigl(k=i \text{ 或 } T[i][k-1]=\mathbf{true}\bigr)
+    \quad \text{且} \quad
+    M_A \text{ 接受 } y_k \cdots y_j.
+\]
+由归纳假设可知，当 $k>i$ 时，$T[i][k-1]=\mathbf{true}$ 等价于 $y_i \cdots y_{k-1} \in A^*$；而当 $k=i$ 时，前半段为空串 $\varepsilon \in A^*$。同时，$M_A$ 的正确性保证
+\[
+    M_A \text{ 接受 } y_k \cdots y_j
+    \iff
+    y_k \cdots y_j \in A.
+\]
+于是，
+\[
+    T[i][j]=\mathbf{true}
+    \iff
+    \text{存在某个分割点 } k,\ 
+    y_i \cdots y_{k-1} \in A^*
+    \text{ 且 }
+    y_k \cdots y_j \in A.
+\]
+这正是 $y_i \cdots y_j \in A^*$ 的定义。因此长度为 $\ell$ 的情形也成立。
+
+由归纳法，所有表项都正确，特别地，
+\[
+    T[1][n] = \mathbf{true}
+    \iff
+    y \in A^*.
+\]
+因此算法 $M^*$ 正确判定 $A^*$。
+
+\subsubsection*{时间复杂度分析}
+
+\begin{itemize}
+  \item 表 $T$ 一共有 $O(n^2)$ 个表项。
+  \item 对每个表项 $T[i][j]$，算法至多枚举 $n$ 个分割点 $k$。
+  \item 对每个 $k$，至多调用一次 $M_A$ 判定子串 $y_k \cdots y_j$；该子串长度不超过 $n$，因此耗时为 $O(n^c)$。
+\end{itemize}
+
+故总时间复杂度为
+\[
+    O(n^2) \cdot O(n) \cdot O(n^c) = O(n^{c+3}),
+\]
+这是关于输入长度 $n$ 的多项式时间。
+
+因此，$M^*$ 是一个确定性多项式时间判定算法，从而
+\[
+    A^* \in \mathbf{P}.
+\]
+由于 $A \in \mathbf{P}$ 是任意的，得到
+\[
+    A \in \mathbf{P} \implies A^* \in \mathbf{P}.
+\]
+故 $\mathbf{P}$ 在星号运算下封闭。
+
+\paragraph{案：} 用动态规划记录每个子串是否已经能被分解成若干个属于 $A$ 的片段；这样避免了对所有切分方式做指数级回溯，从而保持了多项式时间。
+
 \subsection*{7.17}
 
 \begin{figure}[H]
@@ -429,6 +580,66 @@ $O(n^3)$ 是关于输入规模 $n$ 的多项式，故算法 $M$ 是一个\textbf
   \caption{}
   \label{fig:hw_7_17}
 \end{figure}
+
+\begin{proof}
+采用多项式时间 many-one 归约作为 NP 完全性的定义。假设
+\[
+P=NP.
+\]
+任取语言 $A\in P$，且
+\[
+A\neq \varnothing,\qquad A\neq \Sigma^*.
+\]
+由于 $A\in P\subseteq NP$，故有
+\[
+A\in NP.
+\]
+
+下面证明 $A$ 是 NP-hard 的。任取 $L\in NP$。由假设 $P=NP$，可得
+\[
+L\in P.
+\]
+因此存在一个多项式时间算法可以判定 $L$。
+
+又因为 $A\neq\varnothing$，所以存在字符串 $y_1\in A$；因为
+$A\neq\Sigma^*$，所以存在字符串 $y_0\notin A$。定义函数
+$f:\Sigma^*\to\Sigma^*$ 为
+\[
+f(x)=
+\begin{cases}
+y_1, & x\in L,\\
+y_0, & x\notin L.
+\end{cases}
+\]
+由于 $L\in P$，可以在多项式时间内判断 $x\in L$ 是否成立；
+而 $y_0,y_1$ 是固定字符串，因此 $f$ 是多项式时间可计算函数。
+
+对任意 $x\in\Sigma^*$，若 $x\in L$，则
+\[
+f(x)=y_1\in A;
+\]
+若 $x\notin L$，则
+\[
+f(x)=y_0\notin A.
+\]
+因此
+\[
+x\in L \iff f(x)\in A.
+\]
+所以
+\[
+L\leq_p A.
+\]
+由于 $L\in NP$ 是任意的，故
+\[
+\forall L\in NP,\quad L\leq_p A.
+\]
+因此 $A$ 是 NP-hard 的。
+
+综上，$A\in NP$ 且 $A$ 是 NP-hard，所以 $A$ 是 NP 完全的。
+\end{proof}
+
+\paragraph{案：} 这道题最值得玩味的地方在于，规约并不只是“把一个难题机械地变成另一个难题”，而是在不同问题的表述之间传递同一个判定结构。平时我们把多项式时间规约理解为“把未知问题压到一个已知的标准问题上”；而在假设 $P=NP$ 之后，原本“难”与“易”的边界被彻底抹平了。于是，任何一个既不是空集、也不是全集的语言 $A\in P$，都可以作为这种传递的落点。证明里只需固定一个属于 $A$ 的字符串 $y_1$ 和一个不属于 $A$ 的字符串 $y_0$，就能把任意 $L\in NP$ 的真假判定压缩成对 $A$ 的真假判定。换句话说，从一个问题到另一个问题的规约，可以理解成是在不断切换看问题的视角；而当这些视角被压缩到极致时，最后剩下的其实只是最基本的“是或否”的数学判定。
 
 \subsection*{7.23}
 
@@ -439,14 +650,273 @@ $O(n^3)$ 是关于输入规模 $n$ 的多项式，故算法 $M$ 是一个\textbf
   \label{fig:hw_7_23}
 \end{figure}
 
+\[
+CNF_k=\{\langle \phi\rangle \mid \phi \text{ 是可满足的 CNF 公式，且每个变量至多出现 }k\text{ 次}\}.
+\]
+
+\paragraph{(a) 证明 \(CNF_2\in P\).}
+
+设输入是一个 CNF 公式 $\phi$，并且其中每个变量在整个公式中出现的总次数至多为 $2$。记输入长度为 $N$，这里 $N$ 可以取为 $\phi$ 中文字出现的总数。
+
+我们构造如下确定性算法，用来判定在每个变量至多出现两次的前提下，CNF 公式 $\phi$ 是否可满足。
+
+\begin{myalgo}{判定 $2$-出现 CNF 公式 $\phi$ 是否可满足的算法}
+\begin{algorithmic}[1]
+  \Require 一个 CNF 公式 $\phi$，其中每个变量至多出现 $2$ 次
+  \Ensure 若 $\phi$ 可满足则接受，否则拒绝
+  \State $\psi \gets \phi$
+  \While{$\psi$ 中仍含有变量}
+    \If{$\psi$ 中存在空子句}
+      \State \textbf{拒绝}
+    \EndIf
+    \State 任取一个仍在 $\psi$ 中出现的变量 $x$
+    \If{$x$ 在 $\psi$ 中只正出现，或只负出现}
+      \State 令 $x$ 取使这些子句满足的真值
+      \State 从 $\psi$ 中删除所有包含 $x$ 或 $\neg x$ 的子句
+    \Else
+      \State $x$ 在 $\psi$ 中恰好一次正出现、一次负出现
+      \State 设这两个子句分别为 $C_1=(x \vee A)$ 和 $C_2=(\neg x \vee B)$
+      \State 从 $\psi$ 中删除 $C_1$ 和 $C_2$
+      \State 构造归结子句 $D=A \vee B$
+      \State 在 $D$ 中删去重复文字
+      \If{$D$ 同时含有某个变量 $y$ 与 $\neg y$}
+        \State 丢弃 $D$ \Comment{$D$ 为重言式}
+      \ElsIf{$D$ 为空子句}
+        \State \textbf{拒绝}
+      \Else
+        \State 将 $D$ 加入 $\psi$
+      \EndIf
+    \EndIf
+  \EndWhile
+  \If{$\psi$ 中存在空子句}
+    \State \textbf{拒绝}
+  \Else
+    \State \textbf{接受}
+  \EndIf
+\end{algorithmic}
+\end{myalgo}
+
+\paragraph{算法保持的性质.}
+在算法执行过程中，始终保持“每个变量至多出现两次”这一性质。
+
+\begin{itemize}
+  \item 在第一种操作中，我们只是删除一些子句，因此每个变量的出现次数只会减少。
+  \item 在第二种操作中，被消去的变量 $x$ 被完全删除。对于其他变量，它们在新子句 $D$ 中的出现，仅仅来自原来 $A$ 或 $B$ 中的出现，因此它们的总出现次数不会增加。
+\end{itemize}
+
+因此每次循环中，对被选中的变量 $x$，确实只会落入算法中的两种情形之一。
+
+\paragraph{正确性证明.}
+我们证明：每次循环对公式做的变换都保持可满足性。
+
+\paragraph{第一种情形：$x$ 只以同一种极性出现.}
+不妨设 $x$ 只正出现。令
+\[
+\psi = C_1 \wedge C_2 \wedge \cdots \wedge C_t \wedge R,
+\]
+其中 $C_1,\dots,C_t$ 是所有含有 $x$ 的子句，$R$ 中不含 $x$。
+
+设 $\psi'$ 为从 $\psi$ 中删除 $C_1,\dots,C_t$ 后得到的公式，也就是算法更新后的公式。
+
+\begin{itemize}
+  \item 若 $\psi$ 可满足，则取一个满足赋值。把其中 $x$ 的取值改成 $1$ 后，所有 $C_i$ 仍然满足，而 $R$ 不受影响。因此该赋值在删去 $C_1,\dots,C_t$ 后仍满足 $\psi'$。
+  \item 若 $\psi'$ 可满足，则把满足 $\psi'$ 的赋值扩张为 $x=1$，即可满足所有 $C_i$，从而满足 $\psi$。
+\end{itemize}
+
+故 $\psi$ 可满足当且仅当 $\psi'$ 可满足。若 $x$ 只负出现，证明完全类似。
+
+\paragraph{第二种情形：$x$ 一正一负各出现一次.}
+设
+\[
+\psi = (x \vee A)\wedge (\neg x \vee B)\wedge R,
+\]
+其中 $A,B,R$ 都不含变量 $x$。算法将其替换为
+\[
+\psi' = (A \vee B)\wedge R,
+\]
+若 $A \vee B$ 是重言式则直接删除该子句；若 $A \vee B$ 为空子句则立即拒绝。
+
+下面证明 $\psi$ 与 $\psi'$ 等可满足。
+
+\begin{itemize}
+  \item 若 $\psi$ 可满足，取其在除 $x$ 之外各变量上的限制赋值。由于
+  \[
+  (x \vee A)\wedge (\neg x \vee B)
+  \]
+  被满足，因此若 $x=0$ 则必须有 $A=1$，若 $x=1$ 则必须有 $B=1$。无论哪种情况，都有 $A \vee B = 1$，故该限制赋值满足 $\psi'$。
+  \item 若 $\psi'$ 可满足，则在满足 $\psi'$ 的赋值下，$A \vee B = 1$。若 $A=1$，令 $x=0$，则 $(\neg x \vee B)$ 自动为真，且 $(x \vee A)$ 也为真；若 $A=0$，则必有 $B=1$，令 $x=1$ 即可。于是该赋值可扩张为 $\psi$ 的满足赋值。
+\end{itemize}
+
+故 $\psi$ 可满足当且仅当 $\psi'$ 可满足。
+
+由以上两种情形可知，算法每一步都保持可满足性不变。最终若算法拒绝，则一定是产生了空子句，而空子句不可满足；若算法接受，则所有变量都已被消去且未出现空子句，此时剩余公式为空合取，必可满足。因此算法正确。
+
+\paragraph{时间复杂度分析.}
+令 $N$ 为输入公式中出现的文字总数。
+
+\begin{itemize}
+  \item 每次循环至少消去一个变量。
+  \item 更重要的是，每次循环都会使当前公式中的文字总数严格下降。
+  \item 在第一种情形中，至少删除一个包含 $x$ 的文字。
+  \item 在第二种情形中，原来的两个子句一共含有
+  \[
+  |A| + |B| + 2
+  \]
+  个文字，而加入的新子句最多只含有
+  \[
+  |A| + |B|
+  \]
+  个文字，因此文字总数至少减少 $2$。
+\end{itemize}
+
+所以循环次数至多为 $N$ 次。若采用朴素实现，每次循环中扫描当前公式、定位相关子句并构造归结子句，时间均为 $O(N)$。因此总时间复杂度为
+\[
+O(N^2),
+\]
+是多项式时间。
+
+故
+\[
+CNF_2 \in P.
+\]
+
+\paragraph{(b) 证明 \(CNF_3\) 是 NP 完全的。}
+
+\paragraph{第一步：证明 \(CNF_3\in NP\).}
+给定一个真值赋值，我们可以在多项式时间内逐个检查所有子句是否被满足，并统计每个变量在公式中的出现次数是否至多为 $3$。因此
+\[
+CNF_3 \in NP.
+\]
+
+\paragraph{第二步：证明 \(CNF_3\) 是 NP-hard.}
+我们从标准的
+\[
+\textsc{CNF-SAT}
+=
+\{\langle \phi \rangle \mid \phi \text{ 是可满足的 CNF 公式}\}
+\]
+做多项式时间 many-one 归约。
+
+设 $\phi$ 是任意一个 CNF 公式。对 $\phi$ 中每个变量 $x$，记它在 $\phi$ 中总共出现 $d_x$ 次。
+
+\begin{itemize}
+  \item 若 $d_x \le 3$，则保持变量 $x$ 不变。
+  \item 若 $d_x > 3$，则把这 $d_x$ 次出现分别替换为新的变量
+  \[
+  x_1,x_2,\dots,x_{d_x}.
+  \]
+  若原来第 $i$ 次出现是正文字 $x$，则替换为 $x_i$；若原来第 $i$ 次出现是否定文字 $\neg x$，则替换为 $\neg x_i$。
+\end{itemize}
+
+为了强制这些新变量取相同真值，对每个满足 $d_x>3$ 的原变量 $x$ 再加入如下 $d_x$ 个子句：
+\[
+(\neg x_1 \vee x_2)\wedge
+(\neg x_2 \vee x_3)\wedge \cdots \wedge
+(\neg x_{d_x-1} \vee x_{d_x})\wedge
+(\neg x_{d_x} \vee x_1).
+\]
+
+把经过上述替换后的原子句，与所有新加入的环形子句合起来，得到新公式 $\psi$。这就是归约输出。
+
+\paragraph{归约的大小与出现次数控制.}
+对每个被拆开的变量 $x$：
+
+\begin{itemize}
+  \item 每个新变量 $x_i$ 在替换后的原公式部分中恰好出现一次。
+  \item 在环形子句中，$x_i$ 恰好正出现一次、负出现一次。
+\end{itemize}
+
+因此每个 $x_i$ 在 $\psi$ 中总共恰好出现 $3$ 次；而未被拆开的变量本来就至多出现 $3$ 次。因此 $\psi$ 中每个变量至多出现 $3$ 次，即
+\[
+\psi \text{ 的确满足 } CNF_3 \text{ 定义中的出现次数限制。}
+\]
+
+同时，若 $\phi$ 的总文字数为 $N$，则新引入的变量数和子句数都只是 $O(N)$，故整个构造可在多项式时间内完成。
+
+\paragraph{正确性：若 \(\phi\) 可满足，则 \(\psi\) 可满足.}
+设 $\alpha$ 是 $\phi$ 的一个满足赋值。
+
+\begin{itemize}
+  \item 对于未拆开的变量 $x$，令其在 $\psi$ 中保持同样取值。
+  \item 对于被拆开的变量 $x$，令
+  \[
+  x_1=x_2=\cdots=x_{d_x}=\alpha(x).
+  \]
+\end{itemize}
+
+这样，替换后的每个原子句都仍然满足，因为我们只是把原来某一次出现的 $x$ 或 $\neg x$ 换成了与 $\alpha(x)$ 同值的新变量。另一方面，每个环形子句
+\[
+(\neg x_i \vee x_{i+1})
+\]
+在上述赋值下都变成
+\[
+(\neg \alpha(x) \vee \alpha(x)),
+\]
+恒为真。因此 $\psi$ 可满足。
+
+\paragraph{正确性：若 \(\psi\) 可满足，则 \(\phi\) 可满足.}
+设 $\beta$ 是 $\psi$ 的一个满足赋值。我们证明：对每个被拆开的原变量 $x$，一定有
+\[
+\beta(x_1)=\beta(x_2)=\cdots=\beta(x_{d_x}).
+\]
+
+若不然，则在循环序列
+\[
+x_1,x_2,\dots,x_{d_x},x_1
+\]
+中，必存在某个相邻位置满足
+\[
+\beta(x_i)=1,\qquad \beta(x_{i+1})=0,
+\]
+其中下标按模 $d_x$ 计算。于是子句
+\[
+(\neg x_i \vee x_{i+1})
+\]
+在 $\beta$ 下取值为假，这与 $\beta$ 满足 $\psi$ 矛盾。故所有 $x_i$ 必同值。
+
+现在定义原公式 $\phi$ 的赋值 $\alpha$：
+
+\begin{itemize}
+  \item 对未拆开的变量 $x$，令 $\alpha(x)=\beta(x)$。
+  \item 对被拆开的变量 $x$，令 $\alpha(x)=\beta(x_1)$。
+\end{itemize}
+
+由于同一个原变量 $x$ 的所有副本 $x_i$ 在 $\beta$ 下同值，故 $\phi$ 中每个原子句在 $\alpha$ 下的真假，与 $\psi$ 中对应替换后子句在 $\beta$ 下的真假完全一致。因为后者都被满足，所以前者也都被满足。因此 $\phi$ 可满足。
+
+\paragraph{归约结论.}
+我们已经证明
+\[
+\phi \in \textsc{CNF-SAT}
+\iff
+\psi \in CNF_3.
+\]
+因此
+\[
+\textsc{CNF-SAT} \le_p CNF_3.
+\]
+由于 $\textsc{CNF-SAT}$ 是 NP 完全的，故 $CNF_3$ 是 NP-hard 的。
+
+综合两步，得到
+\[
+CNF_3 \in NP
+\quad \text{且} \quad
+CNF_3 \text{ 是 NP-hard}.
+\]
+因此
+\[
+CNF_3 \text{ 是 NP 完全的}.
+\]
+
 \subsection*{7.27}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.8\textwidth]{/home/hlt/Documents/Course_master_s2/Theory_of_Computation/homework_cn/chapters/imgs/hw_7_27.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_7_27.png}
   \caption{}
   \label{fig:hw_7_27}
 \end{figure}
+
+
 
 \subsection*{7.28}
 

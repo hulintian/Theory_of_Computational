@@ -48,6 +48,13 @@
     \medskip
 }
 
+\newenvironment{proof}{%
+    \par\medskip
+    \noindent\textbf{证明.}\;
+}{%
+    \hfill$\square$\par\medskip
+}
+
 % ----- 通用样式 -----
 \tikzset{
     every state/.style = {draw, circle, minimum size=1.05cm, inner sep=1pt, font=\small},

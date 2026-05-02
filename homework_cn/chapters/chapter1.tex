@@ -1,3 +1,4 @@
+\phantomsection
 \section*{Chapter 1}
 \addcontentsline{toc}{section}{Chapter 1}
 
@@ -1261,30 +1262,881 @@ $E = \{q_0, q_2, q_3\}$         & $\{q_0, q_1, q_3\} = D$     & $\{q_0, q_1, q_3
   \label{fig:hw_1_14}
 \end{figure}
 
+\subsubsection*{解答}
+
+先证明对 DFA 成立，再说明为什么对 NFA 直接交换接受状态与非接受状态并不正确。
+
+\paragraph{DFA 情形.}
+设
+\[
+    M = (Q, \Sigma, \delta, q_0, F)
+\]
+识别语言 $B$，即
+\[
+    B = L(M) = \{\, w \in \Sigma^* \mid \delta^*(q_0, w) \in F \,\}.
+\]
+
+构造新的 DFA
+\[
+    M' = (Q, \Sigma, \delta, q_0, Q \setminus F),
+\]
+也就是只交换接受状态与非接受状态，而保持转移函数不变。
+
+对任意字符串 $w \in \Sigma^*$，由于 DFA 的计算路径唯一，
+\[
+    w \in L(M')
+    \iff \delta^*(q_0, w) \in Q \setminus F
+    \iff \delta^*(q_0, w) \notin F.
+\]
+另一方面，
+\[
+    \delta^*(q_0, w) \notin F
+    \iff w \notin L(M)
+    \iff w \notin B.
+\]
+因此
+\[
+    L(M') = \Sigma^* \setminus B = \overline{B}.
+\]
+
+所以，只要把一个识别 $B$ 的 DFA 的接受状态与非接受状态互换，就得到一个识别 $\overline{B}$ 的 DFA。于是，若 $B$ 是正则语言，则 $\overline{B}$ 也是正则语言。换言之，正则语言类在补运算下封闭。
+
+\paragraph{NFA 情形.}
+对于 NFA，直接交换接受状态与非接受状态不一定得到补语言。下面给出一个反例。
+
+设字母表
+\[
+    \Sigma = \{a\}.
+\]
+构造 NFA
+\[
+    N = (Q, \Sigma, \delta, q_0, F),
+\]
+其中
+\[
+    Q = \{q_0, q_1\}, \qquad F = \{q_1\},
+\]
+转移为
+\[
+    \delta(q_0, a) = \{q_0, q_1\}, \qquad \delta(q_1, a) = \{q_1\}.
+\]
+
+这个 NFA 识别的语言是
+\[
+    C = \{a^n \mid n \geq 1\} = a^+.
+\]
+原因是：只要输入非空串，就可以在某一步从 $q_0$ 转到 $q_1$，并最终停在接受状态。
+
+现在交换接受状态与非接受状态，得到
+\[
+    F' = Q \setminus F = \{q_0\}.
+\]
+设新 NFA 为
+\[
+    N' = (Q, \Sigma, \delta, q_0, F').
+\]
+由于对任意 $a^n$ 都可以始终停留在状态 $q_0$，所以
+\[
+    L(N') = a^*.
+\]
+但
+\[
+    \overline{C}
+    = \Sigma^* \setminus a^+
+    = \{\varepsilon\}.
+\]
+显然
+\[
+    L(N') = a^* \neq \{\varepsilon\} = \overline{C}.
+\]
+
+因此，对 NFA 直接交换接受状态与非接受状态，并不一定得到原语言的补集。
+
+\paragraph{原因分析.}
+DFA 的接受基于唯一计算路径，因此
+\[
+    w \in L(M)
+    \iff \text{这唯一一条计算路径接受 } w.
+\]
+所以把接受态与非接受态交换后，恰好就把“接受”变成“拒绝”，把“拒绝”变成“接受”。
+
+但 NFA 的接受条件是
+\[
+    w \in L(N)
+    \iff \text{存在一条计算路径接受 } w.
+\]
+交换接受状态后，新 NFA 接受的是
+\[
+    \text{存在一条计算路径停在原来的非接受状态。}
+\]
+而补语言要求的是
+\[
+    w \in \overline{L(N)}
+    \iff \text{不存在任何一条计算路径接受 } w,
+\]
+也就是
+\[
+    \forall \text{计算路径，都不接受}.
+\]
+这里“存在一条路径”与“所有路径都不接受”并不等价，所以不能通过简单交换终态来取补。
+
+\paragraph{结论.}
+虽然对 NFA 不能直接交换接受状态来取补，但 NFA 所识别的语言类仍然在补运算下封闭。因为任意 NFA 都可以先通过子集构造法转化为等价的 DFA，再对该 DFA 交换接受状态与非接受状态，即可得到补语言的识别器。$\blacksquare$
+
+
+
 \subsection*{1.15}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_15.png}
+  \caption{}
+  \label{fig:hw_1_15}
+\end{figure}
+
+这题中文版的第二版和第三版均存在翻译错误，下图\ref{fig:hw_1_15_en} 是英文版的题干
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_15_en.png}
+  \caption{}
+  \label{fig:hw_1_15_en}
+\end{figure}
+
+\subsubsection*{解答}
+
+这份证明的问题在于：所构造的新 NFA 并不一定识别 $A_1^*$。下面给出一个反例。
+
+\paragraph{反例的选择.}
+取
+\[
+    A_1 = a(ba)^*.
+\]
+令 $N_1$ 是识别 $A_1$ 的 NFA，其状态图如下：
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=3.2cm, on grid]
+    \node[state, initial]      (q1)                 {$q_1$};
+    \node[state, accepting]    (q2) [right=of q1]   {$q_2$};
+    \path[->]
+        (q1) edge                  node        {a}   (q2)
+        (q2) edge [bend left=18]   node        {b}   (q1);
+\end{tikzpicture}
+\end{center}
+
+其中 $q_1$ 是开始状态，$q_2$ 是唯一接受状态。因此
+\[
+    L(N_1) = \{a(ba)^k \mid k \geq 0\} = a(ba)^* = A_1.
+\]
+
+\paragraph{按题中错误方法构造新 NFA.}
+按照题目中的构造，新 NFA $N$ 的接受状态变为
+\[
+    F = \{q_1\} \cup F_1 = \{q_1, q_2\},
+\]
+并且因为 $q_2 \in F_1$，所以还要加入一条 $\varepsilon$-转移 $q_2 \to q_1$。于是得到下图：
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=3.2cm, on grid]
+    \node[state, initial, accepting]  (q1)                 {$q_1$};
+    \node[state, accepting]           (q2) [right=of q1]   {$q_2$};
+    \path[->]
+        (q1) edge                     node        {a}              (q2)
+        (q2) edge [bend left=18]      node        {b}              (q1)
+        (q2) edge [bend right=18]     node[swap]  {$\varepsilon$}  (q1);
+\end{tikzpicture}
+\end{center}
+
+\paragraph{说明该构造出错.}
+在这个新 NFA 中，
+\[
+    q_1 \xrightarrow{a} q_2 \xrightarrow{b} q_1,
+\]
+而 $q_1$ 已经是接受状态，所以
+\[
+    ab \in L(N).
+\]
+
+但是
+\[
+    ab \notin A_1^*.
+\]
+这是因为 $A_1 = a(ba)^*$ 中的每个非空字符串都以 $a$ 开头并以 $a$ 结尾，因此 $A_1^*$ 中每个非空块也都以 $a$ 结尾，从而任意非空拼接结果仍以 $a$ 结尾。字符串 $ab$ 以 $b$ 结尾，所以不可能属于 $A_1^*$。
+
+因此
+\[
+    L(N) \neq A_1^*.
+\]
+这就说明题目中的构造不能用来证明正则语言类对 Kleene 星号运算封闭。
+
+\paragraph{错误的本质.}
+问题出在它直接把原开始状态 $q_1$ 设成了接受状态。这样一来，只要某条路径在“尚未完整读完一个 $A_1$-块”时返回到了 $q_1$，机器就可能提前接受，从而识别出不属于 $A_1^*$ 的字符串。
+
+正确的做法是：新建一个\textbf{新的开始接受状态}，并从它向旧开始状态加一条 $\varepsilon$-边；同时从每个旧接受状态向旧开始状态加 $\varepsilon$-边。这样才能正确识别 $A_1^*$。$\blacksquare$
 
 \subsection*{1.17}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_17.png}
+  \caption{}
+  \label{fig:hw_1_17}
+\end{figure}
+
+\subsubsection*{解答}
+
+\paragraph{识别 $(01 \cup 001 \cup 010)^*$ 的 NFA.}
+按照正则表达式到 NFA 的标准构造，先分别构造识别 $01$、$001$、$010$ 的三个小 NFA，再用 $\varepsilon$ 边做并运算得到 $N_1$，最后在外层按星号构造得到 $N$。
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, node distance=1.35cm and 1.7cm, on grid, scale=0.78, transform shape]
+    \node[state, initial, accepting] (s)                              {$s$};
+    \node[state]                     (u0) [right=2.1cm of s]          {$u_0$};
+
+    \node[state]                     (a0) [above right=1.8cm and 1.6cm of u0] {$a_0$};
+    \node[state]                     (a1) [right=of a0]               {$a_1$};
+    \node[state, accepting]          (a2) [right=of a1]               {$a_2$};
+
+    \node[state]                     (b0) [right=1.6cm of u0]         {$b_0$};
+    \node[state]                     (b1) [right=of b0]               {$b_1$};
+    \node[state]                     (b2) [right=of b1]               {$b_2$};
+    \node[state, accepting]          (b3) [right=of b2]               {$b_3$};
+
+    \node[state]                     (c0) [below right=1.8cm and 1.6cm of u0] {$c_0$};
+    \node[state]                     (c1) [right=of c0]               {$c_1$};
+    \node[state]                     (c2) [right=of c1]               {$c_2$};
+    \node[state, accepting]          (c3) [right=of c2]               {$c_3$};
+    \coordinate (toploop)    at ([yshift=1.10cm]a2.north);
+    \coordinate (midloop)    at ([yshift=0.95cm]b3.north);
+    \coordinate (bottomloop) at ([yshift=-1.05cm]c3.south);
+
+    \node[draw, rounded corners=10pt, inner xsep=0.75cm, inner ysep=0.55cm,
+          fit=(u0) (a0) (a2) (b0) (b3) (c0) (c3)] (None) {};
+    \node[fill=white, inner sep=2pt] at (None.north west) {$N_1$};
+    \node[draw, rounded corners=12pt, inner xsep=0.85cm, inner ysep=0.75cm,
+          fit=(s) (None)] (N) {};
+    \node[fill=white, inner sep=2pt] at (N.north west) {$N$};
+
+    \path[->]
+        (s)  edge                       node[fill=white, inner sep=1pt, above] {$\varepsilon$} (u0)
+
+        (u0) edge                       node[fill=white, inner sep=1pt, above left] {$\varepsilon$} (a0)
+        (u0) edge                       node[fill=white, inner sep=1pt, above]      {$\varepsilon$} (b0)
+        (u0) edge                       node[fill=white, inner sep=1pt, below left] {$\varepsilon$} (c0)
+
+        (a0) edge                       node[fill=white, inner sep=1pt, above] {0} (a1)
+        (a1) edge                       node[fill=white, inner sep=1pt, above] {1} (a2)
+
+        (b0) edge                       node[fill=white, inner sep=1pt, above] {0} (b1)
+        (b1) edge                       node[fill=white, inner sep=1pt, above] {0} (b2)
+        (b2) edge                       node[fill=white, inner sep=1pt, above] {1} (b3)
+
+        (c0) edge                       node[fill=white, inner sep=1pt, above] {0} (c1)
+        (c1) edge                       node[fill=white, inner sep=1pt, above] {1} (c2)
+        (c2) edge                       node[fill=white, inner sep=1pt, above] {0} (c3);
+
+    \draw[->]
+        (a2.north) to[out=95, in=25] node[fill=white, inner sep=1pt, above] {$\varepsilon$} (toploop)
+                   to[out=205, in=95] (u0.north);
+    \draw[->]
+        (b3.north) to[out=105, in=15] node[fill=white, inner sep=1pt, above] {$\varepsilon$} (midloop)
+                   to[out=195, in=65] (u0.north east);
+    \draw[->]
+        (c3.south) to[out=-100, in=-25] node[fill=white, inner sep=1pt, below] {$\varepsilon$} (bottomloop)
+                   to[out=155, in=-75] (u0.south);
+\end{tikzpicture}
+\end{center}
+
+\noindent 其中 $N_1$ 识别 $01 \cup 001 \cup 010$，上、中、下三条分支分别识别 $01$、$001$、$010$。外层 $N$ 的新开始状态 $s$ 同时是接受状态，因此接受空串；从 $s$ 到 $u_0$ 的 $\varepsilon$ 边进入 $N_1$，从 $N_1$ 的接受状态回到 $u_0$ 的 $\varepsilon$ 边允许重复读下一个块。
+
+\paragraph{子集构造得到的等价 DFA.}
+为了得到较小的 DFA，可以先把上面的构造 NFA 化简为只记录“当前匹配到块内哪个前缀”的四状态 NFA。设该 NFA 的状态为 $q_0,q_1,q_2,q_3$，其中 $q_0$ 是开始状态和接受状态，并有如下含义：
+\begin{center}
+\begin{tabular}{c|l}
+状态 & 含义 \\
+\hline
+$q_0$ & 当前正好停在块边界，可以接受；\\
+$q_1$ & 已经读到某个块的前缀 $0$；\\
+$q_2$ & 已经读到某个块的前缀 $00$；\\
+$q_3$ & 已经读到某个块的前缀 $01$，还可继续读 $0$ 形成 $010$。
+\end{tabular}
+\end{center}
+
+对这个 NFA 做子集构造时，DFA 的每个状态都是一个 NFA 状态集合。只保留从开始集合 $\{q_0\}$ 出发能够到达的集合，得到：
+\begin{center}
+\begin{tabular}{c|c|l}
+DFA 状态 & NFA 状态集合 & 为什么会出现 \\
+\hline
+$A$ & $\{q_0\}$ & 开始集合\\
+$B$ & $\{q_1\}$ & $A$ 读 $0$\\
+$C$ & $\{q_2\}$ & $B$ 读 $0$\\
+$D$ & $\{q_0,q_3\}$ & $B$ 或 $F$ 读 $1$\\
+$E$ & $\{q_0,q_1\}$ & $D$ 读 $0$\\
+$F$ & $\{q_1,q_2\}$ & $E$ 读 $0$\\
+$G$ & $\emptyset$ & 无合法转移时进入的死状态
+\end{tabular}
+\end{center}
+
+它们之间的转移由逐点取并得到：
+\begin{center}
+\begin{tabular}{c|cc}
+状态 & $0$ & $1$ \\
+\hline
+$A$ & $B$ & $G$ \\
+$B$ & $C$ & $D$ \\
+$C$ & $G$ & $A$ \\
+$D$ & $E$ & $G$ \\
+$E$ & $F$ & $D$ \\
+$F$ & $C$ & $D$ \\
+$G$ & $G$ & $G$
+\end{tabular}
+\end{center}
+因为原 NFA 的唯一接受态是 $q_0$，所以 DFA 中所有包含 $q_0$ 的状态都是接受状态，即 $A,D,E$；$G=\emptyset$ 是死状态。对应的 DFA 如下。
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt, auto, on grid]
+    \node[state, initial, accepting]  (A)                       {$A$};
+    \node[state]                      (B)  [right=2.9cm of A]   {$B$};
+    \node[state]                      (C)  [right=2.9cm of B]   {$C$};
+    \node[state, dead]                (G)  [right=3.2cm of C]   {$G$};
+    \node[state, accepting]           (E)  [below=2.8cm of A]   {$E$};
+    \node[state, accepting]           (D)  [below=2.8cm of B]   {$D$};
+    \node[state]                      (F)  [below=2.8cm of C]   {$F$};
+
+    \path[->]
+        (A) edge                      node[fill=white, inner sep=1pt, above] {0}   (B)
+        (A) edge [bend left=18]       node[fill=white, inner sep=1pt, above] {1}   (G)
+
+        (B) edge                      node[fill=white, inner sep=1pt, above] {0}   (C)
+        (B) edge                      node[fill=white, inner sep=1pt, left]  {1}   (D)
+
+        (C) edge [bend left=18]       node[fill=white, inner sep=1pt, above] {1}   (A)
+        (C) edge                      node[fill=white, inner sep=1pt, above] {0}   (G)
+
+        (D) edge [bend left=10]       node[fill=white, inner sep=1pt, above] {0}   (E)
+        (D) edge [bend left=10]       node[fill=white, inner sep=1pt, below] {1}   (G)
+
+        (E) edge [bend left=10]       node[fill=white, inner sep=1pt, above] {1}   (D)
+        (E) edge [bend right=18]      node[fill=white, inner sep=1pt, below] {0}   (F)
+
+        (F) edge                      node[fill=white, inner sep=1pt, right] {0}   (C)
+        (F) edge [bend left=10]       node[fill=white, inner sep=1pt, below] {1}   (D)
+
+        (G) edge [loop right]         node[fill=white, inner sep=1pt]        {0,1} ();
+\end{tikzpicture}
+\end{center}
+
 \subsection*{1.19}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_19_p1.png}
+  \caption{}
+  \label{fig:hw_1_19_p1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_1_19_p2.png}
+  \caption{}
+  \label{fig:hw_1_19_p2}
+\end{figure}
+
+\subsubsection*{解答}
+
+下面给出每个语言的两个成员和两个非成员。这里约定字母表为 $\Sigma=\{a,b\}$。
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{c|c|c|c}
+题号 & 语言 & 属于该语言的字符串 & 不属于该语言的字符串 \\
+\hline
+(a) & $a^*b^*$ & $\varepsilon,\ aaabbb$ & $ba,\ abab$ \\
+(b) & $a(ba)^*b$ & $ab,\ abab$ & $\varepsilon,\ aab$ \\
+(c) & $a^* \cup b^*$ & $aaa,\ bb$ & $ab,\ ba$ \\
+(d) & $(aaa)^*$ & $\varepsilon,\ aaaaaa$ & $a,\ aa$ \\
+(e) & $\Sigma^*a\Sigma^*b\Sigma^*a\Sigma^*$ & $aba,\ baaba$ & $\varepsilon,\ aab$ \\
+(f) & $aba \cup bab$ & $aba,\ bab$ & $\varepsilon,\ ab$ \\
+(g) & $(\varepsilon \cup a)b$ & $b,\ ab$ & $\varepsilon,\ a$ \\
+(h) & $(a \cup ba \cup bb)\Sigma^*$ & $a,\ ba$ & $\varepsilon,\ b$ \\
+\end{tabular}
+\end{center}
+
+\noindent 其中 (e) 要求字符串中存在一个按顺序出现的子序列 $a,b,a$；例如 $baaba$ 中第 $2,4,5$ 个字符可取为 $a,b,a$。而 (h) 表示字符串必须以 $a$、$ba$ 或 $bb$ 开头，所以空串和单独的 $b$ 都不属于该语言。
 
 \subsection*{1.30}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_30.png}
+  \caption{}
+  \label{fig:hw_1_30}
+\end{figure}
+
+\subsubsection*{解答}
+
+该证明的错误在于混淆了两个不同的语言。语言
+\[
+    0^*1^*=\{0^m1^n \mid m,n\ge 0\}
+\]
+本身由正则表达式 $0^*1^*$ 描述，因而是正则语言，不可能由泵引理推出其非正则性。
+
+错误发生在把例 1.38 中关于
+\[
+    B=\{0^n1^n \mid n\ge 0\}
+\]
+的结论用于 $0^*1^*$。对于 $B$，字符串 $0^p1^p$ 不能被泵，是因为泵动会破坏 $0$ 与 $1$ 的数量相等；但 $0^*1^*$ 并不要求二者数量相等，只要求所有 $0$ 在所有 $1$ 之前。
+
+事实上，取
+\[
+    s=0^p1^p \in 0^*1^*,
+\]
+可作分解
+\[
+    x=\varepsilon,\qquad y=0,\qquad z=0^{p-1}1^p.
+\]
+于是对任意 $i\ge 0$，
+\[
+    xy^iz=0^{p-1+i}1^p \in 0^*1^*.
+\]
+因此该字符串在语言 $0^*1^*$ 中是可以被泵的。
+
+泵引理用于证明非正则时，必须证明：存在某个选定的 $s\in A$，使得对所有满足条件的分解 $s=xyz$，都能找到 $i\ge 0$ 令 $xy^iz\notin A$。题中证明只借用了 $B=\{0^n1^n\mid n\ge 0\}$ 的结论，而该结论不能迁移到约束不同的语言 $0^*1^*$。$\blacksquare$
+
+\subsubsection*{方法整理}
+
+证明一个语言正则，通常采用构造法。也就是说，给出下列任意一种等价描述即可：
+\[
+    \text{正则表达式}\quad\Longleftrightarrow\quad
+    \text{NFA}\quad\Longleftrightarrow\quad
+    \text{DFA}.
+\]
+因此，若能直接写出正则表达式，或构造出识别该语言的 NFA/DFA，就已经证明了该语言正则。例如 $0^*1^*$ 由正则表达式本身描述，所以正则。
+
+另一种常用方法是使用正则语言的闭包性质。已知正则语言类在并、连接、星号、补、交、差、逆、同态和逆同态等运算下封闭。因此，如果目标语言可由已知正则语言经过这些运算得到，也可推出其正则性。
+
+证明一个语言非正则，则通常用反证法：先假设该语言正则，再推出矛盾。常用工具有：
+\begin{enumerate}[label=(\arabic*), leftmargin=2.5em]
+    \item 泵引理：设语言正则，取足够长且结构受限的字符串 $s$，证明对任意合法分解 $s=xyz$，总能选择某个 $i$ 使 $xy^iz$ 离开该语言。
+    \item 闭包性质反证：若假设 $A$ 正则，则通过与某个正则语言求交、取差、同态等操作得到一个已知非正则语言，从而矛盾。
+    \item 区分串方法：构造无限多个两两可区分的前缀，说明任何 DFA 都需要无限多个状态，因此语言非正则。
+\end{enumerate}
+
+需要注意，泵引理给出的是正则语言的必要条件，而不是充分条件。其逻辑形式是
+\[
+    A\text{ 正则}\quad\Longrightarrow\quad A\text{ 满足泵引理}.
+\]
+因此可以使用逆否命题
+\[
+    A\text{ 不满足泵引理}\quad\Longrightarrow\quad A\text{ 非正则},
+\]
+但不能反过来认为
+\[
+    A\text{ 满足泵引理}\quad\Longrightarrow\quad A\text{ 正则}.
+\]
+所以，泵引理是证明非正则的工具，而不是证明正则的工具。证明正则时应给出 RE、NFA、DFA，或把语言化归为正则语言闭包运算的结果。
+
 \subsection*{1.32}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_32.png}
+  \caption{}
+  \label{fig:hw_1_32}
+\end{figure}
+
+\subsubsection*{证明}
+
+二进制加法应从最低位向最高位检查。故先证明反转语言 $B^R$ 正则，再由正则语言对反转封闭推出 $B$ 正则。
+
+设输入字母为三位列
+\[
+    \begin{bmatrix}
+        a\\ b\\ c
+    \end{bmatrix},
+    \qquad a,b,c\in\{0,1\},
+\]
+分别表示两个加数与和的对应二进制位。在 $B^R$ 中，读入顺序正是从最低位到最高位，所以只需记录当前进位。
+
+构造 DFA
+\[
+    M=(Q,\Sigma_3,\delta,q_0,F),
+\]
+其中
+\[
+    Q=\{q_0,q_1,q_d\},\qquad F=\{q_0\}.
+\]
+状态 $q_0,q_1$ 分别表示当前进位为 $0,1$，而 $q_d$ 为死状态。对 $r\in\{0,1\}$ 与任意列字母
+\[
+    \sigma=
+    \begin{bmatrix}
+        a\\ b\\ c
+    \end{bmatrix},
+\]
+定义转移如下：若
+\[
+    c\equiv a+b+r \pmod 2,
+\]
+则
+\[
+    \delta(q_r,\sigma)
+    =
+    q_{\left\lfloor (a+b+r)/2\right\rfloor};
+\]
+否则令 $\delta(q_r,\sigma)=q_d$。并且对一切 $\sigma\in\Sigma_3$，
+\[
+    \delta(q_d,\sigma)=q_d.
+\]
+
+该 DFA 恰好逐位验证二进制加法，并把进位传递到下一列。输入结束时接受当且仅当最终进位为 $0$，即当前状态为 $q_0$。因此 $B^R$ 是正则语言。由于正则语言对反转封闭，
+\[
+    B=(B^R)^R
+\]
+也是正则语言。$\blacksquare$
+
+\paragraph{解释.}
+这个证明的核心是找出二进制加法检查中真正需要记住的信息。若从右向左读，即从最低位向最高位读，那么已经读过的低位对后续检查的影响只体现为当前进位。进位只有两种可能，$0$ 或 $1$，所以这是有限信息，可以由 DFA 的有限状态记录。
+
+具体地，DFA 处在 $q_r$ 时表示“到目前为止读过的低位都合法，且传给下一位的进位为 $r$”。读入一列
+\[
+    \begin{bmatrix}
+        a\\ b\\ c
+    \end{bmatrix}
+\]
+后，DFA 检查 $c$ 是否等于 $a+b+r$ 的末位。如果不是，就进入死状态；如果是，就把状态更新为新的进位
+\[
+    \left\lfloor \frac{a+b+r}{2}\right\rfloor.
+\]
+因此 DFA 并不需要记住已经读过的全部数字，只需要记住一个有限状态：进位是否为 $1$。这正是该语言正则的原因。
 
 \subsection*{1.34}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_34.png}
+  \caption{}
+  \label{fig:hw_1_34}
+\end{figure}
+
+\subsubsection*{证明}
+
+设字母表为
+\[
+    \Sigma_2=
+    \left\{
+    \begin{bmatrix}0\\0\end{bmatrix},
+    \begin{bmatrix}0\\1\end{bmatrix},
+    \begin{bmatrix}1\\0\end{bmatrix},
+    \begin{bmatrix}1\\1\end{bmatrix}
+    \right\}.
+\]
+字符串
+\[
+    w=
+    \begin{bmatrix}a_1\\ b_1\end{bmatrix}
+    \begin{bmatrix}a_2\\ b_2\end{bmatrix}
+    \cdots
+    \begin{bmatrix}a_n\\ b_n\end{bmatrix}
+\]
+表示两行二进制数 $a_1a_2\cdots a_n$ 与 $b_1b_2\cdots b_n$。从左向右比较二者时，大小关系由最左边第一个不同位决定。
+
+构造 DFA
+\[
+    M=(Q,\Sigma_2,\delta,q_=,F),
+\]
+其中
+\[
+    Q=\{q_=,q_>,q_<\},\qquad F=\{q_>\}.
+\]
+状态 $q_=$ 表示目前为止两行相等，$q_>$ 表示已经确定上面一行较大，$q_<$ 表示已经确定上面一行较小。
+
+在状态 $q_=$ 时，定义
+\[
+\begin{aligned}
+    \delta\left(q_=,\begin{bmatrix}0\\0\end{bmatrix}\right)&=q_=,
+    &
+    \delta\left(q_=,\begin{bmatrix}1\\1\end{bmatrix}\right)&=q_=,\\
+    \delta\left(q_=,\begin{bmatrix}1\\0\end{bmatrix}\right)&=q_>,
+    &
+    \delta\left(q_=,\begin{bmatrix}0\\1\end{bmatrix}\right)&=q_<.
+\end{aligned}
+\]
+一旦已经确定大小关系，后续位不再改变结果。因此对任意 $\sigma\in\Sigma_2$，
+\[
+    \delta(q_>,\sigma)=q_>,
+    \qquad
+    \delta(q_<,\sigma)=q_<.
+\]
+
+该 DFA 恰好记录从左至右比较时所需的有限信息：尚未分出大小、已经上大于下、已经上小于下。最终接受当且仅当最左边第一个不同位为
+\[
+    \begin{bmatrix}1\\0\end{bmatrix},
+\]
+即上面一行表示的二进制数大于下面一行。因此 $L(M)=D$，故 $D$ 是正则语言。$\blacksquare$
+
 \subsection*{1.35}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_35.png}
+  \caption{}
+  \label{fig:hw_1_35}
+\end{figure}
+
+\subsubsection*{证明}
+
+设
+\[
+    \Sigma_2=
+    \left\{
+    \begin{bmatrix}0\\0\end{bmatrix},
+    \begin{bmatrix}0\\1\end{bmatrix},
+    \begin{bmatrix}1\\0\end{bmatrix},
+    \begin{bmatrix}1\\1\end{bmatrix}
+    \right\}.
+\]
+若
+\[
+    w=
+    \begin{bmatrix}a_1\\ b_1\end{bmatrix}
+    \begin{bmatrix}a_2\\ b_2\end{bmatrix}
+    \cdots
+    \begin{bmatrix}a_n\\ b_n\end{bmatrix},
+\]
+则 $w\in E$ 当且仅当
+\[
+    b_1b_2\cdots b_n=a_na_{n-1}\cdots a_1.
+\]
+
+用泵引理反证。假设 $E$ 正则，令 $p$ 为其泵长度。取
+\[
+    s=
+    \begin{bmatrix}0\\1\end{bmatrix}^{p}
+    \begin{bmatrix}1\\0\end{bmatrix}^{p}.
+\]
+其上行是 $0^p1^p$，下行是 $1^p0^p=(0^p1^p)^R$，故 $s\in E$，且 $|s|=2p\ge p$。
+
+由泵引理，存在分解 $s=xyz$，满足
+\[
+    |xy|\le p,\qquad |y|>0,
+\]
+并且对所有 $i\ge 0$，有 $xy^iz\in E$。由于 $|xy|\le p$，子串 $y$ 完全位于前 $p$ 个字母中，所以
+\[
+    y=
+    \begin{bmatrix}0\\1\end{bmatrix}^{k}
+    \qquad(k>0).
+\]
+令 $i=0$，得到
+\[
+    xz=
+    \begin{bmatrix}0\\1\end{bmatrix}^{p-k}
+    \begin{bmatrix}1\\0\end{bmatrix}^{p}.
+\]
+此时上行是 $0^{p-k}1^p$，下行是 $1^{p-k}0^p$。然而
+\[
+    (0^{p-k}1^p)^R=1^p0^{p-k}
+    \ne
+    1^{p-k}0^p.
+\]
+故 $xz\notin E$，与泵引理要求 $xy^0z\in E$ 矛盾。因此 $E$ 不是正则语言。$\blacksquare$
+
+\paragraph{解释.}
+该语言要求下行等于上行的反转。也就是说，自动机读到前面的上行信息后，必须在后面以相反顺序逐位比较。随着输入长度增加，需要保存的前缀可以任意长；而 DFA 只有有限多个状态，不能保存任意长的前缀信息。这就是 $E$ 非正则的本质原因。
+
+这里并不是只考察了某一种特殊分解。泵引理要求对任意满足 $|xy|\le p$、$|y|>0$ 的分解都能泵。我们选取的
+\[
+    s=
+    \begin{bmatrix}0\\1\end{bmatrix}^{p}
+    \begin{bmatrix}1\\0\end{bmatrix}^{p}
+\]
+有一个关键性质：它的前 $p$ 个符号全都是
+\[
+    \begin{bmatrix}0\\1\end{bmatrix}.
+\]
+因此无论合法分解 $s=xyz$ 怎样选，只要 $|xy|\le p$ 且 $|y|>0$，子串 $y$ 都必然具有形式
+\[
+    y=
+    \begin{bmatrix}0\\1\end{bmatrix}^{k}
+    \qquad(k>0).
+\]
+所以证明中令 $y=\begin{bmatrix}0\\1\end{bmatrix}^{k}$ 并不是任取一种情况，而是概括了所有合法分解。随后取 $i=0$，对任意这样的 $k>0$ 都会破坏上下两行的反转关系，故得到的矛盾满足泵引理反证所需的量词结构。
 
 \subsection*{1.36}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_1_36.png}
+  \caption{}
+  \label{fig:hw_1_36}
+\end{figure}
+
+\subsubsection*{证明}
+
+固定任意 $n\ge 1$。构造 DFA
+\[
+    M_n=(Q,\{a\},\delta,q_0,F),
+\]
+其中
+\[
+    Q=\{q_0,q_1,\ldots,q_{n-1}\},\qquad F=\{q_0\}.
+\]
+状态 $q_i$ 表示目前已经读入的 $a$ 的个数模 $n$ 余 $i$。转移函数定义为
+\[
+    \delta(q_i,a)=q_{i+1 \bmod n},
+    \qquad 0\le i\le n-1.
+\]
+
+于是对任意 $k\ge 0$，
+\[
+    \delta^*(q_0,a^k)=q_{k\bmod n}.
+\]
+因此
+\[
+    a^k\in L(M_n)
+    \iff
+    \delta^*(q_0,a^k)=q_0
+    \iff
+    k\equiv 0\pmod n.
+\]
+也就是说，
+\[
+    L(M_n)=\{a^k\mid k\text{ 是 }n\text{ 的整数倍}\}=B_n.
+\]
+所以对每个 $n\ge 1$，$B_n$ 都由一个有限状态自动机识别，故 $B_n$ 是正则语言。$\blacksquare$
+
+\paragraph{解释.}
+这里 DFA 需要记住的不是完整的长度 $k$，而只是 $k$ 除以 $n$ 的余数。余数只有
+\[
+    0,1,\ldots,n-1
+\]
+这 $n$ 种可能，因此可以用有限多个状态记录。每读入一个 $a$，余数加 $1$ 并对 $n$ 取模；最终回到余数 $0$ 的状态，正好表示长度是 $n$ 的整数倍。
+
 \subsection*{1.40}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{chapters/imgs/hw_1_40.png}
   \caption{}
   \label{fig:hw_1_40}
 \end{figure}
+
+\subsubsection*{证明}
+
+设 $A$ 是正则语言，令
+\[
+    M=(Q,\Sigma,\delta,q_0,F)
+\]
+为识别 $A$ 的 DFA。
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+    \item 先证明 $\operatorname{NOPREFIX}(A)$ 正则。
+
+    构造 DFA
+    \[
+        M_1=(Q\cup\{q_d\},\Sigma,\delta_1,q_0,F),
+    \]
+    其中 $q_d$ 是死状态。定义
+    \[
+        \delta_1(q_d,a)=q_d
+        \qquad(a\in\Sigma),
+    \]
+    且对 $q\in Q$，
+    \[
+        \delta_1(q,a)=
+        \begin{cases}
+            q_d, & q\in F,\\
+            \delta(q,a), & q\notin F.
+        \end{cases}
+    \]
+
+    这个构造的含义是：一旦读到某个已经属于 $A$ 的前缀，而输入还没有结束，则该前缀就是真前缀，于是进入死状态。只有当第一次到达接受状态恰好发生在输入结束时，才接受。因此
+    \[
+        L(M_1)=\operatorname{NOPREFIX}(A),
+    \]
+    所以 $\operatorname{NOPREFIX}(A)$ 正则。
+
+    \item 再证明 $\operatorname{NOEXTEND}(A)$ 正则。
+
+    关键是筛掉那些“还能继续走到接受态”的状态。把 $M$ 看成一个有限有向图：状态是顶点，每条转移边
+    \[
+        q\xrightarrow{a}\delta(q,a)
+    \]
+    是一条带标号的有向边。定义
+    \[
+        P=\{q\in Q\mid \text{从 }q\text{ 出发存在一条长度至少为 }1\text{ 的路径通向 }F\}.
+    \]
+    等价地，
+    \[
+        P=\{q\in Q\mid \exists x\in\Sigma^+,\ \delta^*(q,x)\in F\}.
+    \]
+    这里并不是枚举无穷多个字符串 $x$，而是在有限状态图上做可达性判断。
+
+    具体地，先在反向图中从所有接受状态 $F$ 出发做 BFS 或 DFS，得到
+    \[
+        R=\{q\in Q\mid \text{从 }q\text{ 出发可以经零步或多步到达 }F\}.
+    \]
+    然后取
+    \[
+        P=\{q\in Q\mid \exists a\in\Sigma,\ \delta(q,a)\in R\}.
+    \]
+    这样正好保证从 $q$ 到接受态至少走了一步；特别地，若某个接受状态有自环或能绕一圈回到接受状态，它也会被放入 $P$。
+
+    构造 DFA
+    \[
+        M_2=(Q,\Sigma,\delta,q_0,F'),
+        \qquad
+        F'=F\setminus P.
+    \]
+    也就是说，状态、字母表、转移函数、开始状态全部不变，只把接受状态改为 $F\setminus P$。
+
+    若 $w$ 被 $M_2$ 接受，设
+    \[
+        r=\delta^*(q_0,w).
+    \]
+    则 $r\in F'=F\setminus P$。所以 $r\in F$，从而 $w\in A$；同时 $r\notin P$，说明从 $r$ 出发不可能再经非空路径到达任何接受状态。于是不存在非空字符串 $z$ 使得 $wz\in A$，故 $w$ 不是 $A$ 中任何字符串的真前缀。
+
+    反过来，若 $w\in A$ 且 $w$ 不是 $A$ 中任何字符串的真前缀，令 $r=\delta^*(q_0,w)$。由于 $w\in A$，有 $r\in F$；又因为 $w$ 不能继续扩展成 $A$ 中的字符串，从 $r$ 出发不存在通向接受状态的非空路径，所以 $r\notin P$。于是 $r\in F\setminus P=F'$，故 $M_2$ 接受 $w$。
+
+    因此
+    \[
+        L(M_2)=\operatorname{NOEXTEND}(A),
+    \]
+    所以 $\operatorname{NOEXTEND}(A)$ 正则。
+\end{enumerate}
+
+综上，正则语言类在 $\operatorname{NOPREFIX}$ 与 $\operatorname{NOEXTEND}$ 运算下封闭。$\blacksquare$
+
+\paragraph{解释.}
+$\operatorname{NOPREFIX}(A)$ 要求“在接受当前串之前，不能已经接受过某个真前缀”，所以 DFA 只需在读入过程中检查是否提前进入过接受状态；若提前接受后还有输入，就进入死状态。
+
+这里使用的 $\delta^*$ 是 DFA 转移函数 $\delta$ 的扩展。若
+\[
+    \delta:Q\times\Sigma\to Q
+\]
+表示读入一个字符后的状态转移，则
+\[
+    \delta^*:Q\times\Sigma^*\to Q
+\]
+表示从某个状态出发，读完整个字符串后到达的状态。它由
+\[
+    \delta^*(q,\varepsilon)=q,
+    \qquad
+    \delta^*(q,wa)=\delta(\delta^*(q,w),a)
+\]
+递归定义，其中 $w\in\Sigma^*$，$a\in\Sigma$。因此 $\delta^*(q,z)\in F$ 的意思是：从状态 $q$ 出发读完整个字符串 $z$ 后到达接受状态。这是自动机理论中的标准记号。
+
+$\operatorname{NOEXTEND}(A)$ 要求“当前串虽然在 $A$ 中，但不能继续扩展成另一个 $A$ 中的串”。从改 DFA 的角度看，就是检查每个接受状态后面是否还存在通往某个接受状态的非空路径：若存在，就说明停在该状态的字符串还能继续扩展成 $A$ 中更长的字符串，因此这个状态不能保留为接受状态；若不存在，才保留它。这个过程完全发生在有限状态图上，所以是有限的构造。
+
+\paragraph{什么叫封闭.}
+一般地，称一类语言 $\mathcal C$ 在某个运算 $T$ 下封闭，是指对 $\mathcal C$ 中的语言施行该运算后，所得结果仍属于 $\mathcal C$。若 $T$ 是一元运算，则要求
+\[
+    A\in\mathcal C\implies T(A)\in\mathcal C;
+\]
+若 $T$ 是二元运算，则要求
+\[
+    A,B\in\mathcal C\implies T(A,B)\in\mathcal C.
+\]
+在本章里，$\mathcal C$ 就是正则语言类。因此 1.40 的结论是：若 $A$ 正则，则 $\operatorname{NOPREFIX}(A)$ 与 $\operatorname{NOEXTEND}(A)$ 仍正则。证明这类封闭性命题的常见方法，就是从识别原语言的 DFA 或 NFA 出发，直接构造识别新语言的自动机。
 
 \subsection*{1.42}
 
@@ -1295,6 +2147,87 @@ $E = \{q_0, q_2, q_3\}$         & $\{q_0, q_1, q_3\} = D$     & $\{q_0, q_1, q_3
   \label{fig:hw_1_42}
 \end{figure}
 
+\subsubsection*{证明}
+
+设 $A,B\subseteq\Sigma^*$ 都是正则语言。取识别它们的 DFA
+\[
+    M_A=(Q_A,\Sigma,\delta_A,q_A,F_A),
+    \qquad
+    M_B=(Q_B,\Sigma,\delta_B,q_B,F_B).
+\]
+我们构造 DFA
+\[
+    M=(Q_A\times Q_B\times\{0,1\},\Sigma,\delta,(q_A,q_B,0),F),
+\]
+其中第三个分量用来记录当前读入的位置奇偶：
+\[
+    0:\text{下一位应送入 }M_A,
+    \qquad
+    1:\text{下一位应送入 }M_B.
+\]
+接受状态取为
+\[
+    F=F_A\times F_B\times\{0\}.
+\]
+这表示输入已经恰好读完若干对符号，并且奇数位形成的串被 $M_A$ 接受，偶数位形成的串被 $M_B$ 接受。
+
+转移函数定义为
+\[
+    \delta\bigl((p,q,0),a\bigr)=(\delta_A(p,a),q,1),
+    \qquad
+    \delta\bigl((p,q,1),b\bigr)=(p,\delta_B(q,b),0),
+\]
+其中 $p\in Q_A$，$q\in Q_B$，$a,b\in\Sigma$。
+
+下面证明 $L(M)$ 正是 $A$ 与 $B$ 的完全间隔交叉。
+
+若
+\[
+    w=a_1b_1a_2b_2\cdots a_kb_k
+\]
+且
+\[
+    a_1a_2\cdots a_k\in A,\qquad b_1b_2\cdots b_k\in B,
+\]
+则 $M$ 读入奇数位时只更新第一个分量，读入偶数位时只更新第二个分量。因此读完整个 $w$ 后到达状态
+\[
+    \bigl(\delta_A^*(q_A,a_1a_2\cdots a_k),\ \delta_B^*(q_B,b_1b_2\cdots b_k),\ 0\bigr).
+\]
+由于两行分别属于 $A$ 与 $B$，前两个分量落在 $F_A$ 与 $F_B$ 中；又因为 $w$ 长度为偶数，第三个分量回到 $0$。故 $w\in L(M)$。
+
+反过来，若 $w\in L(M)$，则第三个分量最终为 $0$，所以 $w$ 的长度必为偶数。于是可唯一写成
+\[
+    w=a_1b_1a_2b_2\cdots a_kb_k.
+\]
+设
+\[
+    x=a_1a_2\cdots a_k,
+    \qquad
+    y=b_1b_2\cdots b_k.
+\]
+根据转移定义，$M$ 读完 $w$ 后的前两个分量分别正是
+\[
+    \delta_A^*(q_A,x),
+    \qquad
+    \delta_B^*(q_B,y).
+\]
+又因为 $w$ 被接受，这两个状态分别属于 $F_A$ 与 $F_B$，故
+\[
+    x\in A,\qquad y\in B.
+\]
+因此 $w$ 正是由 $x\in A$ 与 $y\in B$ 按完全间隔交叉得到的字符串。
+
+综上，
+\[
+    L(M)=\{w\mid w \text{ 是 }A\text{ 与 }B\text{ 的完全间隔交叉}\}.
+\]
+所以正则语言类在完全间隔交叉运算下封闭。$\blacksquare$
+
+\paragraph{解释.}
+这个构造的核心很直接：DFA 一边读输入，一边把奇数位送给识别 $A$ 的自动机，把偶数位送给识别 $B$ 的自动机；额外的一个二值状态只负责记录“当前该轮到哪一边读”。由于需要记住的信息只有两个分自动机的当前状态以及当前位置的奇偶性，所以总状态数仍然是有限的。
+
+就 1.42 而言，这里讨论的运算是“完全间隔交叉”：输入是两个语言 $A,B$，输出是由 $A$ 中字符串与 $B$ 中字符串按奇偶位交错得到的所有字符串组成的语言。所谓“正则语言类在这个运算下封闭”，意思正是：只要 $A$ 与 $B$ 都正则，那么它们的完全间隔交叉所得语言也仍然正则。上面的乘积 DFA 就给出了这一点的构造性证明。
+
 \subsection*{1.52}
 
 \begin{figure}[H]
@@ -1303,6 +2236,163 @@ $E = \{q_0, q_2, q_3\}$         & $\{q_0, q_1, q_3\} = D$     & $\{q_0, q_1, q_3
   \caption{}
   \label{fig:hw_1_52}
 \end{figure}
+
+\subsubsection*{证明}
+
+记
+\[
+    x\equiv_L y
+\]
+表示字符串 $x,y\in\Sigma^*$ 用 $L$ 不可区分，即
+\[
+    \forall z\in\Sigma^*,\qquad xz\in L\iff yz\in L.
+\]
+若存在某个 $z\in\Sigma^*$ 使得
+\[
+    xz\in L,\ yz\notin L
+\]
+或反过来，则称 $x,y$ 可由 $L$ 区分。
+
+\begin{enumerate}[label=(\alph*), leftmargin=2.5em]
+    \item 设 $L$ 被一台有 $k$ 个状态的 DFA
+    \[
+        M=(Q,\Sigma,\delta,q_0,F)
+    \]
+    识别，并且 $|Q|=k$。任取一个用 $L$ 两两可区分的集合
+    \[
+        X\subseteq\Sigma^*.
+    \]
+
+    对每个 $x\in X$，看它从初态出发到达的状态 $\delta^*(q_0,x)$。若存在不同的 $x,y\in X$ 满足
+    \[
+        \delta^*(q_0,x)=\delta^*(q_0,y),
+    \]
+    则对任意 $z\in\Sigma^*$，都有
+    \[
+        \delta^*(q_0,xz)
+        =
+        \delta^*(\delta^*(q_0,x),z)
+        =
+        \delta^*(\delta^*(q_0,y),z)
+        =
+        \delta^*(q_0,yz).
+    \]
+    因而
+    \[
+        xz\in L\iff yz\in L.
+    \]
+    这说明 $x,y$ 用 $L$ 不可区分，与 $X$ 中任意两个不同字符串都应可区分矛盾。
+
+    因此，$X$ 中不同字符串必须到达不同状态。于是映射
+    \[
+        x\longmapsto \delta^*(q_0,x)
+    \]
+    从 $X$ 到 $Q$ 是单射，所以
+    \[
+        |X|\le |Q|=k.
+    \]
+    故 $L$ 的指数不超过 $k$。
+
+    \item 设 $L$ 的指数有限，且等于 $k$。因为 $L$ 的指数为 $k$，所以关系 $\equiv_L$ 将 $\Sigma^*$ 分成 $k$ 个等价类。以这些等价类为状态，构造 DFA
+    \[
+        M=(Q,\Sigma,\delta,q_0,F).
+    \]
+    令
+    \[
+        Q=\{[x]\mid x\in\Sigma^*\},
+    \]
+    其中
+    \[
+        [x]=\{y\in\Sigma^*\mid y\equiv_L x\}.
+    \]
+    因为指数是 $k$，所以 $|Q|=k$。
+
+    初始状态定义为
+    \[
+        q_0=[\varepsilon].
+    \]
+
+    转移函数定义为
+    \[
+        \delta([x],a)=[xa].
+    \]
+    需要说明它是良定义的。若
+    \[
+        [x]=[y],
+    \]
+    即 $x\equiv_L y$，则对任意 $z\in\Sigma^*$，因为 $x\equiv_L y$ 对字符串 $az$ 也成立，所以
+    \[
+        xaz\in L\iff yaz\in L.
+    \]
+    也就是
+    \[
+        (xa)z\in L\iff (ya)z\in L.
+    \]
+    因此 $xa\equiv_L ya$，从而
+    \[
+        [xa]=[ya].
+    \]
+    所以转移函数定义良好。
+
+    接受状态定义为
+    \[
+        F=\{[x]\mid x\in L\}.
+    \]
+    这同样是良定义的。若 $[x]=[y]$，即 $x\equiv_L y$，取 $z=\varepsilon$，则
+    \[
+        x\in L\iff y\in L.
+    \]
+    因而同一个等价类中的字符串要么全在 $L$ 中，要么全不在 $L$ 中，所以接受状态集合定义良好。
+
+    下面证明该 DFA 识别 $L$。对任意字符串
+    \[
+        w=a_1a_2\cdots a_n,
+    \]
+    由转移定义可归纳得到
+    \[
+        \delta^*([\varepsilon],w)=[w].
+    \]
+    因此
+    \[
+        w\in L(M)
+        \iff
+        \delta^*([\varepsilon],w)\in F
+        \iff
+        [w]\in F
+        \iff
+        w\in L.
+    \]
+    所以
+    \[
+        L(M)=L.
+    \]
+    因而 $L$ 被一台有 $k$ 个状态的 DFA 识别。
+
+    \item 由 (a) 可知，若 $L$ 被某台 $k$ 状态 DFA 识别，则 $L$ 的指数不超过 $k$。因此，若 $L$ 是正则语言，则存在有限状态 DFA 识别它，从而 $L$ 的指数有限。
+
+    由 (b) 可知，若 $L$ 的指数有限且等于 $k$，则可构造一台有 $k$ 个状态的 DFA 识别 $L$。所以
+    \[
+        L\text{ 正则}
+        \iff
+        L\text{ 的指数有限}.
+    \]
+    此外，因为任何识别 $L$ 的 DFA 的状态数都至少是 $L$ 的指数，而我们又能构造一台恰有指数个状态的 DFA，所以
+    \[
+        \boxed{
+            L\text{ 的指数}
+            =
+            \text{识别 }L\text{ 的最小 DFA 的状态数}.
+        }
+    \]
+    $\blacksquare$
+\end{enumerate}
+
+\paragraph{解释.}
+Myhill--Nerode 定理的核心是：DFA 的一个状态只代表“从这里继续往后读，未来会发生什么”。若两个前缀 $x,y$ 对所有后缀 $z$ 都表现完全一样，即
+\[
+    xz\in L\iff yz\in L,
+\]
+那么自动机没有必要把它们分开；反之，只要存在某个后缀能把它们区分开，自动机就必须给它们不同的状态。因此，最小 DFA 的状态本质上就是这些“未来行为”不同的等价类。
 
 \subsection*{1.53}
 
@@ -1313,6 +2403,76 @@ $E = \{q_0, q_2, q_3\}$         & $\{q_0, q_1, q_3\} = D$     & $\{q_0, q_1, q_3
   \label{fig:hw_1_53}
 \end{figure}
 
-证明ADD不是正则的。
+\subsubsection*{证明}
+
+设
+\[
+    \mathrm{ADD}
+    =
+    \{x=y+z\mid x,y,z\text{ 是二进制整数，且 }x=y+z\}.
+\]
+我们用闭包性质反证。令
+\[
+    R=\{10^i=10^j+0\mid i,j\ge 0\}.
+\]
+显然 $R$ 是正则语言，因为它可由正则表达式
+\[
+    10^*=10^*+0
+\]
+描述。
+
+若 $\mathrm{ADD}$ 是正则语言，则
+\[
+    L=\mathrm{ADD}\cap R
+\]
+也应是正则语言。但在 $R$ 中，字符串具有形式
+\[
+    10^i=10^j+0.
+\]
+其表示的等式为
+\[
+    2^i=2^j+0.
+\]
+该等式成立当且仅当 $i=j$。因此
+\[
+    L=\{10^n=10^n+0\mid n\ge 0\}.
+\]
+
+下面证明 $L$ 非正则。假设 $L$ 正则，令 $p$ 为其泵长度。取
+\[
+    s=10^p=10^p+0\in L.
+\]
+由泵引理，存在分解 $s=xyz$，满足
+\[
+    |xy|\le p,\qquad |y|>0,
+\]
+且对所有 $k\ge 0$，都有 $xy^kz\in L$。
+
+由于 $|xy|\le p$，子串 $y$ 完全落在第一个 $10^p$ 中。令 $k=0$，即删除 $y$。这样得到的 $xz$ 会改变等号左边的二进制数，而等号右边的 $10^p+0$ 不变。因此 $xz$ 不可能仍具有形式
+\[
+    10^n=10^n+0.
+\]
+所以
+\[
+    xz\notin L,
+\]
+这与泵引理矛盾。故 $L$ 非正则。
+
+于是若 $\mathrm{ADD}$ 正则，则正则语言 $R$ 与它的交 $L$ 应正则；但 $L$ 非正则，矛盾。因此
+\[
+    \mathrm{ADD}
+\]
+不是正则语言。$\blacksquare$
+
+\paragraph{解释.}
+这个证明的关键是用正则语言 $R$ 把 $\mathrm{ADD}$ 限制到一种很简单的加法：
+\[
+    10^i=10^j+0.
+\]
+此时加法本身没有复杂性，因为右边只是加 $0$；唯一要检查的是左右两个二进制数是否完全相同，即是否 $i=j$。这就把问题化为
+\[
+    \{10^n=10^n+0\mid n\ge 0\},
+\]
+而有限自动机无法记住等号左边有多少个 $0$，再在等号右边逐一比较。因此该语言非正则，从而 $\mathrm{ADD}$ 也不可能正则。
 
 \clearpage

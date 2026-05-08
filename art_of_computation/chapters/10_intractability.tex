@@ -1,0 +1,33 @@
+\section{子任务 10：第 9 章 Intractability}
+
+\subsection{核心知识点}
+
+\begin{itemize}[leftmargin=2em]
+  \item hierarchy theorems：更多时间或空间确实带来更强计算能力。
+  \item 指数时间、指数空间中的完备性现象。
+  \item relativization：给机器加 oracle 后，复杂度类之间的关系可能改变。
+  \item 相对化结果揭示某些证明方法的局限。
+  \item circuit complexity：用非一致模型研究计算难度。
+\end{itemize}
+
+\subsection{典型问题与证明套路}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{证明层级严格}：做受资源约束的对角化，让新机器在给定资源内专门和低层机器作对。
+  \item \textbf{证明某方法不够强}：构造 oracle 世界，使得同一方法在某些世界里支持结论、另一些世界里反对结论。
+  \item \textbf{讨论电路复杂度}：把算法问题转成布尔函数族，看需要多大电路、多少层深、何种非一致资源。
+\end{enumerate}
+
+\subsection{证明背后的哲学}
+
+这一章的哲学非常成熟：\textbf{不仅要证明结论，还要反思证明工具本身。}
+层级定理说明资源差异确实重要；相对化则提醒我们，某些自然方法即使强大，也可能永远不足以解决像 $P$ vs.\ $NP$ 这样的核心难题。理论开始从“研究问题”上升到“研究证明问题的方法论”。
+
+\subsection{本章精华}
+
+\begin{itemize}[leftmargin=2em]
+  \item Intractability 不只是说“这题难”，而是研究“为什么我们现有工具难以证明它不难”。
+  \item 复杂性理论在这一章显出元理论气质：它开始分析自身的证明边界。
+\end{itemize}
+
+\newpage

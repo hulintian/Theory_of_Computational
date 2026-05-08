@@ -1,0 +1,38 @@
+\section{子任务 9：第 8 章 Space Complexity}
+
+\subsection{核心知识点}
+
+\begin{itemize}[leftmargin=2em]
+  \item 空间复杂度：算法在运行过程中额外使用多少工作空间。
+  \item Savitch 定理：非确定型空间可以用平方量级的确定型空间模拟。
+  \item PSPACE 及其完备问题 TQBF。
+  \item 游戏与量词的联系：交替存在/任意选择天然对应博弈树。
+  \item L、NL 及其完备问题，如图可达性。
+  \item NL = coNL：非确定型对数空间对补封闭。
+\end{itemize}
+
+\subsection{典型问题与证明套路}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{证明空间上界}：设计可复用工作带的算法，而不是只盯着总步数。
+  \item \textbf{证明 Savitch 定理}：把“从配置 $c_1$ 是否可在 $t$ 步内到达 $c_2$”递归拆成中点可达性问题。
+  \item \textbf{证明 PSPACE 完全}：常从 TQBF 出发，因为量词交替本身就是受控空间搜索的典型形式。
+  \item \textbf{证明 NL 完全}：把问题编码成有向图可达性，或从可达性问题编码回目标问题。
+  \item \textbf{理解 NL = coNL}：通过分层计数与可验证的计数证据，证明“不可达”也能在 NL 框架下被处理。
+\end{enumerate}
+
+\subsection{证明背后的哲学}
+
+这一章表明：\textbf{时间和空间不是同一种资源。}
+时间常常只能线性流逝，但空间可以反复覆盖、重用、递归借壳。Savitch 定理尤其漂亮，因为它说明非确定性的空间优势没有时间优势那么大。
+
+同时，这一章也让逻辑与博弈直接进入复杂性理论：全称量词像对手出招，存在量词像我方应对，复杂度类别开始呈现明显的语义结构。
+
+\subsection{本章精华}
+
+\begin{itemize}[leftmargin=2em]
+  \item PSPACE 的核心直觉不是“特别慢”，而是“推理过程需要维持多少同时存活的信息”。
+  \item NL = coNL 告诉我们：即使在极小空间下，补运算也未必像看上去那么难处理。
+\end{itemize}
+
+\newpage

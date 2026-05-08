@@ -917,6 +917,202 @@ CNF_3 \text{ 是 NP 完全的}.
   \label{fig:hw_7_27}
 \end{figure}
 
+\paragraph{解答.}
+先证
+\[
+3COLOR\in NP.
+\]
+给定一个 3-着色方案作为证书，只需在多项式时间内检查每个结点是否被赋予三种颜色之一，并验证每条边两端颜色不同即可。
+
+\medskip
+下面证明它是 NP-hard。我们从
+\[
+3SAT
+\]
+归约到
+\[
+3COLOR.
+\]
+
+\medskip
+设
+\[
+\phi=C_1\wedge C_2\wedge\cdots\wedge C_m
+\]
+是一个 3CNF 公式，变量为
+\[
+x_1,\dots,x_n.
+\]
+按照图 \ref{fig:hw_7_27} 中给出的三个小图来构造图 $G_\phi$。
+
+\paragraph{1. 调色板.}
+先放入一个三角形，其三个顶点分别记为
+\[
+T,\quad F,\quad B.
+\]
+在任何合法 3-着色中，这三个顶点必然被染成三种互不相同的颜色。以后我们直接把这三种颜色也分别称为 $T,F,B$。
+
+\paragraph{2. 变量构件.}
+对每个变量 $x_i$，加入两个顶点
+\[
+x_i,\qquad \overline{x_i},
+\]
+并令它们彼此相连；再分别把这两个顶点都与调色板中的 $B$ 相连。这正是图中的“变量”构件。
+
+由于 $x_i,\overline{x_i}$ 都与 $B$ 相邻，所以它们都不能取颜色 $B$，只能在 $T,F$ 两色中取值；又因为它们彼此相邻，所以二者颜色必定相反。于是每个变量都自然地对应一个真假赋值：
+\[
+x_i=T \Longleftrightarrow x_i \text{ 取真},\qquad
+x_i=F \Longleftrightarrow x_i \text{ 取假}.
+\]
+同时
+\[
+\overline{x_i}
+\]
+自动取相反真值。
+
+\paragraph{3. OR 构件.}
+图中的“OR 构件”有两个输入端和一个输出端。设其两个下端顶点为输入 $u,v$，上端顶点为输出 $w$。再把这三个端点都与调色板中的 $B$ 相连，于是它们都只能在 $T,F$ 两色中着色。
+
+我们 claim：在这种限制下，OR 构件存在合法 3-着色，且输出端被强制为 $T$，当且仅当两个输入中至少有一个为 $T$。
+
+\medskip
+原因如下。设中间两个内部顶点为 $p,q$。因为
+\[
+w,p,q
+\]
+构成三角形，它们三者必须取三种不同颜色。
+
+\begin{itemize}
+  \item 若要求 $w=T$，则 $\{p,q\}=\{F,B\}$。
+  \item 若又有 $u=F$，由于 $u$ 与 $p$ 相邻，$p$ 不能取 $F$，故只能取 $B$。
+  \item 同理，若 $v=F$，则 $q$ 只能取 $B$。
+\end{itemize}
+
+因此若
+\[
+u=v=F,
+\]
+则会同时推出
+\[
+p=q=B,
+\]
+与 $p,q$ 相邻矛盾。所以当输出被强制为 $T$ 时，不可能两个输入都为 $F$。
+
+反过来，若两个输入中至少有一个为 $T$，则总可以给 $p,q$ 适当赋予 $F,B$ 两色，使整个 OR 构件合法着色。例如：
+\[
+(u,v)=(T,F)
+\]
+时可取
+\[
+p=F,\ q=B,\ w=T;
+\]
+\[
+(u,v)=(F,T)
+\]
+时可取
+\[
+p=B,\ q=F,\ w=T;
+\]
+\[
+(u,v)=(T,T)
+\]
+时可取
+\[
+p=F,\ q=B,\ w=T.
+\]
+
+所以这个构件确实实现了“输出为真，当且仅当两个输入至少一个为真”的 OR 逻辑。
+
+\paragraph{4. 子句构件.}
+对每个子句
+\[
+C_j=(\ell_{j1}\vee \ell_{j2}\vee \ell_{j3}),
+\]
+使用两个 OR 构件串接起来：
+
+\begin{itemize}
+  \item 第一个 OR 构件以
+  \[
+  \ell_{j1},\ \ell_{j2}
+  \]
+  为输入，输出新顶点 $y_j$；
+  \item 第二个 OR 构件以
+  \[
+  y_j,\ \ell_{j3}
+  \]
+  为输入，输出新顶点 $z_j$。
+\end{itemize}
+
+再把
+\[
+z_j
+\]
+同时与调色板中的
+\[
+F\quad\text{和}\quad B
+\]
+相连，于是
+\[
+z_j
+\]
+只能取颜色 $T$。因此这个子句构件可合法着色，当且仅当
+\[
+\ell_{j1}\vee \ell_{j2}\vee \ell_{j3}
+\]
+为真。
+
+\paragraph{5. 正确性.}
+
+\paragraph{若 $\phi$ 可满足，则 $G_\phi$ 可 3-着色.}
+取 $\phi$ 的一个满足赋值。令调色板取三种不同颜色，仍记作 $T,F,B$。
+
+\begin{itemize}
+  \item 对每个变量，若 $x_i$ 取真，就把顶点 $x_i$ 染成 $T$、$\overline{x_i}$ 染成 $F$；若 $x_i$ 取假，则反之。
+  \item 对每个子句，由于至少有一个文字为真，按上面对 OR 构件的分析，可以逐个给其中的内部顶点着色，使最后输出 $z_j$ 取到颜色 $T$。
+\end{itemize}
+
+于是整个图得到一个合法 3-着色。
+
+\paragraph{若 $G_\phi$ 可 3-着色，则 $\phi$ 可满足.}
+任取 $G_\phi$ 的一个合法 3-着色。
+
+\begin{itemize}
+  \item 调色板三角形确定了三种不同颜色 $T,F,B$。
+  \item 每个变量构件保证
+  \[
+  x_i,\overline{x_i}
+  \]
+  分别取 $T,F$ 中的相反颜色，于是得到一个一致的真假赋值。
+  \item 每个子句构件的输出顶点 $z_j$ 因与 $F,B$ 相邻而被强制为 $T$。由 OR 构件的性质可知，该子句中至少有一个文字取真。
+\end{itemize}
+
+故所有子句都被满足，从而 $\phi$ 可满足。
+
+\medskip
+综上，
+\[
+\phi\in 3SAT
+\iff
+G_\phi\in 3COLOR.
+\]
+构造显然是多项式时间的，因此
+\[
+3SAT\le_p 3COLOR.
+\]
+
+因此
+\[
+3COLOR
+\]
+是 NP-hard 的。再结合
+\[
+3COLOR\in NP,
+\]
+得到
+\[
+3COLOR
+\]
+是 NP 完全的。$\blacksquare$
 
 
 \subsection*{7.28}
@@ -929,6 +1125,187 @@ CNF_3 \text{ 是 NP 完全的}.
   \label{fig:hw_7_28}
 \end{figure}
 
+\paragraph{解答.}
+先证
+\[
+SET\text{-}SPLITTING\in NP.
+\]
+证书就是对集合
+\[
+S
+\]
+中每个元素的红蓝染色。验证时逐个检查每个
+\[
+C_i\in C
+\]
+是否同时含有红色元素与蓝色元素即可，故验证在多项式时间内完成。
+
+\medskip
+下面从
+\[
+3SAT
+\]
+归约到
+\[
+SET\text{-}SPLITTING.
+\]
+
+\medskip
+设
+\[
+\phi=C_1\wedge\cdots\wedge C_m
+\]
+是一个 3CNF 公式，变量为
+\[
+x_1,\dots,x_n.
+\]
+构造有穷集
+\[
+S=\{x_1,\overline{x_1},\dots,x_n,\overline{x_n},t,f\}.
+\]
+其中 $t,f$ 是两个新元素。再构造子集族
+\[
+C
+\]
+如下：
+
+\begin{itemize}
+  \item 加入集合
+  \[
+  \{t,f\};
+  \]
+  \item 对每个变量 $x_i$，加入集合
+  \[
+  \{x_i,\overline{x_i}\};
+  \]
+  \item 对每个子句
+  \[
+  C_j=(\ell_{j1}\vee \ell_{j2}\vee \ell_{j3}),
+  \]
+  加入集合
+  \[
+  \{\ell_{j1},\ell_{j2},\ell_{j3},f\}.
+  \]
+\end{itemize}
+
+设构造得到的实例为
+\[
+\langle S,C\rangle.
+\]
+
+\paragraph{若 $\phi$ 可满足，则 $\langle S,C\rangle\in SET\text{-}SPLITTING$.}
+取 $\phi$ 的一个满足赋值。把
+\[
+t
+\]
+染成红色，
+\[
+f
+\]
+染成蓝色。对每个变量 $x_i$：
+
+\begin{itemize}
+  \item 若 $x_i$ 在赋值下为真，则把
+  \[
+  x_i
+  \]
+  染成红色，把
+  \[
+  \overline{x_i}
+  \]
+  染成蓝色；
+  \item 若 $x_i$ 为假，则反过来染色。
+\end{itemize}
+
+这样，
+\[
+\{t,f\}
+\]
+不是单色集；每个
+\[
+\{x_i,\overline{x_i}\}
+\]
+也不是单色集。
+
+再看任一子句
+\[
+C_j=(\ell_{j1}\vee \ell_{j2}\vee \ell_{j3}).
+\]
+由于它被满足，三个文字中至少有一个取真，因此在上述染色下至少有一个文字与 $t$ 同色，即为红色。而集合
+\[
+\{\ell_{j1},\ell_{j2},\ell_{j3},f\}
+\]
+中又含有蓝色元素 $f$，故该集合也不是单色集。
+
+因此这是一组合法的集合分裂染色。
+
+\paragraph{若 $\langle S,C\rangle\in SET\text{-}SPLITTING$，则 $\phi$ 可满足.}
+取一组使所有集合都非单色的红蓝染色。交换“红”“蓝”标签不会影响性质，所以不妨设
+\[
+t\text{ 为红色},\qquad f\text{ 为蓝色}.
+\]
+
+由于
+\[
+\{x_i,\overline{x_i}\}
+\]
+不是单色集，而其中只有两个元素，因此它们必定一红一蓝。于是可定义赋值：
+\[
+x_i=\text{真}
+\iff
+x_i\text{ 与 }t\text{ 同色}.
+\]
+这样
+\[
+\overline{x_i}
+\]
+自动取相反真假值。
+
+现在看任一子句
+\[
+C_j=(\ell_{j1}\vee \ell_{j2}\vee \ell_{j3}).
+\]
+对应集合
+\[
+\{\ell_{j1},\ell_{j2},\ell_{j3},f\}
+\]
+不是单色集，而
+\[
+f
+\]
+是蓝色，所以这四个元素中至少有一个不是蓝色，即至少有一个是红色。也就是说，
+\[
+\ell_{j1},\ell_{j2},\ell_{j3}
+\]
+中至少有一个与 $t$ 同色，于是至少有一个文字为真。故每个子句都被满足。
+
+因此
+\[
+\phi
+\]
+可满足。
+
+\medskip
+综上，
+\[
+\phi\in 3SAT
+\iff
+\langle S,C\rangle\in SET\text{-}SPLITTING.
+\]
+故
+\[
+3SAT\le_p SET\text{-}SPLITTING.
+\]
+结合
+\[
+SET\text{-}SPLITTING\in NP,
+\]
+可得
+\[
+SET\text{-}SPLITTING
+\]
+是 NP 完全的。$\blacksquare$
+
 \subsection*{7.29}
 
 \begin{figure}[H]
@@ -937,6 +1314,146 @@ CNF_3 \text{ 是 NP 完全的}.
   \caption{}
   \label{fig:hw_7_29}
 \end{figure}
+
+\paragraph{解答.}
+把该问题形式化为语言
+\[
+\begin{aligned}
+EXAM\text{-}SCHEDULE
+=
+\{\,x \mid x=\langle F_1,\dots,F_k,\ S_1,\dots,S_\ell,\ h\rangle,\ \text{且}\\
+\text{存在一个把每门考试分配到 }h\text{ 个时段之一的安排，使得任一学生都不会在同一时段参加两门考试}\,\}.
+\end{aligned}
+\]
+
+\paragraph{1. 证明 \(EXAM\text{-}SCHEDULE\in NP\).}
+证书是一个函数
+\[
+\sigma:\{F_1,\dots,F_k\}\to\{1,\dots,h\},
+\]
+表示每门考试所在的时段。验证时，只需对每个学生检查他所参加的任意两门考试是否被安排到不同的时段即可。这个检查显然可在多项式时间内完成，因此
+\[
+EXAM\text{-}SCHEDULE\in NP.
+\]
+
+\paragraph{2. 证明 NP-hard.}
+从
+\[
+3COLOR
+\]
+归约。
+
+给定一个无向图
+\[
+G=(V,E),
+\]
+构造一个考试安排实例。对每个顶点
+\[
+v\in V
+\]
+建立一门考试
+\[
+F_v.
+\]
+对每条边
+\[
+\{u,v\}\in E,
+\]
+建立一个学生
+\[
+S_{uv},
+\]
+并令他恰好参加两门考试
+\[
+F_u\quad\text{和}\quad F_v.
+\]
+最后令
+\[
+h=3.
+\]
+该构造显然在多项式时间内完成。
+
+\paragraph{正确性.}
+
+\paragraph{若 \(G\) 可 3-着色，则该考试实例可在 3 个时段内安排.}
+设
+\[
+c:V\to\{1,2,3\}
+\]
+是一个合法 3-着色。把每门考试
+\[
+F_v
+\]
+安排到时段
+\[
+c(v).
+\]
+若学生
+\[
+S_{uv}
+\]
+同时参加
+\[
+F_u,F_v,
+\]
+则因为
+\[
+\{u,v\}\in E,
+\]
+合法着色保证
+\[
+c(u)\ne c(v),
+\]
+所以这两门考试不会落在同一时段。故该安排合法。
+
+\paragraph{若该考试实例可在 3 个时段内安排，则 \(G\) 可 3-着色.}
+设
+\[
+\sigma
+\]
+是一组合法安排。定义顶点颜色为
+\[
+c(v)=\sigma(F_v)\in\{1,2,3\}.
+\]
+若
+\[
+\{u,v\}\in E,
+\]
+则学生
+\[
+S_{uv}
+\]
+同时参加
+\[
+F_u,F_v,
+\]
+而安排合法意味着
+\[
+\sigma(F_u)\ne \sigma(F_v).
+\]
+因此
+\[
+c(u)\ne c(v).
+\]
+故 $c$ 是 $G$ 的合法 3-着色。
+
+\medskip
+于是
+\[
+G\in 3COLOR
+\iff
+\langle F_1,\dots,F_k,S_1,\dots,S_\ell,3\rangle\in EXAM\text{-}SCHEDULE.
+\]
+所以
+\[
+3COLOR\le_p EXAM\text{-}SCHEDULE.
+\]
+
+结合
+\[
+EXAM\text{-}SCHEDULE\in NP,
+\]
+得到该语言是 NP 完全的。$\blacksquare$
 
 \subsection*{7.30}
 
@@ -947,6 +1464,146 @@ CNF_3 \text{ 是 NP 完全的}.
   \label{fig:hw_7_30}
 \end{figure}
 
+\paragraph{解答.}
+把题目形式化为语言
+\[
+MINE
+=
+\{\langle G\rangle \mid G \text{ 是一个部分带数字标记的无向图，存在一种给未标记结点放置地雷的方式，}
+\]
+\[
+\text{使得每个标记为 }m\text{ 的结点恰好有 }m\text{ 个相邻结点带雷}\}.
+\]
+
+\paragraph{1. 证明 \(MINE\in NP\).}
+证书就是一组“哪些未标记结点放雷”的选择。验证时，对每个带标号的结点统计其相邻雷的数目，并检查是否等于该标号即可。该过程显然是多项式时间的，所以
+\[
+MINE\in NP.
+\]
+
+\paragraph{2. 证明 NP-hard.}
+从
+\[
+INDEPENDENT\text{-}SET
+=
+\{\langle G,k\rangle \mid G \text{ 有大小为 }k\text{ 的独立集}\}
+\]
+归约。
+
+给定实例
+\[
+\langle G,k\rangle,
+\qquad
+G=(V,E),
+\]
+构造一个新的带标号图 $G'$：
+
+\begin{itemize}
+  \item 对每个原顶点
+  \[
+  v\in V
+  \]
+  建立一个未标记顶点，仍记为 $v$；
+  \item 加入一个新顶点 $c$，并把它标记为
+  \[
+  k;
+  \]
+  再把 $c$ 与每个原顶点 $v$ 相连；
+  \item 对每条边
+  \[
+  e=\{u,v\}\in E,
+  \]
+  加入一个新顶点 $a_e$，并把它标记为
+  \[
+  1;
+  \]
+  同时令 $a_e$ 与 $u,v$ 相连；
+  \item 对每条边
+  \[
+  e\in E,
+  \]
+  再加入一个未标记顶点 $b_e$，并令 $b_e$ 仅与 $a_e$ 相连。
+\end{itemize}
+
+\paragraph{若 \(G\) 有大小为 \(k\) 的独立集，则 \(G'\in MINE\).}
+设
+\[
+S\subseteq V,\qquad |S|=k
+\]
+是 $G$ 的一个独立集。我们在 $G'$ 中放雷如下：
+
+\begin{itemize}
+  \item 对每个
+  \[
+  v\in S
+  \]
+  的原顶点放雷；
+  \item 对每条边
+  \[
+  e=\{u,v\},
+  \]
+  若 $u,v$ 都不在 $S$ 中，则在 $b_e$ 上放雷；否则不在 $b_e$ 上放雷。
+\end{itemize}
+
+验证：中心结点 $c$ 的相邻原顶点中恰有
+\[
+k
+\]
+个带雷，因此 $c$ 的标号满足。再看每个标为 1 的顶点 $a_e$。由于 $S$ 是独立集，一条边的两个端点不可能都在 $S$ 中，所以在
+\[
+\{u,v,b_e\}
+\]
+中恰有一个结点带雷。故 $a_e$ 的标号也满足。于是这是一个合法布雷方案。
+
+\paragraph{若 \(G'\in MINE\)，则 \(G\) 有大小为 \(k\) 的独立集.}
+设 $G'$ 有一个合法布雷方案。记
+\[
+S=\{v\in V \mid v \text{ 这个原顶点带雷}\}.
+\]
+因为中心顶点 $c$ 标号为
+\[
+k
+\]
+且它只与原顶点相邻，所以
+\[
+|S|=k.
+\]
+
+现在证明 $S$ 是独立集。任取边
+\[
+e=\{u,v\}\in E.
+\]
+对应的顶点 $a_e$ 标号为 1，且它仅与
+\[
+u,\ v,\ b_e
+\]
+相邻。因此在这三个顶点中恰有一个带雷，特别地，不可能同时有
+\[
+u,v
+\]
+都带雷。于是对每条边，两个端点不可能都属于 $S$。故 $S$ 是大小为 $k$ 的独立集。
+
+\medskip
+综上，
+\[
+\langle G,k\rangle\in INDEPENDENT\text{-}SET
+\iff
+G'\in MINE.
+\]
+故
+\[
+INDEPENDENT\text{-}SET\le_p MINE.
+\]
+再结合
+\[
+MINE\in NP,
+\]
+得到
+\[
+MINE
+\]
+是 NP 完全的。$\blacksquare$
+
 \subsection*{7.32}
 
 \begin{figure}[H]
@@ -955,6 +1612,90 @@ CNF_3 \text{ 是 NP 完全的}.
   \caption{}
   \label{fig:hw_7_32}
 \end{figure}
+
+\paragraph{解答.}
+这里把输入中的
+\[
+\#^t
+\]
+理解为由 $t$ 个符号 $\#$ 组成的一元串。
+
+\paragraph{1. 证明 \(U\in NP\).}
+一个自然证书是一条长度至多为 $t$ 的接受分支的完整计算历史：
+\[
+C_0,C_1,\dots,C_m,
+\qquad m\le t,
+\]
+其中
+\[
+C_0
+\]
+是 $M$ 在输入 $x$ 上的初始配置，
+\[
+C_m
+\]
+是接受配置，且每个
+\[
+C_{i+1}
+\]
+都是
+\[
+C_i
+\]
+在某个非确定分支上的合法后继。
+
+因为时间界是 $t$，每个配置长度至多与
+\[
+|x|+t
+\]
+成线性关系，所以整个证书长度是多项式的；又由于 $t$ 用一元编码，输入长度本身也至少为 $t$。因此我们可以在多项式时间内检查这份计算历史是否真实且以接受配置结束。故
+\[
+U\in NP.
+\]
+
+\paragraph{2. 证明 \(U\) 是 NP-hard.}
+任取语言
+\[
+A\in NP.
+\]
+则存在某个非确定型图灵机 $N$ 和多项式 $p$，使得 $N$ 在时间
+\[
+p(n)
+\]
+内判定 $A$。
+
+定义归约
+\[
+f(x)=\langle N,x,\#^{\,p(|x|)}\rangle.
+\]
+这个函数可在多项式时间内计算，因为我们只需把固定机器 $N$ 的描述、输入 $x$，以及一元串
+\[
+\#^{\,p(|x|)}
+\]
+写出来。
+
+对任意输入 $x$，
+\[
+x\in A
+\iff
+N \text{ 在某个分支上于 } p(|x|) \text{ 步内接受 } x
+\iff
+\langle N,x,\#^{\,p(|x|)}\rangle\in U.
+\]
+因此
+\[
+A\le_p U.
+\]
+
+因为 $A\in NP$ 是任意的，所以 $U$ 是 NP-hard。结合
+\[
+U\in NP,
+\]
+得到
+\[
+U
+\]
+是 NP 完全的。$\blacksquare$
 
 \subsection*{7.34}
 
@@ -966,6 +1707,177 @@ CNF_3 \text{ 是 NP 完全的}.
   \label{fig:hw_7_34}
 \end{figure}
 
+\paragraph{解答.}
+先证
+\[
+DOMINATING\text{-}SET\in NP.
+\]
+给定一个大小为 $k$ 的结点集合 $D$ 作为证书，只需检查：对每个不在 $D$ 中的结点 $v$，是否存在
+\[
+u\in D
+\]
+使得
+\[
+\{u,v\}\in E.
+\]
+该验证显然是多项式时间的。
+
+\medskip
+下面按题意，从
+\[
+VERTEX\text{-}COVER
+\]
+归约。
+
+给定实例
+\[
+\langle G,k\rangle,
+\qquad
+G=(V,E).
+\]
+若
+\[
+k=0,
+\]
+则该实例是否属于
+\[
+VERTEX\text{-}COVER
+\]
+是平凡可判定的，因此以后只考虑
+\[
+k\ge 1.
+\]
+
+\medskip
+构造图 $G'=(V',E')$ 如下：
+
+\begin{itemize}
+  \item 保留原图中的每个顶点
+  \[
+  v\in V;
+  \]
+  \item 对每条边
+  \[
+  e=\{u,v\}\in E,
+  \]
+  加入一个新顶点
+  \[
+  w_e;
+  \]
+  \item 把原顶点集合
+  \[
+  V
+  \]
+  变成一个团，也就是说，对任意不同的
+  \[
+  u,v\in V
+  \]
+  都加入边
+  \[
+  \{u,v\};
+  \]
+  \item 对每条边
+  \[
+  e=\{u,v\}\in E,
+  \]
+  令新顶点
+  \[
+  w_e
+  \]
+  仅与 $u,v$ 相连。
+\end{itemize}
+
+输出实例
+\[
+\langle G',k\rangle.
+\]
+该构造显然是多项式时间的。
+
+\paragraph{若 \(G\) 有大小为 \(k\) 的顶点覆盖，则 \(G'\) 有大小为 \(k\) 的支配集.}
+设
+\[
+C\subseteq V,\qquad |C|=k
+\]
+是 $G$ 的一个顶点覆盖。我们 claim $C$ 也是 $G'$ 的支配集。
+
+\begin{itemize}
+  \item 原顶点集合 $V$ 在 $G'$ 中构成团，而
+  \[
+  C\ne\varnothing
+  \]
+  （因为 $k\ge1$），所以每个原顶点要么属于 $C$，要么与 $C$ 中任意一个顶点相邻。
+  \item 对任意新顶点 $w_e$，其中
+  \[
+  e=\{u,v\}\in E.
+  \]
+  因为 $C$ 是顶点覆盖，所以 $u,v$ 中至少有一个在 $C$ 里。故 $w_e$ 与 $C$ 中某个顶点相邻。
+\end{itemize}
+
+因此 $C$ 支配了 $G'$ 的所有顶点。
+
+\paragraph{若 \(G'\) 有大小为 \(k\) 的支配集，则 \(G\) 有大小为 \(k\) 的顶点覆盖.}
+设
+\[
+D
+\]
+是 $G'$ 的一个大小为 $k$ 的支配集。若 $D$ 中含有某个新顶点
+\[
+w_e,
+\]
+其中
+\[
+e=\{u,v\},
+\]
+我们把它替换成端点 $u$。这样做不会增大集合大小，并且仍然保持支配性质：
+
+\begin{itemize}
+  \item 原顶点集合 $V$ 是团，所以用 $u\in V$ 代替 $w_e$ 后，所有原顶点仍被支配；
+  \item 顶点 $w_e$ 自己由 $u$ 支配；
+  \item 其他新顶点本来就不依赖 $w_e$ 来被支配，因为新顶点之间没有边，而若它们与 $u$ 相邻，替换后反而更好。
+\end{itemize}
+
+反复进行这一步，可得到一个同样大小的支配集
+\[
+D'\subseteq V.
+\]
+
+现在任取原图的一条边
+\[
+e=\{u,v\}\in E.
+\]
+对应的新顶点
+\[
+w_e
+\]
+在 $G'$ 中只能由 $u$ 或 $v$ 来支配（因为
+\[
+D'\subseteq V
+\]
+且 $w_e$ 只与 $u,v$ 相连）。所以
+\[
+u\in D'
+\quad\text{或}\quad
+v\in D'.
+\]
+这说明 $D'$ 覆盖了原图的每一条边，因此 $D'$ 是 $G$ 的一个大小为 $k$ 的顶点覆盖。
+
+\medskip
+综上，
+\[
+\langle G,k\rangle\in VERTEX\text{-}COVER
+\iff
+\langle G',k\rangle\in DOMINATING\text{-}SET.
+\]
+故
+\[
+VERTEX\text{-}COVER\le_p DOMINATING\text{-}SET.
+\]
+结合
+\[
+DOMINATING\text{-}SET\in NP,
+\]
+得到它是 NP 完全的。$\blacksquare$
+
 \subsection*{7.36}
 
 \begin{figure}[H]
@@ -975,6 +1887,120 @@ CNF_3 \text{ 是 NP 完全的}.
   \label{fig:hw_7_36}
 \end{figure}
 
+\paragraph{解答.}
+假设
+\[
+P=NP.
+\]
+于是
+\[
+SAT\in P.
+\]
+设
+\[
+T
+\]
+是一台多项式时间算法，用来判定一个布尔公式是否可满足。
+
+\medskip
+现在给定一个可满足的布尔公式
+\[
+\phi(x_1,\dots,x_n),
+\]
+我们构造一个多项式时间算法输出它的一个满足赋值。
+
+\begin{myalgo}{在假设 $P=NP$ 下求可满足公式的满足赋值}
+\begin{algorithmic}[1]
+  \Require 一个可满足的布尔公式 $\phi(x_1,\dots,x_n)$
+  \Ensure 输出 $\phi$ 的一个满足赋值
+  \State $\psi \gets \phi$
+  \For{$i=1$ \textbf{to} $n$}
+    \If{$T(\psi\wedge x_i)$ 接受}
+      \State 令 $x_i=1$
+      \State $\psi \gets \psi\wedge x_i$
+    \Else
+      \State 令 $x_i=0$
+      \State $\psi \gets \psi\wedge \neg x_i$
+    \EndIf
+  \EndFor
+  \State 输出所得赋值 $(x_1,\dots,x_n)$
+\end{algorithmic}
+\end{myalgo}
+
+\paragraph{正确性证明.}
+我们对循环过程做归纳。初始时
+\[
+\psi=\phi
+\]
+是可满足的。
+
+假设在第 $i$ 轮开始时，当前公式
+\[
+\psi
+\]
+仍可满足。由于
+\[
+\psi
+\]
+可满足，所以在某个满足赋值下，
+\[
+x_i
+\]
+不是取真就是取假。因此
+\[
+\psi\wedge x_i
+\]
+与
+\[
+\psi\wedge \neg x_i
+\]
+中至少有一个可满足。
+
+\begin{itemize}
+  \item 若
+  \[
+  \psi\wedge x_i
+  \]
+  可满足，则算法把 $x_i$ 设为 $1$，并把 $\psi$ 更新为
+  \[
+  \psi\wedge x_i;
+  \]
+  新公式仍可满足。
+  \item 否则，
+  \[
+  \psi\wedge x_i
+  \]
+  不可满足。由于至少一边可满足，可知
+  \[
+  \psi\wedge \neg x_i
+  \]
+  必可满足。算法于是把 $x_i$ 设为 $0$，并把 $\psi$ 更新为
+  \[
+  \psi\wedge \neg x_i,
+  \]
+  新公式仍可满足。
+\end{itemize}
+
+所以每一步之后，当前公式始终保持可满足。经过 $n$ 轮后，所有变量都被确定，所得赋值满足最终公式，也就满足原公式 $\phi$。
+
+\paragraph{时间复杂度.}
+算法共调用 $T$ 恰好 $n$ 次。每次调用的输入公式大小至多是
+\[
+|\phi|+O(n),
+\]
+仍为多项式规模。因为 $T$ 是多项式时间算法，所以总运行时间是
+\[
+n\cdot \mathrm{poly}(|\phi|),
+\]
+仍是多项式时间。
+
+\medskip
+因此，在假设
+\[
+P=NP
+\]
+之下，确实存在一个多项式时间算法，可以在输入一个可满足布尔公式时输出它的一个满足赋值。$\blacksquare$
+
 \subsection*{7.39}
 
 \begin{figure}[H]
@@ -983,6 +2009,106 @@ CNF_3 \text{ 是 NP 完全的}.
   \caption{}
   \label{fig:hw_7_39}
 \end{figure}
+
+\paragraph{解答.}
+在 Cook--Levin 定理的证明里，窗口的作用是刻画“相邻两行是否对应一次合法的图灵机转移”。关键点在于：一次转移会同时影响头所在位置及其左右相邻位置，总共三个相邻单元。因此需要一个
+\[
+2\times 3
+\]
+的局部视野，才能把这三列作为一个整体检查。
+
+\medskip
+如果只用
+\[
+2\times 2
+\]
+窗口，那么左半部分和右半部分可能分别看起来都合法，但二者并不一定来自同一次转移；也就是说，可以把两个不同合法转移的“局部碎片”拼接成一个整体上非法的相邻行，而所有
+\[
+2\times 2
+\]
+窗口仍然全部通过检查。
+
+\medskip
+例如，设顶行在某一段是
+\[
+w,\ x,\ qa,\ y,
+\]
+其中
+\[
+qa
+\]
+表示机器当前处于状态 $q$ 且头扫描符号 $a$。设机器存在两种可能的后继局部形式：
+
+\[
+w,\ q'x,\ b,\ y
+\qquad\text{和}\qquad
+w,\ x,\ b,\ q'y.
+\]
+
+前一种表示头向左移动，后一种表示头向右移动。若只检查
+\[
+2\times 2
+\]
+窗口，那么下面这个相邻两行：
+
+\[
+\begin{array}{cccc}
+w & x & qa & y\\
+w & q'x & b & q'y
+\end{array}
+\]
+
+的每一个
+\[
+2\times 2
+\]
+子窗口都能在前面两种合法局部形式中找到“解释”：
+
+\[
+\begin{array}{cc}
+w & x\\
+w & q'x
+\end{array},
+\qquad
+\begin{array}{cc}
+x & qa\\
+q'x & b
+\end{array},
+\qquad
+\begin{array}{cc}
+qa & y\\
+b & q'y
+\end{array}
+\]
+
+分别来自某个合法左移或右移窗口。
+
+\medskip
+但是整条下一行显然不可能是一次合法转移的结果，因为它同时含有
+\[
+q'x
+\quad\text{和}\quad
+q'y,
+\]
+相当于“头同时往左、往右各走了一步”。这说明：
+
+\begin{center}
+仅仅让所有
+\[
+2\times 2
+\]
+窗口都合法，并不能保证整对相邻配置真的对应一次图灵机转移。
+\end{center}
+
+而
+\[
+2\times 3
+\]
+窗口正好把“左邻、当前、右邻”三列同时纳入检查，能阻止这种把两个不同局部转移拼接起来的伪造情形。因此，若改用
+\[
+2\times 2
+\]
+窗口，Cook--Levin 证明中的局部一致性条件就不再足够，整个证明会失效。$\blacksquare$
 
 \subsection*{7.40}
 
@@ -1001,6 +2127,234 @@ CNF_3 \text{ 是 NP 完全的}.
   \label{fig:hw_7_40_p2}
 \end{figure}
 
+\paragraph{解答.}
+设输入 DFA 为
+\[
+M=(Q,\Sigma,\delta,q_0,A),
+\]
+算法输出
+\[
+M'=(Q',\Sigma,\delta',q_0',A').
+\]
+为叙述方便，先把第 1 步删除不可达状态之后剩余的状态集仍记为 $Q$。
+
+\paragraph{(a) 证明 \(M\) 与 \(M'\) 等价.}
+定义两个状态
+\[
+q,r\in Q
+\]
+是\emph{可区分的}，如果存在某个字符串
+\[
+w\in\Sigma^*
+\]
+使得
+\[
+\delta^*(q,w)\in A
+\quad\text{而}\quad
+\delta^*(r,w)\notin A,
+\]
+或反过来。
+
+算法构造图 $G$ 的本质，就是把所有可区分状态对都连边。我们先证明算法结束时：
+\[
+\{q,r\}\text{ 在 }G\text{ 中有边}
+\iff
+q,r\text{ 可区分}.
+\]
+
+\paragraph{“有边 \(\Rightarrow\) 可区分”.}
+按边被加入的次序归纳。
+
+\begin{itemize}
+  \item 初始加入的边，恰好连接一个接受状态和一个非接受状态。此时空串
+  \[
+  \varepsilon
+  \]
+  就能区分这两个状态。
+  \item 后续若因为某个
+  \[
+  a\in\Sigma
+  \]
+  且
+  \[
+  (\delta(q,a),\delta(r,a))
+  \]
+  已有边，而把
+  \[
+  (q,r)
+  \]
+  加入图中，那么根据归纳假设，存在字符串 $w$ 区分
+  \[
+  \delta(q,a),\delta(r,a).
+  \]
+  于是字符串
+  \[
+  aw
+  \]
+  区分 $q,r$。
+\end{itemize}
+
+\paragraph{“可区分 \(\Rightarrow\) 有边”.}
+对区分字符串的最短长度归纳。
+
+\begin{itemize}
+  \item 若最短区分字符串长度为 $0$，则该字符串只能是
+  \[
+  \varepsilon,
+  \]
+  所以 $q,r$ 一接受一不接受，初始时就连边。
+  \item 若最短区分字符串为
+  \[
+  aw,
+  \qquad a\in\Sigma,
+  \]
+  则
+  \[
+  \delta(q,a),\delta(r,a)
+  \]
+  被更短的字符串 $w$ 区分。按归纳假设，它们在图中已有边。因此算法最终会把
+  \[
+  (q,r)
+  \]
+  加入图中。
+\end{itemize}
+
+所以最终无边相连的状态恰好是不可区分状态。算法定义
+\[
+[q]=\{r\in Q\mid q,r\text{ 在 }G\text{ 中无边相连}\},
+\]
+因此
+\[
+[q]
+\]
+正是与 $q$ 等价的不可区分类。
+
+\medskip
+现在证明 $M'$ 与 $M$ 识别同一语言。首先，若
+\[
+q\sim r,
+\]
+则对任意
+\[
+a\in\Sigma
+\]
+都有
+\[
+\delta(q,a)\sim \delta(r,a),
+\]
+否则若
+\[
+\delta(q,a),\delta(r,a)
+\]
+可区分，则 $q,r$ 会被字符串
+\[
+aw
+\]
+区分，矛盾。因此
+\[
+\delta'([q],a)=[\delta(q,a)]
+\]
+是良定义的。
+
+\medskip
+再对输入字符串 $w$ 长度归纳，可得
+\[
+\delta'^*([q_0],w)=[\delta^*(q_0,w)].
+\]
+而同一不可区分类中的状态不可能一接受一不接受，否则会被
+\[
+\varepsilon
+\]
+区分。所以
+\[
+\delta^*(q_0,w)\in A
+\iff
+[\delta^*(q_0,w)]\in A'.
+\]
+于是
+\[
+w\in L(M)
+\iff
+w\in L(M').
+\]
+故
+\[
+L(M)=L(M').
+\]
+
+\paragraph{(b) 证明 \(M'\) 极小.}
+由上一步可知，$M'$ 的状态正是删除不可达状态后，$M$ 的不可区分类。任意两个不同的类
+\[
+[q]\ne [r]
+\]
+都对应一对可区分状态，因此存在某个字符串把这两个类区分开。
+
+现在设 $N$ 是任何一个与 $M$ 等价的 DFA。若 $N$ 把两个不同的类
+\[
+[q],[r]
+\]
+合并到同一个状态中，那么读入区分它们的那个字符串后，$N$ 就无法同时模仿 $M$ 对这两个类的不同接受行为，矛盾。因此任何识别同一语言的 DFA 至少都要有和这些不可区分类一样多的状态。
+
+而 $M'$ 恰好每个类取一个状态，所以没有更少状态的 DFA 能识别同一语言。故 $M'$ 是极小 DFA。
+
+\medskip
+若愿意，也可以直接引用第 1 章 1.52 的结论：最小 DFA 的状态数正好等于 Myhill--Nerode 等价类的个数，而这里的
+\[
+[q]
+\]
+正是这些等价类。
+
+\paragraph{(c) 证明 \(MINIMIZE\) 在多项式时间内运行.}
+设删除不可达状态后剩余状态数为
+\[
+n=|Q|,
+\qquad
+s=|\Sigma|.
+\]
+
+\begin{itemize}
+  \item 第 1 步删除不可达状态，可在
+  \[
+  O(ns)
+  \]
+  或
+  \[
+  O(n^2)
+  \]
+  时间内完成；
+  \item 图 $G$ 最多有
+  \[
+  \binom n2=O(n^2)
+  \]
+  条无向边；
+  \item 初始化“接受态--非接受态”之间的边，需要至多
+  \[
+  O(n^2)
+  \]
+  时间；
+  \item 之后每一轮都扫描每对状态和每个字母，检查是否应加边，这一步是
+  \[
+  O(n^2s).
+  \]
+  每一轮若未结束，则至少新增一条边，所以轮数至多为
+  \[
+  O(n^2).
+  \]
+\end{itemize}
+
+因此总时间至多为
+\[
+O(n^4s),
+\]
+当然这是一个比较粗的上界，但已经足够说明它是多项式时间算法。最后形成等价类并构造 $M'$ 也只需多项式时间。
+
+\medskip
+所以
+\[
+MINIMIZE
+\]
+在多项式时间内运行。$\blacksquare$
+
 \subsection*{7.42}
 
 \begin{figure}[H]
@@ -1009,5 +2363,167 @@ CNF_3 \text{ 是 NP 完全的}.
   \caption{}
   \label{fig:hw_7_42}
 \end{figure}
+
+\paragraph{解答.}
+设
+\[
+\phi
+\]
+是一个 2CNF 公式。也就是说，
+\[
+\phi=C_1\wedge\cdots\wedge C_m,
+\]
+其中每个子句 $C_i$ 至多含有两个文字。
+
+\medskip
+我们给出一个多项式时间判定算法。核心工具是\emph{蕴含图}。
+
+\paragraph{1. 构造蕴含图.}
+对每个变量
+\[
+x
+\]
+建立两个顶点
+\[
+x,\qquad \neg x.
+\]
+若子句为
+\[
+(\alpha\vee \beta),
+\]
+则加入两条有向边
+\[
+\neg\alpha\to \beta,
+\qquad
+\neg\beta\to \alpha.
+\]
+因为要使
+\[
+(\alpha\vee \beta)
+\]
+为真，只要
+\[
+\alpha
+\]
+为假，就必须令
+\[
+\beta
+\]
+为真；反之亦然。
+
+若子句只有一个文字
+\[
+(\alpha),
+\]
+可把它看作
+\[
+(\alpha\vee \alpha),
+\]
+于是加入边
+\[
+\neg\alpha\to \alpha.
+\]
+
+\paragraph{2. 关键判据.}
+我们 claim：
+\[
+\phi \text{ 可满足}
+\iff
+\text{对每个变量 }x,\ x\text{ 与 }\neg x\text{ 不在同一个强连通分量中}.
+\]
+
+\paragraph{必要性.}
+若某个变量 $x$ 满足
+\[
+x \leadsto \neg x
+\qquad\text{且}\qquad
+\neg x \leadsto x,
+\]
+那么若令 $x$ 为真，由路径上的蕴含关系会推出
+\[
+\neg x
+\]
+也为真；若令 $x$ 为假，则同样推出
+\[
+x
+\]
+为真。于是无论怎样赋值都会矛盾，所以公式不可满足。
+
+\paragraph{充分性.}
+若对每个变量 $x$，
+\[
+x,\neg x
+\]
+都不在同一个强连通分量中，则把强连通分量缩成 DAG。按该 DAG 的逆拓扑序依次赋值：对于每个变量 $x$，若
+\[
+SCC(x)
+\]
+排在
+\[
+SCC(\neg x)
+\]
+之后，就令 $x=\mathrm{true}$；否则令
+\[
+x=\mathrm{false}.
+\]
+
+这是标准的 2SAT 赋值法。它保证：若存在边
+\[
+\alpha\to \beta,
+\]
+则不可能出现
+\[
+\alpha=\mathrm{true}
+\quad\text{但}\quad
+\beta=\mathrm{false}
+\]
+的情形。否则会导致
+\[
+SCC(\alpha)
+\]
+在 DAG 中不晚于
+\[
+SCC(\beta),
+\]
+与赋值规则矛盾。于是所有蕴含都被满足，故每个子句也都被满足。
+
+\paragraph{3. 算法与复杂度.}
+因此算法是：
+
+\begin{myalgo}{判定 2CNF 公式是否可满足的算法}
+\begin{algorithmic}[1]
+  \Require 一个 2CNF 公式 $\phi$
+  \Ensure 若 $\phi$ 可满足则接受，否则拒绝
+  \State 构造 $\phi$ 的蕴含图 $H$
+  \State 求 $H$ 的所有强连通分量
+  \ForAll{变量 $x$}
+    \If{$x$ 与 $\neg x$ 在同一个强连通分量中}
+      \State \textbf{拒绝}
+    \EndIf
+  \EndFor
+  \State \textbf{接受}
+\end{algorithmic}
+\end{myalgo}
+
+设公式共有 $n$ 个变量、$m$ 个子句，则蕴含图共有
+\[
+2n
+\]
+个顶点、至多
+\[
+2m
+\]
+条边。求强连通分量可在线性时间
+\[
+O(n+m)
+\]
+内完成。因此整个算法是多项式时间的。
+
+\medskip
+所以
+\[
+2SAT\in P.
+\]
+$\blacksquare$
 
 \clearpage

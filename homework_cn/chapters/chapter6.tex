@@ -4,18 +4,661 @@
 
 \subsection*{6.3}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_6_3.png}
+  \caption{}
+  \label{fig:hw_6_3}
+\end{figure}
+
+证明。设
+\[
+    A \le_T B
+    \qquad\text{且}\qquad
+    B \le_T C.
+\]
+于是存在带预言机 $B$ 的图灵机 $M_1^B$ 判定 $A$，以及带预言机 $C$ 的图灵机 $M_2^C$ 判定 $B$。
+
+\medskip
+构造带预言机 $C$ 的图灵机 $M_3^C$ 来判定 $A$。机器 $M_3$ 模拟 $M_1$ 的运行。每当 $M_1$ 向其预言机询问某个字符串 $x$ 是否属于 $B$ 时，$M_3$ 就启动子过程，利用 $M_2^C$ 来判定
+\[
+    x\in B
+\]
+是否成立，然后把答案返回给这次询问。除此之外，$M_3$ 完全照着 $M_1$ 的步骤运行。
+
+\medskip
+因为 $M_2^C$ 判定 $B$，所以 $M_3^C$ 对每次关于 $B$ 的预言机询问都能给出正确答案。因此，$M_3^C$ 的整个计算与 $M_1^B$ 的计算完全一致。于是对任意输入 $w$，
+\[
+    M_3^C \text{ 接受 } w
+    \iff
+    M_1^B \text{ 接受 } w
+    \iff
+    w\in A.
+\]
+故 $M_3^C$ 判定 $A$，从而
+\[
+    A \le_T C.
+\]
+这就证明了图灵可归约性的传递性。$\blacksquare$
+
+\paragraph{解释.}
+这是预言机版本的“函数复合”。既然求解 $A$ 只需要会问 $B$，而求解 $B$ 又只需要会问 $C$，那么把所有“问 $B$”的地方改成“调用一个以 $C$ 为预言机的判定器”，就得到了 $A \le_T C$。
+
 \subsection*{6.4}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_6_4.png}
+  \caption{}
+  \label{fig:hw_6_4}
+\end{figure}
+
+设
+\[
+    A_{\mathrm{TM}}^{A_{\mathrm{TM}}}
+    =
+    \{\langle M,w\rangle \mid M \text{ 是预言机图灵机且 } M^{A_{\mathrm{TM}}} \text{ 接受 } w\}.
+\]
+我们证明：
+\[
+    A_{\mathrm{TM}}^{A_{\mathrm{TM}}}
+\]
+相对于预言机
+\[
+    A_{\mathrm{TM}}
+\]
+仍然不可判定。
+
+\medskip
+反设存在一台带预言机 $A_{\mathrm{TM}}$ 的图灵机 $H^{A_{\mathrm{TM}}}$ 判定
+\[
+    A_{\mathrm{TM}}^{A_{\mathrm{TM}}}.
+\]
+也就是说，对任意预言机图灵机 $M$ 和输入 $w$，
+\[
+    H^{A_{\mathrm{TM}}}(\langle M,w\rangle)
+\]
+接受当且仅当
+\[
+    M^{A_{\mathrm{TM}}} \text{ 接受 } w.
+\]
+
+\begin{myalgo}{对角化构造的预言机图灵机 $D^{A_{\mathrm{TM}}}$}
+\begin{algorithmic}[1]
+  \Require 输入 $\langle M\rangle$，其中 $M$ 是预言机图灵机
+  \Ensure 与 $M^{A_{\mathrm{TM}}}$ 在输入 $\langle M\rangle$ 上的行为相反
+  \State 在输入 $\langle M,\langle M\rangle\rangle$ 上运行 $H^{A_{\mathrm{TM}}}$
+  \If{$H^{A_{\mathrm{TM}}}$ 接受}
+    \State \textbf{拒绝}
+  \Else
+    \State \textbf{接受}
+  \EndIf
+\end{algorithmic}
+\end{myalgo}
+
+现在考察 $D^{A_{\mathrm{TM}}}$ 在自身描述上的行为。若
+\[
+    D^{A_{\mathrm{TM}}} \text{ 接受 } \langle D\rangle,
+\]
+则按照 $D$ 的定义，
+\[
+    H^{A_{\mathrm{TM}}}(\langle D,\langle D\rangle\rangle)
+\]
+必须拒绝。但 $H$ 判定
+\[
+    A_{\mathrm{TM}}^{A_{\mathrm{TM}}},
+\]
+因此它拒绝恰意味着
+\[
+    D^{A_{\mathrm{TM}}}
+\]
+不接受
+\[
+    \langle D\rangle,
+\]
+矛盾。
+
+\medskip
+反之，若
+\[
+    D^{A_{\mathrm{TM}}} \text{ 不接受 } \langle D\rangle,
+\]
+则 $H^{A_{\mathrm{TM}}}(\langle D,\langle D\rangle\rangle)$ 必须接受，于是按 $D$ 的定义，
+\[
+    D^{A_{\mathrm{TM}}} \text{ 接受 } \langle D\rangle,
+\]
+仍然矛盾。
+
+\medskip
+故这样的 $H^{A_{\mathrm{TM}}}$ 不存在。于是
+\[
+    A_{\mathrm{TM}}^{A_{\mathrm{TM}}}
+\]
+相对于
+\[
+    A_{\mathrm{TM}}
+\]
+不可判定。$\blacksquare$
+
+\paragraph{解释.}
+这就是普通
+\[
+    A_{\mathrm{TM}}
+\]
+不可判定证明的相对化版本。即便机器本身已经拥有
+\[
+    A_{\mathrm{TM}}
+\]
+预言机，我们仍然可以对“带这个预言机的机器是否接受”做对角化，所以再强一层的接受问题依然超出这一层预言机的能力。
 
 \subsection*{6.7}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_6_7.png}
+  \caption{}
+  \label{fig:hw_6_7}
+\end{figure}
+
+\paragraph{解答.}
+令 $t$ 是这样一个可计算变换：对任意图灵机描述
+\[
+\langle M\rangle,
+\]
+$t(\langle M\rangle)$ 是把 $M$ 的
+\[
+q_{\mathrm{accept}}
+\quad\text{与}\quad
+q_{\mathrm{reject}}
+\]
+互换后得到的机器描述。
+
+\medskip
+在递归定理的不动点形式里，$t$ 的一个不动点是任何满足
+\[
+L(M)=L(t(\langle M\rangle))
+\]
+的机器 $M$。一个最简单的例子是：
+
+\begin{center}
+\emph{在任意输入上都一直循环、从不进入接受态或拒绝态的图灵机。}
+\end{center}
+
+设这台机器为 $M$。那么对任意输入 $w$，
+\[
+M \text{ 在 } w \text{ 上一直循环},
+\]
+因此
+\[
+w\notin L(M).
+\]
+
+把
+\[
+q_{\mathrm{accept}}
+\quad\text{和}\quad
+q_{\mathrm{reject}}
+\]
+互换之后，机器的实际运行并没有任何变化，因为这两个状态本来就永远不会被访问到。所以对任意输入 $w$，
+\[
+t(\langle M\rangle)
+\]
+也仍然一直循环，从而
+\[
+w\notin L(t(\langle M\rangle)).
+\]
+
+于是
+\[
+L(M)=\varnothing=L(t(\langle M\rangle)).
+\]
+故这台“对所有输入都循环”的图灵机就是 $t$ 的一个不动点例子。$\blacksquare$
+
+\paragraph{解释.}
+这里的不动点不是说机器描述字面上一模一样，而是说变换前后识别的语言相同。若一台机器从来不进入接受态或拒绝态，那么交换这两个状态根本不会改变它的行为，因此自然就是一个不动点。
+
 \subsection*{6.10}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_6_10.png}
+  \caption{}
+  \label{fig:hw_6_10}
+\end{figure}
+
+\paragraph{解答.}
+一个最简单的模型是
+\[
+\mathcal M=(\mathbb N,R_1^{\mathcal M}),
+\]
+其中论域取为自然数集
+\[
+\mathbb N=\{0,1,2,\dots\},
+\]
+并把二元关系 $R_1$ 解释为“相等关系”：
+\[
+R_1^{\mathcal M}(x,y)
+\iff
+x=y.
+\]
+
+下面验证它满足题目给出的三个条件。
+
+\paragraph{(1) 自反性}
+题中的第一部分是
+\[
+\forall x\, R_1(x,x).
+\]
+在模型 $\mathcal M$ 中，这变成：
+\[
+\forall x\in\mathbb N,\ x=x,
+\]
+显然成立。
+
+\paragraph{(2) 对称性}
+题中的第二部分是
+\[
+\forall x,y\,[R_1(x,y)\leftrightarrow R_1(y,x)].
+\]
+在模型 $\mathcal M$ 中，
+\[
+R_1(x,y)
+\iff
+x=y
+\iff
+y=x
+\iff
+R_1(y,x),
+\]
+故该式成立。
+
+\paragraph{(3) 传递性}
+题中的第三部分是
+\[
+\forall x,y,z\,[(R_1(x,y)\wedge R_1(y,z))\to R_1(x,z)].
+\]
+在模型 $\mathcal M$ 中，若
+\[
+R_1(x,y)\wedge R_1(y,z),
+\]
+则
+\[
+x=y \quad\text{且}\quad y=z,
+\]
+从而
+\[
+x=z,
+\]
+也就是
+\[
+R_1(x,z).
+\]
+所以该式也成立。
+
+\medskip
+因此
+\[
+\mathcal M=(\mathbb N,=)
+\]
+就是题目所求的一个模型。$\blacksquare$
+
+\paragraph{解释.}
+这个句子正是在刻画“等价关系”：自反、对称、传递。最直接的例子就是把 $R_1$ 解释成真正的“等于”。当然，像“同奇偶”这样的关系也同样给出一个模型。
 
 \subsection*{6.12}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_6_12.png}
+  \caption{}
+  \label{fig:hw_6_12}
+\end{figure}
+
+\paragraph{解答.}
+我们把语言
+\[
+\{<\}
+\]
+中的每个公式有效翻译成语言
+\[
+\{+\}
+\]
+中的公式。关键观察是：在自然数上，
+\[
+x<y
+\iff
+\exists z\,\bigl(z\ne 0 \wedge x+z=y\bigr).
+\]
+
+\medskip
+因此，对任意一阶句子 $\varphi$（其唯一非逻辑符号是 $<$），都可以机械地构造一个新句子 $\varphi^\sharp$（其唯一非逻辑符号是 $+$），方法是把 $\varphi$ 中每个原子式
+\[
+x<y
+\]
+都替换成
+\[
+\exists z\,\bigl(z\ne 0 \wedge x+z=y\bigr),
+\]
+其余逻辑联结词和量词保持不变。
+
+\medskip
+这样构造满足：
+\[
+(\mathbb N,<)\models \varphi
+\iff
+(\mathbb N,+)\models \varphi^\sharp.
+\]
+原因很直接：在自然数结构上，
+\[
+<
+\]
+与
+\[
+\exists z\,(z\ne 0\wedge x+z=y)
+\]
+定义的是同一个关系，所以替换前后真值不变。
+
+\medskip
+现在利用已知结果：
+\[
+\mathrm{Th}(\mathbb N,+)
+\]
+是可判定的。于是要判定任意句子
+\[
+\varphi\in \mathrm{Th}(\mathbb N,<),
+\]
+只需：
+
+\begin{enumerate}[label=(\arabic*), leftmargin=2.5em]
+  \item 有效地把 $\varphi$ 翻译成 $\varphi^\sharp$；
+  \item 用
+  \[
+  \mathrm{Th}(\mathbb N,+)
+  \]
+  的判定算法判定 $\varphi^\sharp$ 是否为真。
+\end{enumerate}
+
+若 $\varphi^\sharp$ 在
+\[
+(\mathbb N,+)
+\]
+中为真，则 $\varphi$ 在
+\[
+(\mathbb N,<)
+\]
+中为真；反之亦然。故
+\[
+\mathrm{Th}(\mathbb N,<)
+\]
+可判定。$\blacksquare$
+
+\paragraph{解释.}
+这里的核心不是重新发明一个关于 $<$ 的判定器，而是把“小于”翻译成“加法存在一个正增量”。一旦这个翻译是有效的，而
+\[
+(\mathbb N,+)
+\]
+的理论已经可判定，那么
+\[
+(\mathbb N,<)
+\]
+的理论也就跟着可判定。
+
 \subsection*{6.14}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_6_14.png}
+  \caption{}
+  \label{fig:hw_6_14}
+\end{figure}
+
+\paragraph{解答.}
+定义语言
+\[
+J=\{0x\mid x\in A\}\cup \{1x\mid x\in B\}.
+\]
+我们证明
+\[
+A\le_T J
+\qquad\text{且}\qquad
+B\le_T J.
+\]
+
+\paragraph{证明 \(A\le_T J\).}
+构造带预言机 $J$ 的图灵机 $M_A^J$：在输入 $x$ 上，仅向预言机询问一次
+\[
+0x\in J\;?
+\]
+若预言机回答“是”，则接受；否则拒绝。
+
+由 $J$ 的定义，
+\[
+0x\in J
+\iff
+x\in A.
+\]
+因此 $M_A^J$ 判定 $A$，从而
+\[
+A\le_T J.
+\]
+
+\paragraph{证明 \(B\le_T J\).}
+同理，构造带预言机 $J$ 的图灵机 $M_B^J$：在输入 $x$ 上询问
+\[
+1x\in J\;?
+\]
+并按照答案接受或拒绝。因为
+\[
+1x\in J
+\iff
+x\in B,
+\]
+所以 $M_B^J$ 判定 $B$，从而
+\[
+B\le_T J.
+\]
+
+\medskip
+于是我们找到了一个语言 $J$，使得
+\[
+A\le_T J
+\qquad\text{且}\qquad
+B\le_T J.
+\]
+命题得证。$\blacksquare$
+
+\paragraph{解释.}
+这个构造就是把两个语言“并排打包”进一个新语言里。前缀 $0$ 表示“这是关于 $A$ 的问题”，前缀 $1$ 表示“这是关于 $B$ 的问题”。于是同一个预言机 $J$ 同时包含了两边的信息。
 
 \subsection*{6.17}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_6_17.png}
+  \caption{}
+  \label{fig:hw_6_17}
+\end{figure}
+
+\paragraph{解答.}
+取
+\[
+A=\{\langle M\rangle\mid M \text{ 接受 } \langle M\rangle\},
+\]
+\[
+B=\{\langle M\rangle\mid M \text{ 拒绝 } \langle M\rangle\}.
+\]
+
+\paragraph{1. \(A\) 与 \(B\) 不相交且都是图灵可识别的.}
+显然
+\[
+A\cap B=\varnothing,
+\]
+因为一台图灵机在同一个输入上不可能既接受又拒绝。
+
+对 $A$，给定输入 $\langle M\rangle$，直接模拟 $M$ 在输入 $\langle M\rangle$ 上的运行；若 $M$ 接受，则接受。故 $A$ 是图灵可识别的。
+
+对 $B$，给定输入 $\langle M\rangle$，同样模拟 $M$ 在输入 $\langle M\rangle$ 上的运行；若 $M$ 拒绝，则接受。故 $B$ 也是图灵可识别的。
+
+\paragraph{2. 证明它们不能被任何可判定语言分离.}
+反设存在一个可判定语言 $C$，满足
+\[
+A\subseteq C
+\qquad\text{且}\qquad
+B\subseteq \overline C.
+\]
+设图灵机 $R$ 判定 $C$。构造图灵机 $D$：
+
+\begin{myalgo}{由分离器 $R$ 构造的图灵机 $D$}
+\begin{algorithmic}[1]
+  \Require 输入 $x$
+  \Ensure 在 $R$ 的答案上对角化
+  \State 在输入 $x$ 上运行 $R$
+  \If{$R$ 接受}
+    \State \textbf{拒绝}
+  \Else
+    \State \textbf{接受}
+  \EndIf
+\end{algorithmic}
+\end{myalgo}
+
+现在考虑 $\langle D\rangle$。
+
+\medskip
+若
+\[
+\langle D\rangle\in C,
+\]
+则 $R$ 在输入 $\langle D\rangle$ 上接受，因此 $D$ 在输入 $\langle D\rangle$ 上拒绝。于是
+\[
+\langle D\rangle\in B.
+\]
+但
+\[
+B\subseteq \overline C,
+\]
+故
+\[
+\langle D\rangle\notin C,
+\]
+矛盾。
+
+\medskip
+若
+\[
+\langle D\rangle\notin C,
+\]
+则 $R$ 在输入 $\langle D\rangle$ 上拒绝，因此 $D$ 在输入 $\langle D\rangle$ 上接受。于是
+\[
+\langle D\rangle\in A.
+\]
+但
+\[
+A\subseteq C,
+\]
+故
+\[
+\langle D\rangle\in C,
+\]
+仍然矛盾。
+
+\medskip
+因此不存在任何可判定语言 $C$ 能把 $A$ 与 $B$ 分离开。故题目所求的两个语言就是上述 $A$ 与 $B$。$\blacksquare$
+
+\paragraph{解释.}
+这两个语言分别记录“机器在自己描述上接受”和“机器在自己描述上拒绝”。如果某个可判定语言真能把这两种情况完全分开，就能像标准对角化那样造出一台在自己描述上永远与这个分离器作对的机器，于是立刻矛盾。
+
 \subsection*{6.22}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_6_22.png}
+  \caption{}
+  \label{fig:hw_6_22}
+\end{figure}
+
+\paragraph{解答.}
+反设函数
+\[
+K(x)
+\]
+是可计算的。我们将导出矛盾。
+
+\medskip
+在这个假设下，构造如下图灵机 $M$：给定输入 $n$（用二进制编码），$M$ 依次枚举所有字符串
+\[
+x
+\]
+并计算
+\[
+K(x),
+\]
+直到找到字典序最小的满足
+\[
+K(x)>n
+\]
+的字符串，然后输出该字符串。
+
+\begin{myalgo}{假设 $K$ 可计算时构造的机器 $M$}
+\begin{algorithmic}[1]
+  \Require 输入正整数 $n$
+  \Ensure 输出字典序最小的满足 $K(x)>n$ 的字符串
+  \ForAll{字符串 $x$，按字典序枚举}
+    \State 计算 $K(x)$
+    \If{$K(x)>n$}
+      \State 输出 $x$ 并停机
+    \EndIf
+  \EndFor
+\end{algorithmic}
+\end{myalgo}
+
+先说明这样的字符串一定存在。因为长度至多为 $n$ 的描述只有有限多个，所以满足
+\[
+K(x)\le n
+\]
+的字符串也只有有限多个；而字符串总数是无限的，因此必然存在某个 $x$ 使得
+\[
+K(x)>n.
+\]
+故机器 $M$ 对每个输入 $n$ 都会停机。
+
+\medskip
+设机器 $M$ 在输入 $n$ 时输出的字符串为 $x_n$。由构造，
+\[
+K(x_n)>n.
+\]
+
+另一方面，$x_n$ 可以由“机器 $M$ 的固定描述”加上“输入 $n$ 的编码”唯一确定。因此存在常数 $c$，使得对所有 $n$，
+\[
+K(x_n)\le |\langle n\rangle|+c.
+\]
+由于 $n$ 采用二进制编码，
+\[
+|\langle n\rangle|\le \lceil \log_2 n\rceil + O(1),
+\]
+所以存在常数 $c'$，使得
+\[
+K(x_n)\le \log_2 n + c'.
+\]
+
+\medskip
+综上，对充分大的 $n$，
+\[
+n < K(x_n)\le \log_2 n + c',
+\]
+这是不可能的，因为
+\[
+\log_2 n + c' < n
+\]
+当 $n$ 足够大时成立。
+
+\medskip
+矛盾说明最初假设错误。因此函数
+\[
+K(x)
+\]
+不是可计算函数。$\blacksquare$
+
+\paragraph{解释.}
+这是 Kolmogorov 复杂度版本的 Berry 悖论。若 $K$ 真能计算，我们就能有效地找到“第一个复杂度大于 $n$ 的串”。但这样一个串又被“这台寻找它的机器 + 参数 $n$”简短地描述了，于是它反而不该那么复杂。
 
 \clearpage

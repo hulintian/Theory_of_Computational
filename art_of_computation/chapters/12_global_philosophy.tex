@@ -1,0 +1,59 @@
+\section{子任务 12：全书总收束：计算理论之艺}
+
+\subsection{全书最常见的证明范式}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{构造证明}：若要证明“某类语言可识别/可判定”，优先造机器、文法、算法。
+  \item \textbf{双向模拟}：若要证明两个模型等价，就把一边的每一步翻译成另一边的有限多步。
+  \item \textbf{压缩与抽象}：若要证明模型能力有限，就观察它到底能保留多少历史摘要。
+  \item \textbf{对角化与自指}：若要证明某种全能判定器不存在，就让它在“自己的描述”上失效。
+  \item \textbf{归约}：若要证明一个新问题很难，就把旧难题稳定编码进来。
+  \item \textbf{计数法}：若要证明某些对象必然存在，就比较“候选描述数量”和“目标对象数量”。
+\end{enumerate}
+
+\subsection{遇到问题时如何选证明工具}
+
+\begin{itemize}[leftmargin=2em]
+  \item 题目问“属于某类吗”：先想构造。
+  \item 题目问“两个模型一样强吗”：先想模拟。
+  \item 题目问“为什么不属于某类”：正则/CFL 常先想 pumping；可判定性层面先想对角化或从经典不可判定问题归约。
+  \item 题目问“为什么这么难”：复杂度层面先想多项式时间归约，寻找完备问题来源。
+  \item 题目问“需要多少资源”：先找配置图、递归分治、证书结构、逻辑编码或电路视角。
+\end{itemize}
+
+\subsection{Sipser 这本书传达的证明哲学}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{先抓本质，再写细节。} 例如先把有限自动机理解成“有限记忆摘要器”，后面很多结论就自然了。
+  \item \textbf{重要的不只是结果，还有结果为何稳定。} 图灵机之所以重要，不是因为它像真实机器，而是因为各种合理模型都与它等价。
+  \item \textbf{困难性来自结构，而不是题面。} 归约告诉你，看似不同的问题可能共享同一种核心难度。
+  \item \textbf{不可能性证明往往依赖自指。} 从不可判定到递归定理，自指既能摧毁全能算法，也能制造固定点。
+  \item \textbf{资源分析需要选择合适的不变量。} 时间看步数增长，空间看工作带复用，随机算法看错误概率，交互证明看信息交换。
+\end{enumerate}
+
+\subsection{计算理论的精华}
+
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{自动机部分}告诉我们：不同层级的记忆，对应不同层级的语言结构。
+  \item \textbf{可计算性部分}告诉我们：算法的极限不是工程极限，而是逻辑极限。
+  \item \textbf{复杂性部分}告诉我们：即使原则上可解，资源也会重新划分世界。
+\end{itemize}
+
+\subsection{最后的收束}
+
+如果把这本书压成一句话，可以写成：
+
+\begin{center}
+\textbf{计算理论研究的不是某一台机器，而是“信息、规则、资源、证明”四者之间的永久关系。}
+\end{center}
+
+而所谓“art of computation”，就在于你逐渐学会判断：
+\begin{itemize}[leftmargin=2em]
+  \item 什么信息必须记住，
+  \item 什么信息可以遗忘，
+  \item 什么问题可以转写成别的问题，
+  \item 什么障碍来自技巧不足，
+  \item 什么障碍则来自原则上的不可能。
+\end{itemize}
+
+这就是 Sipser 这本书最值得带走的东西。

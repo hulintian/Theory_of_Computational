@@ -1,0 +1,58 @@
+\section{子任务 0：全书阅读地图}
+
+\subsection{这本书在问什么}
+
+Sipser 这本书始终围绕一个总问题展开：\textbf{计算到底能做什么，不能做什么，以及即便能做，代价有多大。}
+这三个维度分别展开为三部分：
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{自动机与语言}：研究有限记忆、栈记忆等受限计算模型能识别哪些语言。
+  \item \textbf{可计算性}：研究哪些问题原则上可解，哪些问题任何算法都无能为力。
+  \item \textbf{复杂性}：研究可解问题内部的难易层次，尤其是时间和空间的代价。
+\end{itemize}
+
+\subsection{按子任务拆开的阅读路线}
+
+\begin{enumerate}[leftmargin=2em]
+  \item 第 0 章：建立数学语言、证明规范与全书问题意识。
+  \item 第 1 章：理解正则语言等价于“有限状态记忆”。
+  \item 第 2 章：理解上下文无关语言等价于“有限控制加一个栈”。
+  \item 第 3 章：用图灵机刻画“算法”的本质。
+  \item 第 4 章：第一次真正看到“不可判定”。
+  \item 第 5 章：学会用归约传播不可判定性。
+  \item 第 6 章：把自指、逻辑、信息量纳入可计算性框架。
+  \item 第 7 章：进入时间复杂性，理解 P、NP 与 NP 完全。
+  \item 第 8 章：进入空间复杂性，理解 PSPACE、L、NL 与其完备问题。
+  \item 第 9 章：研究分离定理、相对化与证明方法的边界。
+  \item 第 10 章：观察复杂性理论向随机性、交互、并行与密码学扩展。
+\end{enumerate}
+
+\subsection{全书反复出现的四类证明动作}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{构造}：直接造出自动机、文法、图灵机、验证器或算法。
+  \item \textbf{模拟}：证明两个模型等价，核心是把一个模型的步骤翻译成另一个模型的步骤。
+  \item \textbf{对角化与自指}：通过“让机器谈论自己”制造矛盾，证明不可能性。
+  \item \textbf{归约}：把已知困难的问题编码成新问题，转移困难性。
+\end{enumerate}
+
+\subsection{如何使用这份总结}
+
+每一章都固定从四个角度展开：
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{核心知识点}：这一章建立了哪些定义、模型、定理。
+  \item \textbf{典型问题与证明套路}：遇到什么类型的问题时，通常怎么证明。
+  \item \textbf{证明背后的哲学}：这些证明真正依赖的思想是什么。
+  \item \textbf{本章精华}：如果只记住一两句话，应该记住什么。
+\end{itemize}
+
+\subsection{全书的第一层哲学}
+
+这本书最有力量的地方，不是告诉你几个经典结论，而是训练一种判断力：
+\begin{itemize}[leftmargin=2em]
+  \item 先选对\textbf{计算模型}，再谈能力。
+  \item 先写清\textbf{编码与输入}，再谈难度。
+  \item 先区分\textbf{存在算法}和\textbf{高效算法}，再谈可行性。
+  \item 先建立\textbf{证明工具}，再追求大结论。
+\end{itemize}
+
+\newpage

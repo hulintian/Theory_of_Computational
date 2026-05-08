@@ -1,0 +1,33 @@
+\section{子任务 6：第 5 章 Reducibility}
+
+\subsection{核心知识点}
+
+\begin{itemize}[leftmargin=2em]
+  \item 许多语言理论中的自然问题是不可判定的，例如某些关于图灵机语言是否为空、是否正规、两个语言是否相等等问题。
+  \item computation history：把一台机器的完整运行编码成一个离散对象，便于把“会不会接受”翻译成“编码是否合法”。
+  \item Post correspondence problem 等简单表面形式的问题也能承载不可判定性。
+  \item mapping reducibility：用可计算函数把一个问题实例机械地翻译成另一个问题实例。
+\end{itemize}
+
+\subsection{典型问题与证明套路}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{证明新问题不可判定}：从已知不可判定问题出发构造归约。关键不是结论像不像，而是实例能否被系统翻译。
+  \item \textbf{把机器行为转成静态对象}：使用 computation history，把“存在一条接受运行”变成“存在一串配置序列满足局部一致性”。
+  \item \textbf{证明像 PCP 这种组合问题不可判定}：构造拼图、tile、编码块，让合法匹配精确对应某台机器的合法运行。
+  \item \textbf{使用 mapping reducibility}：记住方向。若 $A \leq_m B$ 且 $A$ 已知困难，那么 $B$ 至少一样困难；方向写反，结论就失效。
+\end{enumerate}
+
+\subsection{证明背后的哲学}
+
+这一章的核心哲学是：\textbf{困难性是一种可搬运的结构。}
+一旦你能把旧问题的每个实例，可靠地翻译成新问题的实例，而且答案保持一致，那么新问题就继承了旧问题的困难性。归约不是技巧清单，而是一种“问题间的保序映射”思想：保留答案，转移难度。
+
+\subsection{本章精华}
+
+\begin{itemize}[leftmargin=2em]
+  \item 对角化负责造出第一批不可判定问题，归约负责把这种困难性扩散到大量自然问题。
+  \item 从这一章起，证明一个问题难，往往不再正面硬攻，而是把它放进一张“谁能编码谁”的网络里。
+\end{itemize}
+
+\newpage

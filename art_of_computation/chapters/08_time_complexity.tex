@@ -1,0 +1,38 @@
+\section{子任务 8：第 7 章 Time Complexity}
+
+\subsection{核心知识点}
+
+\begin{itemize}[leftmargin=2em]
+  \item 时间复杂度的定义与 Big-O、small-o 记号。
+  \item 类 P：可在多项式时间内判定的问题。
+  \item 类 NP：给定证书后可在多项式时间内验证的问题；等价地，也可看作非确定型多项式时间。
+  \item NP 完全：既在 NP 中，又是 NP-hard 的问题。
+  \item Cook--Levin theorem：SAT 是 NP 完全的。
+  \item 经典 NP 完全问题链：SAT、VERTEX COVER、HAMILTONIAN PATH、SUBSET SUM 等。
+\end{itemize}
+
+\subsection{典型问题与证明套路}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{证明某问题在 P}：直接给算法并精确计时，说明总步数由输入长度的多项式界定。
+  \item \textbf{证明某问题在 NP}：给出证书格式，再设计多项式时间验证器。
+  \item \textbf{证明 NP-hard}：从已知 NP 完全问题做多项式时间归约，通常通过 gadget 或结构翻译保持“有解当且仅当有解”。
+  \item \textbf{证明 NP 完全}：两步走，先证属于 NP，再证 NP-hard。
+  \item \textbf{理解 Cook--Levin}：把图灵机的接受计算编码成布尔公式，变量描述时间步、带格内容和状态，约束保证局部一致与全局接受。
+\end{enumerate}
+
+\subsection{证明背后的哲学}
+
+这一章的哲学是：\textbf{可计算不等于可行计算。}
+图灵机告诉你“能不能做”，复杂度告诉你“做不做得起”。P 之所以重要，不是因为多项式时间是绝对正确的效率定义，而是因为它在模型变化下足够稳健；线性、平方、立方可能不同，但都属于“可承受”的同一层级。
+
+另一个关键哲学是：\textbf{验证通常比搜索容易。} NP 正是把这种直觉制度化。
+
+\subsection{本章精华}
+
+\begin{itemize}[leftmargin=2em]
+  \item NP 完全理论给出了“为什么很多自然问题看起来都同样难”的统一解释。
+  \item Cook--Levin 证明了逻辑公式与一般计算之间可以互相编码，这是复杂性理论最核心的桥梁之一。
+\end{itemize}
+
+\newpage

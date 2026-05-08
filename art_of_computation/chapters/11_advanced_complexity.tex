@@ -1,0 +1,37 @@
+\section{子任务 11：第 10 章 Advanced Topics in Complexity Theory}
+
+\subsection{核心知识点}
+
+\begin{itemize}[leftmargin=2em]
+  \item 近似算法：当精确最优太贵时，求可证明接近最优的解。
+  \item 概率算法与 BPP：允许小概率出错以换取速度。
+  \item 交替计算与多项式层级：把存在/全称分支提升为模型原语。
+  \item 交互证明系统：证明者与验证者通过对话完成验证，最终得到 $IP = PSPACE$。
+  \item 并行计算、统一布尔电路、NC 与 P-completeness。
+  \item 密码学中的单向函数、陷门函数与公钥思想。
+\end{itemize}
+
+\subsection{典型问题与证明套路}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{证明近似比}：把算法输出与最优解比较，建立统一界。
+  \item \textbf{证明随机算法正确}：分析成功概率，并通过独立重复降低错误率。
+  \item \textbf{证明层级或等价}：把交替分支和量词前缀、博弈语义互相翻译。
+  \item \textbf{设计交互证明}：让验证者只做轻计算，但通过随机挑战迫使证明者无法持续作弊。
+  \item \textbf{讨论并行可计算性}：把算法改写成浅层电路，关心深度而不仅是总工作量。
+  \item \textbf{分析密码学安全}：通常不是直接证明“攻击绝不可能”，而是把攻击者的能力归约到某个被相信困难的计算问题上。
+\end{enumerate}
+
+\subsection{证明背后的哲学}
+
+这一章展示复杂性理论最有创造力的一面：\textbf{当标准计算框架受限时，不是立即放弃，而是逐个放松限制。}
+不要求精确最优，就得到近似算法；允许随机性，就得到更快算法；允许交互，就得到更强的验证机制；允许大规模并行，就得到新的效率尺度；利用困难性，还能反过来构建密码系统。
+
+\subsection{本章精华}
+
+\begin{itemize}[leftmargin=2em]
+  \item 复杂性理论不只是“证明难”，也在教你如何\textbf{带着约束重新设计计算}。
+  \item 这一章把理论推向现代计算思想的前沿：随机、交互、并行、安全都成为资源问题。
+\end{itemize}
+
+\newpage

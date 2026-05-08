@@ -1,0 +1,38 @@
+\section{子任务 2：第 1 章 Regular Languages}
+
+\subsection{核心知识点}
+
+\begin{itemize}[leftmargin=2em]
+  \item 有限自动机 DFA：把无限多个输入前缀压缩成有限多个状态。
+  \item NFA 与 $\varepsilon$-迁移：允许“猜测”，但不增加可识别能力。
+  \item 正则表达式：用代数式描述语言。
+  \item 三种表述的等价性：DFA、NFA、正则表达式刻画同一类语言。
+  \item 正则语言的闭包性质：并、连接、星、交、补等运算下封闭。
+  \item pumping lemma：给出正则语言无法处理某些长程依赖的必要条件。
+\end{itemize}
+
+\subsection{典型问题与证明套路}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{证明一个语言是正则的}：直接构造 DFA，或者先构造 NFA，再用等价性转回 DFA。
+  \item \textbf{证明正则语言在某运算下封闭}：构造组合自动机。
+  
+  对并运算，常见做法是让新自动机从两个子自动机中二选一开始；对交运算，则用积状态同时追踪两个自动机。
+  \item \textbf{证明 NFA 与 DFA 等价}：使用子集构造，把“当前可能所在的多个状态”压缩成一个 DFA 状态。
+  \item \textbf{证明正则表达式与自动机等价}：一边把表达式分解成基本块再拼装自动机，另一边把自动机消元成表达式。
+  \item \textbf{证明一个语言不是正则的}：假设其满足 pumping lemma，选一条足够长且结构敏感的串，再对所有可泵位置分类讨论，最后让泵送后的串破坏语言性质。
+\end{enumerate}
+
+\subsection{证明背后的哲学}
+
+这一章的核心哲学是：\textbf{有限状态意味着有限记忆，有限记忆意味着只能保留有限摘要，而不能保留无界精确信息。}
+只要一个语言需要机器记住“到底见过多少个 $a$，并且之后还要与同样多的 $b$ 配对”，它通常就超出了正则能力。正则性的本质不是语法长得简单，而是历史信息可以被有限状态完全概括。
+
+\subsection{本章精华}
+
+\begin{itemize}[leftmargin=2em]
+  \item 正则语言的精华不是某一种定义，而是\textbf{机器、代数式、闭包性质三种视角的完全一致}。
+  \item pumping lemma 的价值不在于“万能判非正则”，而在于揭示：有限自动机无法维持长距离的精确匹配。
+\end{itemize}
+
+\newpage

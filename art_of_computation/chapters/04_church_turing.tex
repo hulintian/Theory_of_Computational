@@ -1,0 +1,33 @@
+\section{子任务 4：第 3 章 The Church--Turing Thesis}
+
+\subsection{核心知识点}
+
+\begin{itemize}[leftmargin=2em]
+  \item 图灵机 TM：用有限控制、读写头和无限纸带抽象“逐步执行的算法”。
+  \item 多带图灵机、非确定型图灵机、枚举器等变体。
+  \item 这些变体在\textbf{可计算性意义上等价}：它们解决同一批问题。
+  \item Church--Turing thesis：任何“有效可计算”的过程，都可以由图灵机实现。
+\end{itemize}
+
+\subsection{典型问题与证明套路}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{设计一台图灵机}：不要陷入低层细节，先用高层阶段描述，再把阶段翻译为局部操作。
+  \item \textbf{证明两个模型等价}：核心是模拟。一个模型的单步，要能系统地翻译成另一个模型的有限多步。
+  \item \textbf{证明某语言可枚举}：构造枚举器，或从识别器出发枚举所有输入并进行交错模拟。
+  \item \textbf{讨论“算法”的定义}：这里不是做定理证明，而是做概念稳健性论证，看所有合理模型是否收敛到同一能力边界。
+\end{enumerate}
+
+\subsection{证明背后的哲学}
+
+这一章最深的思想是：\textbf{算法的本质与具体硬件无关。}
+只要一个模型具备有限规则控制、可重复的局部读写、以及无界但离散的工作空间，它就会落入同一个可计算性宇宙。Church--Turing thesis 不是形式定理，因为“有效可计算”本身是前形式概念；但它通过多种模型的一致收敛，变成了理论计算机科学最可信的原则之一。
+
+\subsection{本章精华}
+
+\begin{itemize}[leftmargin=2em]
+  \item 图灵机并不“像真实电脑”，但它抓住了算法最稳定的骨架。
+  \item 后面所有关于可判定、不可判定、复杂度类别的讨论，都以这个统一模型为基准。
+\end{itemize}
+
+\newpage

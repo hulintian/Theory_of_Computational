@@ -1,0 +1,37 @@
+\section{子任务 7：第 6 章 Advanced Topics in Computability Theory}
+
+\subsection{核心知识点}
+
+\begin{itemize}[leftmargin=2em]
+  \item recursion theorem：机器可以在某种意义上获得自己的描述，并据此进行自引用计算。
+  \item 逻辑理论的可判定与不可判定：有些形式系统可算法判定，有些则不行。
+  \item Turing reducibility：允许算法调用 oracle，比较问题之间更细的相对难度。
+  \item Kolmogorov complexity 风格的信息定义：一个对象的信息量等于其最短有效描述长度。
+  \item 不可压缩串与随机性：绝大多数长串都没有显著更短的描述。
+\end{itemize}
+
+\subsection{典型问题与证明套路}
+
+\begin{enumerate}[leftmargin=2em]
+  \item \textbf{涉及“程序谈论自己”}：优先考虑 recursion theorem，而不只是反证式自指。
+  \item \textbf{证明某逻辑理论可判定}：寻找语法正规化、量词消去或有限等价表示。
+  \item \textbf{比较两个不可判定问题谁更强}：使用 Turing reducibility，看一个问题是否可作为另一个问题的 oracle 子程序。
+  \item \textbf{证明存在高复杂度对象}：做计数。短程序数量少于长字符串数量，所以必有字符串无法被大幅压缩。
+\end{enumerate}
+
+\subsection{证明背后的哲学}
+
+这一章展示了可计算性理论的两个高级转向。
+
+第一，\textbf{自指不只会制造悖论，也能制造构造。} recursion theorem 说明，自引用可以被驯化成正规工具。
+
+第二，\textbf{信息可以用可计算描述长度来定义。} 这把“复杂”“随机”“有规律”从直觉词汇变成了可比较的理论量。
+
+\subsection{本章精华}
+
+\begin{itemize}[leftmargin=2em]
+  \item 可计算性理论并不止于“哪些问题不可判定”，它还在研究自引用、逻辑系统和信息本身。
+  \item 这一章把“机器处理对象”推进到“机器处理机器描述”，层次显著提高。
+\end{itemize}
+
+\newpage

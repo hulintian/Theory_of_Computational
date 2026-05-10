@@ -2,7 +2,7 @@
 \section*{Chapter 8}
 \addcontentsline{toc}{section}{Chapter 8}
 
-\subsection*{8.1}
+\subsection*{8.3}
 
 \begin{figure}[H]
   \centering
@@ -11,14 +11,40 @@
   \label{fig:hw_8_1}
 \end{figure}
 
-\subsection*{8.3}
-
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_3.png}
   \caption{}
   \label{fig:hw_8_3}
 \end{figure}
+
+\subsubsection*{解答}
+
+选手 II 有必胜策略，选手 I 没有必胜策略。
+
+在广义地理学游戏中，已经经过的结点不能再次使用；当前选手若无法沿一条合法有向边移动，则失败。由题图可读出边为
+\[
+1\to 2,\qquad
+2\to 3,\quad 2\to 4,\qquad
+3\to 6,\qquad
+4\to 5,\qquad
+5\to 2,\quad 5\to 6.
+\]
+起点是 $1$，所以选手 I 第一手只能走
+\[
+1\to 2.
+\]
+此时轮到选手 II。若选手 II 走 $2\to 3$，则选手 I 走 $3\to 6$，选手 II 在结点 $6$ 无路可走而输。因此选手 II 不应走向 $3$。
+
+选手 II 走
+\[
+2\to 4
+\]
+则选手 I 被迫走 $4\to 5$。此时结点 $2$ 已经访问过，所以边 $5\to 2$ 不再合法；选手 II 只需走
+\[
+5\to 6.
+\]
+于是选手 I 在结点 $6$ 无合法移动而失败。故选手 II 的必胜策略是在到达结点 $2$ 后走向结点 $4$。
 
 \subsection*{8.6}
 
@@ -29,6 +55,22 @@
   \label{fig:hw_8_6}
 \end{figure}
 
+\subsubsection*{证明}
+
+设语言 $B$ 是 PSPACE 难的。按定义，对任意 $A\in\mathrm{PSPACE}$，都有多项式时间多对一归约
+\[
+A\leq_m^p B.
+\]
+又因为
+\[
+\mathrm{NP}\subseteq\mathrm{PSPACE},
+\]
+所以对任意 $A\in\mathrm{NP}$，也有 $A\in\mathrm{PSPACE}$，从而同样满足
+\[
+A\leq_m^p B.
+\]
+这正是 $B$ 为 NP 难的定义。因此任意 PSPACE 难语言也是 NP 难语言。$\blacksquare$
+
 \subsection*{8.10}
 
 \begin{figure}[H]
@@ -38,6 +80,26 @@
   \label{fig:hw_8_10}
 \end{figure}
 
+\subsubsection*{证明}
+
+给定一个 $n\times n$ 的推广五子棋局面 $B$，棋盘上至多还有 $n^2$ 个空位。因此从任意局面继续下去，游戏长度至多为 $n^2$ 步；不存在无限对局。
+
+构造如下递归判定过程 $\mathrm{Win}(B,P)$，其中 $P\in\{X,O\}$ 是当前要落子的选手。
+\begin{enumerate}[label=(\arabic*)]
+  \item 若当前局面已经有 $X$ 的五子连线，则返回真。
+  \item 若当前局面已经有 $O$ 的五子连线，则返回假。
+  \item 若无空位，则返回假。
+  \item 若 $P=X$，枚举所有合法落子位置；只要存在一步使得递归调用返回真，就返回真，否则返回假。
+  \item 若 $P=O$，枚举所有合法落子位置；只要存在一步使得递归调用返回假，就返回假，否则返回真。
+\end{enumerate}
+这个过程精确表达了“$X$ 是否有必胜策略”：$X$ 的结点取存在分支，$O$ 的结点取所有分支。
+
+空间复杂度方面，递归深度至多为 $n^2$。每一层只需保存当前尝试的落子位置、轮到谁走以及一个 $n\times n$ 棋盘，或者等价地在原棋盘上递归地修改并回溯。因此总空间为多项式阶，例如 $O(n^4)$ 以内。于是该深度优先搜索虽然时间可能指数大，但只使用多项式空间。
+
+故
+\[
+GM\in\mathrm{PSPACE}.
+\]
 
 \subsection*{8.13}
 
@@ -48,6 +110,33 @@
   \label{fig:hw_8_13}
 \end{figure}
 
+\subsubsection*{证明}
+
+先证 $A_{\mathrm{LBA}}\in\mathrm{PSPACE}$。给定输入 $\langle M,w\rangle$，其中 $M$ 是一台 LBA。因为 LBA 只能使用与输入长度线性相关的带空间，所以 $M$ 在 $w$ 上的每个配置长度为多项式。配置总数至多为指数个。构造配置图 $G$：结点是 $M$ 在 $w$ 上的合法配置，边表示一步计算关系。于是
+\[
+\langle M,w\rangle\in A_{\mathrm{LBA}}
+\]
+当且仅当在 $G$ 中，初始配置能够到达某个接受配置。
+
+可用 Savitch 定理中的递归可达性算法判定这个可达性问题。递归过程中只需保存常数个配置和一个步数界，所用空间为配置长度的多项式。因此 $A_{\mathrm{LBA}}\in\mathrm{PSPACE}$。
+
+再证 PSPACE 难。设 $A\in\mathrm{PSPACE}$，则存在图灵机 $M$ 和多项式 $p$，使得 $M$ 在每个长度为 $n$ 的输入上只使用 $p(n)$ 个带格。对输入 $w$，构造 LBA $B_w$ 以及输入
+\[
+x=1^{p(|w|)}.
+\]
+机器 $B_w$ 把 $w$ 硬编码在有限控制中，并在长度为 $p(|w|)$ 的输入带空间内模拟 $M(w)$。若 $M$ 接受 $w$，则 $B_w$ 接受 $x$；若 $M$ 拒绝 $w$，则 $B_w$ 拒绝 $x$。因此
+\[
+w\in A
+\iff
+\langle B_w,x\rangle\in A_{\mathrm{LBA}}.
+\]
+该映射可在多项式时间内完成，所以 $A\leq_m^p A_{\mathrm{LBA}}$。由于 $A$ 是任意 PSPACE 语言，$A_{\mathrm{LBA}}$ 是 PSPACE 难的。
+
+综上，
+\[
+A_{\mathrm{LBA}}\ \text{是 PSPACE 完全的}.
+\]
+
 \subsection*{8.20}
 
 \begin{figure}[H]
@@ -56,6 +145,32 @@
   \caption{}
   \label{fig:hw_8_20}
 \end{figure}
+
+\subsubsection*{证明}
+
+设输入为 $a\#b\#c$，三者均为二进制自然数。记最低位为第 $0$ 位。我们逐位验证乘积
+\[
+a\cdot b=c.
+\]
+对第 $k$ 位，乘法竖式给出的未进位和为
+\[
+s_k=\sum_{i+j=k} a_j b_i+\gamma_k,
+\]
+其中 $a_j$ 是 $a$ 的第 $j$ 位，$b_i$ 是 $b$ 的第 $i$ 位，$\gamma_k$ 是从更低位传来的进位。第 $k$ 位乘积应为 $s_k\bmod 2$，下一位进位为
+\[
+\gamma_{k+1}=\left\lfloor s_k/2\right\rfloor.
+\]
+
+一台对数空间机从 $k=0$ 开始依次检查各位。它只需保存：
+\[
+k,\quad i,\quad j,\quad \gamma_k
+\]
+以及有限个状态。所有这些数都不超过输入长度的多项式，故只需 $O(\log n)$ 空间。需要读取某一位 $a_j$ 或 $b_i$ 时，机器从输入开头重新扫描并定位该位即可；这会增加时间，但不增加空间。
+
+逐位检查完所有可能的乘积位后，再确认高位进位与 $c$ 的剩余高位一致，并确认输入格式合法。整个过程中工作带空间为 $O(\log n)$，因此
+\[
+MULT\in\mathrm{L}.
+\]
 
 \subsection*{8.21}
 
@@ -66,6 +181,33 @@
   \label{fig:hw_8_21}
 \end{figure}
 
+\subsubsection*{证明}
+
+先看 $A_2$。设 $x$ 的二进制长度为 $m$。在计算
+\[
+R^+(x)=x+x^R
+\]
+时，第 $i$ 位只依赖于 $x$ 的第 $i$ 位、$x$ 的第 $m-1-i$ 位以及来自低位的进位。对数空间机按位从低到高扫描，保存当前位置 $i$ 和一个进位位，并反复从输入中定位所需的两位即可。每一步检查所得结果位是否与 $y$ 的对应位相等，最后检查最高进位。因此 $A_2\in\mathrm{L}$。
+
+再看 $A_3$。令
+\[
+z=R^+(x).
+\]
+我们不能把 $z$ 整体写在工作带上，但可以在对数空间内按需计算 $z$ 的任意一位：若要计算 $z_i$，只需从低位到第 $i$ 位重新执行上段的加法进位计算。这个子过程只保存位置和进位，仍为对数空间。
+
+于是为了验证
+\[
+y=R^+(z)=z+z^R,
+\]
+机器再次逐位相加。每当需要 $z$ 的某一位或 $z^R$ 的某一位时，就调用上述按需计算子过程。外层只保存当前位置和进位，内层也只用对数空间；嵌套调用不会要求同时保存多项式长的字符串。因此总空间仍为 $O(\log n)$。
+
+故
+\[
+A_2\in\mathrm{L}
+\qquad\text{且}\qquad
+A_3\in\mathrm{L}.
+\]
+
 \subsection*{8.24}
 
 \begin{figure}[H]
@@ -74,6 +216,43 @@
   \caption{}
   \label{fig:hw_8_24}
 \end{figure}
+
+\subsubsection*{证明}
+
+取字母表为 $\{a\}$。令 $p_1,\ldots,p_n$ 为前 $n$ 个素数，并令
+\[
+P_n=p_1p_2\cdots p_n.
+\]
+显然 $P_n\geq 2^n$。
+
+对每个素数 $p$，构造正则表达式
+\[
+D_p=(a^p)^*(a\cup a^2\cup\cdots\cup a^{p-1})(a^p)^*.
+\]
+它恰好生成长度不能被 $p$ 整除的一元串。令
+\[
+R_n=\epsilon\cup D_{p_1}\cup D_{p_2}\cup\cdots\cup D_{p_n},
+\qquad
+S_n=a^*.
+\]
+因为第 $i$ 个素数满足 $p_i=O(i\log i)$，所以
+\[
+|R_n|=O\!\left(\sum_{i=1}^n p_i^2\right)=\mathrm{poly}(n),
+\qquad
+|S_n|=O(1).
+\]
+
+现在比较 $L(R_n)$ 和 $L(S_n)$。任意长度 $1\leq \ell<P_n$ 的字符串 $a^\ell$ 不可能同时被所有 $p_1,\ldots,p_n$ 整除，否则 $P_n\mid \ell$，矛盾。因此存在某个 $p_i$ 不整除 $\ell$，从而 $a^\ell\in L(D_{p_i})\subseteq L(R_n)$。同时 $\epsilon\in L(R_n)$，所以二者在所有长度小于 $P_n$ 的字符串上一致。
+
+但是 $a^{P_n}\in L(S_n)$，而 $P_n$ 被每个 $p_i$ 整除，所以
+\[
+a^{P_n}\notin L(R_n).
+\]
+因此 $L(R_n)\neq L(S_n)$，且它们第一次相异的字符串长度至少为
+\[
+P_n\geq 2^n.
+\]
+取任意常数 $0<\varepsilon\leq 1$ 即得题设要求。
 
 \subsection*{8.28}
 
@@ -84,6 +263,30 @@
   \label{fig:hw_8_28}
 \end{figure}
 
+\subsubsection*{证明}
+
+先证 $BOTH_{\mathrm{NFA}}\in\mathrm{NL}$。给定 $\langle M_1,M_2\rangle$，非确定型对数空间机只需在两个 NFA 的乘积自动机上猜一条路径。它保存当前状态对
+\[
+(q_1,q_2)
+\]
+以及一个长度不超过 $|Q_1||Q_2|$ 的计数器。每一步非确定地猜下一个输入符号以及两台 NFA 的相应转移。若在计数器耗尽前到达某个
+\[
+q_1\in F_1,\qquad q_2\in F_2
+\]
+的状态对，则接受。若交集非空，则乘积自动机中必存在一条长度至多 $|Q_1||Q_2|$ 的简单接受路径；反之，任何接受路径都给出一个同时被两台 NFA 接受的字符串。因此该算法正确，且只用对数空间。
+
+再证 NL 难。把 NL 完全问题 $\mathrm{PATH}$ 归约到 $BOTH_{\mathrm{NFA}}$。给定有向图 $G$ 及结点 $s,t$，构造一台一元 NFA $M_1$：状态集合为 $G$ 的结点，起始状态为 $s$，唯一接受状态为 $t$；对每条边 $u\to v$，加入转移
+\[
+u\xrightarrow{a}v.
+\]
+再令 $M_2$ 为接受 $a^*$ 的一状态 NFA。于是
+\[
+L(M_1)\cap L(M_2)\neq\varnothing
+\]
+当且仅当 $G$ 中存在从 $s$ 到 $t$ 的有向路径。该构造显然可在对数空间内输出。因此 $BOTH_{\mathrm{NFA}}$ 是 NL 难的。
+
+综上，$BOTH_{\mathrm{NFA}}$ 是 NL 完全的。
+
 \subsection*{8.30}
 
 \begin{figure}[H]
@@ -93,6 +296,44 @@
   \label{fig:hw_8_30}
 \end{figure}
 
+\subsubsection*{证明}
+
+这里
+\[
+E_{\mathrm{DFA}}=\{\langle M\rangle\mid M\text{ 是 DFA 且 }L(M)=\varnothing\}.
+\]
+
+先证 $E_{\mathrm{DFA}}\in\mathrm{NL}$。DFA 的语言非空当且仅当从起始状态可达某个接受状态。因此
+\[
+\overline{E_{\mathrm{DFA}}}
+\]
+就是一个有向图可达性问题，属于 NL。由 Immerman--Szelepcsényi 定理，$\mathrm{NL}=\mathrm{coNL}$，所以 $E_{\mathrm{DFA}}\in\mathrm{NL}$。
+
+再证 NL 难。先观察到
+\[
+\mathrm{NONEMPTY}_{\mathrm{DFA}}
+=\{\langle M\rangle\mid L(M)\neq\varnothing\}
+\]
+是 NL 难的：给定 $\mathrm{PATH}$ 实例 $(G,s,t)$，为图中每条边指定一个输入符号，并构造 DFA，使其从状态 $u$ 在对应边符号上转移到 $v$；未定义的转移进入死状态。起始状态为 $s$，唯一接受状态为 $t$。则该 DFA 的语言非空当且仅当 $t$ 从 $s$ 可达。
+
+由于 $\mathrm{NL}=\mathrm{coNL}$，对任意 $A\in\mathrm{NL}$，其补语言 $\overline A$ 也在 NL。把 $\overline A$ 对数空间归约到 $\mathrm{NONEMPTY}_{\mathrm{DFA}}$，得到 DFA $M_x$，满足
+\[
+x\in\overline A
+\iff
+L(M_x)\neq\varnothing.
+\]
+于是
+\[
+x\in A
+\iff
+L(M_x)=\varnothing
+\iff
+\langle M_x\rangle\in E_{\mathrm{DFA}}.
+\]
+故 $A\leq_m^L E_{\mathrm{DFA}}$。因为 $A$ 任意，$E_{\mathrm{DFA}}$ 是 NL 难的。
+
+综上，$E_{\mathrm{DFA}}$ 是 NL 完全的。
+
 \subsection*{8.33}
 
 \begin{figure}[H]
@@ -101,5 +342,28 @@
   \caption{}
   \label{fig:hw_8_33}
 \end{figure}
+
+\subsubsection*{证明}
+
+先证 $CYCLE\in\mathrm{NL}$。给定有向图 $G$，非确定地猜一个起点 $v$，再猜一条长度在 $1$ 到 $|V|$ 之间的有向路径。机器只保存当前结点、起点 $v$ 和步数计数器。若在至少走了一条边后回到 $v$，则接受。若图中存在有向回路，则存在一个长度至多 $|V|$ 的简单有向回路，所以该算法正确，并且只使用对数空间。
+
+再证 NL 难。把 $\mathrm{PATH}$ 归约到 $CYCLE$。给定实例 $(G,s,t)$，设 $|V(G)|=n$。构造分层有向图 $G'$：其结点为
+\[
+(v,i),\qquad v\in V(G),\quad 0\leq i\leq n.
+\]
+对 $G$ 中每条边 $u\to v$ 和每个 $0\leq i<n$，加入边
+\[
+(u,i)\to(v,i+1).
+\]
+这些边都从低层指向高层，因此本身不产生回路。最后，对每个 $1\leq i\leq n$，加入一条边
+\[
+(t,i)\to(s,0).
+\]
+
+若 $G$ 中存在从 $s$ 到 $t$ 的路径，则删去重复结点后可取长度至多 $n$ 的简单路径；它在 $G'$ 中给出从 $(s,0)$ 到某个 $(t,i)$ 的路径，再接上边 $(t,i)\to(s,0)$，得到有向回路。反之，$G'$ 中任何回路都必须使用某条回边 $(t,i)\to(s,0)$；而回边之前的分层路径正给出 $G$ 中从 $s$ 到 $t$ 的路径。
+
+该构造可在对数空间内完成，所以 $\mathrm{PATH}\leq_m^L CYCLE$。故 $CYCLE$ 是 NL 难的。
+
+因此 $CYCLE$ 是 NL 完全的。
 
 \clearpage

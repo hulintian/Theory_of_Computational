@@ -11,6 +11,30 @@
   \label{fig:hw_10_2}
 \end{figure}
 
+\subsubsection*{证明}
+
+取费马测试的底数
+\[
+a=5.
+\]
+有
+\[
+\gcd(5,12)=1.
+\]
+若 $12$ 能通过以 $5$ 为底的费马测试，则应满足
+\[
+5^{12-1}=5^{11}\equiv 1 \pmod{12}.
+\]
+但
+\[
+5^2=25\equiv 1\pmod{12},
+\]
+所以
+\[
+5^{11}=5(5^2)^5\equiv 5\not\equiv 1\pmod{12}.
+\]
+因此 $12$ 不能通过该费马测试。故 $12$ 不是伪素数。
+
 \subsection*{10.4}
 
 \begin{figure}[H]
@@ -19,6 +43,29 @@
   \caption{}
   \label{fig:hw_10_4}
 \end{figure}
+
+\subsubsection*{证明}
+
+构造一个按顺序读取 $x_1,\ldots,x_n$ 的分支程序。第 $i$ 层保存读完前 $i-1$ 个输入后的奇偶状态：
+\[
+E_i:\text{ 当前 }1\text{ 的个数为偶数},
+\qquad
+O_i:\text{ 当前 }1\text{ 的个数为奇数}.
+\]
+起始结点为 $E_1$。在第 $i$ 层查询变量 $x_i$：
+\[
+\begin{array}{lll}
+E_i \xrightarrow{x_i=0} E_{i+1}, &\qquad& E_i \xrightarrow{x_i=1} O_{i+1},\\
+O_i \xrightarrow{x_i=0} O_{i+1}, && O_i \xrightarrow{x_i=1} E_{i+1}.
+\end{array}
+\]
+读完 $x_n$ 后，从 $O_{n+1}$ 连到接受结点，从 $E_{n+1}$ 连到拒绝结点。
+
+该分支程序每一层只有两个结点，总结点数为
+\[
+2(n+1)+2=O(n).
+\]
+它接受当且仅当输入中 $1$ 的个数为奇数，因此计算的是 $n$ 输入奇偶函数。
 
 \subsection*{10.7}
 
@@ -29,6 +76,25 @@
   \label{fig:hw_10_7}
 \end{figure}
 
+\subsubsection*{证明}
+
+设 $A\in\mathrm{BPP}$，由概率多项式时间图灵机 $M$ 判定。对长度为 $n$ 的输入，可假设 $M$ 恰好使用
+\[
+r(n)
+\]
+个随机比特，其中 $r$ 是某个多项式。每一个随机比特串 $\rho\in\{0,1\}^{r(n)}$ 唯一确定 $M$ 的一条计算分支。
+
+确定型 PSPACE 机器可以枚举所有 $\rho$，逐一模拟 $M(w;\rho)$，并统计接受分支数。枚举计数器、接受分支计数器和一次模拟所需的空间都为多项式；虽然分支数是指数个，但空间可以复用。
+
+最后比较接受分支数是否大于相应阈值，例如是否至少为
+\[
+\frac23\cdot 2^{r(n)}.
+\]
+若是则接受，否则拒绝。该判定与 $M$ 的 BPP 判定条件一致，并且只使用多项式空间。因此
+\[
+\mathrm{BPP}\subseteq\mathrm{PSPACE}.
+\]
+
 \subsection*{10.8}
 
 \begin{figure}[H]
@@ -37,6 +103,31 @@
   \caption{}
   \label{fig:hw_10_8}
 \end{figure}
+
+\subsubsection*{证明}
+
+设正则语言 $A$ 由 DFA
+\[
+D=(Q,\{0,1\},\delta,q_0,F)
+\]
+识别。因为 $A$ 固定，状态集合 $Q$ 的大小是常数。
+
+每个输入比特 $b\in\{0,1\}$ 都诱导一个从 $Q$ 到 $Q$ 的函数
+\[
+T_b(q)=\delta(q,b).
+\]
+一个长度为 $n$ 的输入 $x_1\cdots x_n$ 是否被接受，只取决于函数复合
+\[
+T_{x_n}\circ T_{x_{n-1}}\circ\cdots\circ T_{x_1}
+\]
+作用在 $q_0$ 上后是否落入 $F$。
+
+用常数个比特编码一个 $Q\to Q$ 的函数。由于 $|Q|$ 是常数，两个这样的函数的复合也可由常数规模、常数深度的电路计算。于是构造一棵平衡二叉树：叶子根据输入位 $x_i$ 输出 $T_0$ 或 $T_1$ 的编码，内部结点计算左右子树对应函数的复合。最后用常数规模电路检查复合函数把 $q_0$ 映到的状态是否属于 $F$。
+
+该树有 $n$ 个叶子和 $O(n)$ 个内部结点，所以规模为 $O(n)$；树高为 $O(\log n)$，每层只增加常数深度，所以总深度为 $O(\log n)$。因此 $A$ 的规模--深度复杂度为
+\[
+(O(n),O(\log n)).
+\]
 
 \subsection*{10.10}
 
@@ -47,6 +138,48 @@
   \label{fig:hw_10_10}
 \end{figure}
 
+\subsubsection*{证明}
+
+记
+\[
+\mathrm{PDA}_k=\{A\mid A\text{ 可由一台 }k\text{ 头下推自动机识别}\}.
+\]
+证明分两边。
+
+\paragraph{第一步：$\bigcup_k\mathrm{PDA}_k\subseteq\mathrm{P}$.}
+固定 $k$，考虑一台 $k$ 头下推自动机 $M$ 在长度为 $n$ 的输入上的运行。忽略栈中较深部分后，一个表层配置由有限控制状态、$k$ 个输入头位置和栈顶符号决定，因此表层配置数为
+\[
+O(n^k).
+\]
+对固定的栈符号 $\gamma$，可计算一个摘要关系
+\[
+R_\gamma(p,q),
+\]
+表示从表层配置 $p$ 出发、在栈顶为 $\gamma$ 且不访问 $\gamma$ 以下栈内容的前提下，机器是否能最终弹出该 $\gamma$ 并到达表层配置 $q$。这些摘要关系可由动态规划或最小不动点饱和算法求出；关系项总数为多项式，因为 $k$ 和栈字母表都是固定的。
+
+一旦所有摘要关系求出，就能在多项式时间内判断初始配置是否可达接受配置。因此每个 $\mathrm{PDA}_k$ 中的语言都属于 $\mathrm{P}$。
+
+\paragraph{第二步：$\mathrm{P}\subseteq\bigcup_k\mathrm{PDA}_k$.}
+使用定理
+\[
+\mathrm{P}=\mathrm{ALOGSPACE}.
+\]
+设 $A\in\mathrm{P}$，取一台交替对数空间机 $N$ 判定 $A$。由于 $N$ 只使用 $O(\log n)$ 空间，它的一个配置可由常数多个 $0$ 到 $n^{O(1)}$ 之间的整数编码。每个这样的整数可用常数个输入头的位置作为 $n$ 进制计数器表示；因此存在某个固定的 $k$，使得一台 $k$ 头下推自动机能够在其输入头位置中保存并更新 $N$ 的当前配置编码。
+
+可令 $N$ 携带一个多项式时间时钟；该时钟也只需 $O(\log n)$ 位，因此仍可并入上述常数多个计数器。这样 $N$ 的交替计算树深度为多项式，且不会出现无限分支。
+
+下推栈用于做交替计算树的深度优先求值。对存在配置，自动机依次计算其后继配置并递归检查，只要找到一个接受后继即可返回接受；对全称配置，自动机把尚未检查的后继信息压栈，逐个验证所有后继都接受。每次递归调用只需在输入头位置中保存当前配置编码，并用栈保存返回点和待检查分支。于是栈承担递归搜索记录的作用，而配置本身始终由常数多个输入头表示。
+
+于是存在某个固定 $k$，使得 $A\in\mathrm{PDA}_k$。因此
+\[
+\mathrm{P}\subseteq\bigcup_k\mathrm{PDA}_k.
+\]
+
+两边合并得到
+\[
+\mathrm{P}=\bigcup_k\mathrm{PDA}_k.
+\]
+
 \subsection*{10.13}
 
 \begin{figure}[H]
@@ -56,6 +189,47 @@
   \label{fig:hw_10_13}
 \end{figure}
 
+\subsubsection*{证明}
+
+假设
+\[
+\mathrm{PH}=\mathrm{PSPACE}.
+\]
+由于 $\mathrm{TQBF}$ 是 PSPACE 完全语言，且 $\mathrm{PSPACE}=\mathrm{PH}$，可知
+\[
+\mathrm{TQBF}\in\mathrm{PH}.
+\]
+而
+\[
+\mathrm{PH}=\bigcup_{k\geq 0}\Sigma_k^p,
+\]
+所以存在某个固定的 $m$，使得
+\[
+\mathrm{TQBF}\in\Sigma_m^p.
+\]
+
+现在取任意 $A\in\mathrm{PSPACE}$。由于 $\mathrm{TQBF}$ 是 PSPACE 完全的，
+\[
+A\leq_m^p \mathrm{TQBF}.
+\]
+又 $\Sigma_m^p$ 对多项式时间多对一归约封闭，因此
+\[
+A\in\Sigma_m^p.
+\]
+于是
+\[
+\mathrm{PSPACE}\subseteq\Sigma_m^p.
+\]
+另一方面
+\[
+\Sigma_m^p\subseteq\mathrm{PH}=\mathrm{PSPACE}.
+\]
+故
+\[
+\mathrm{PH}=\mathrm{PSPACE}=\Sigma_m^p.
+\]
+这说明从第 $m$ 层开始，多项式时间层次全部坍缩到 $\Sigma_m^p$。因此多项式时间层次至多只有有限个不同的层次。
+
 \subsection*{10.19}
 
 \begin{figure}[H]
@@ -64,5 +238,40 @@
   \caption{}
   \label{fig:hw_10_19}
 \end{figure}
+
+\subsubsection*{证明}
+
+总有
+\[
+\mathrm{RP}\subseteq\mathrm{NP},
+\]
+因为 RP 机器在接受输入上存在一条接受随机分支，而在拒绝输入上没有接受分支；接受随机串可作为 NP 证书。
+
+下面在假设
+\[
+\mathrm{NP}\subseteq\mathrm{BPP}
+\]
+下证明 $\mathrm{NP}\subseteq\mathrm{RP}$。只需证明 $\mathrm{SAT}\in\mathrm{RP}$，因为任意 NP 语言都可多项式时间归约到 SAT，而 RP 对多项式时间多对一归约封闭。
+
+由假设，$\mathrm{SAT}\in\mathrm{BPP}$。把这个 BPP 算法放大，使其在每次调用上的错误概率小于 $1/(10n)$，其中 $n$ 是公式变量数。
+
+给定公式 $\phi(x_1,\ldots,x_n)$，RP 算法尝试构造一个满足赋值。依次处理变量 $x_i$：在已经固定前缀赋值后，调用放大后的 BPP-SAT 算法判断令 $x_i=0$ 后的剩余公式是否仍可满足；若答案为是，则令 $x_i=0$，否则令 $x_i=1$。所有变量赋值完成后，确定性地检查所得赋值是否真的满足 $\phi$；满足则接受，否则拒绝。
+
+若 $\phi$ 不可满足，则无论 BPP 子程序怎样回答，最终得到的赋值都不可能满足 $\phi$，所以算法一定拒绝。这给出了 RP 所需的单边错误。
+
+若 $\phi$ 可满足，则只要所有 $n$ 次 BPP 调用都回答正确，上述自归约过程就会始终保留至少一个满足赋值，最终构造出真正的满足赋值并接受。由并合界，所有调用都正确的概率至少为
+\[
+1-\frac{n}{10n}=\frac9{10},
+\]
+特别地大于 $1/2$。因此 $\mathrm{SAT}\in\mathrm{RP}$。
+
+故
+\[
+\mathrm{NP}\subseteq\mathrm{RP}.
+\]
+结合 $\mathrm{RP}\subseteq\mathrm{NP}$，得到
+\[
+\mathrm{NP}=\mathrm{RP}.
+\]
 
 \clearpage

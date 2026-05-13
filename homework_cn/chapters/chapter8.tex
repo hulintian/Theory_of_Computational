@@ -2,7 +2,7 @@
 \section*{Chapter 8}
 \addcontentsline{toc}{section}{Chapter 8}
 
-\subsection*{8.3}
+\subsection*{8.1}
 
 \begin{figure}[H]
   \centering
@@ -11,9 +11,69 @@
   \label{fig:hw_8_1}
 \end{figure}
 
+\subsubsection*{证明}
+
+设 $\mathcal{C}_1$ 是用单带 TM 定义得到的空间复杂性类 $\mathrm{SPACE}(f(n))$，$\mathcal{C}_2$ 是用“两带且输入带只读”的 TM 定义得到的 $\mathrm{SPACE}(f(n))$。我们证明
+\[
+\mathcal{C}_1=\mathcal{C}_2,
+\qquad
+\text{其中 }f(n)\ge n.
+\]
+
+\paragraph{$\mathcal{C}_1\subseteq \mathcal{C}_2$}
+设单带机 $M$ 在长度为 $n$ 的输入上使用至多 $f(n)$ 个带格。构造两带只读输入机 $N$：
+
+\[
+N=\text{``对于输入 }w\text{：}
+\]
+\[
+\text{1. 先把只读输入带上的 }w\text{ 复制到工作带上。}
+\]
+\[
+\text{2. 然后在工作带上逐步模拟 }M\text{ 对 }w\text{ 的计算。''}
+\]
+
+复制输入只需 $n$ 个工作带格，而 $f(n)\ge n$，故这一步仍在 $O(f(n))$ 空间内。此后模拟 $M$ 最多再使用 $f(n)$ 个工作带格，所以 $N$ 也属于 $\mathrm{SPACE}(f(n))$。因此
+\[
+\mathcal{C}_1\subseteq \mathcal{C}_2.
+\]
+
+\paragraph{$\mathcal{C}_2\subseteq \mathcal{C}_1$}
+设两带只读输入机 $M$ 在长度为 $n$ 的输入上使用至多 $f(n)$ 个工作带格。构造单带机 $N$ 如下：
+
+\[
+N=\text{``对于输入 }w\text{：}
+\]
+\[
+\text{1. 保留前 }n\text{ 个带格上的输入 }w\text{ 不改写，把它当作原来的只读输入带。}
+\]
+\[
+\text{2. 在其右侧开辟工作区，存放 }M\text{ 的工作带内容。}
+\]
+\[
+\text{3. 用标记记录 }M\text{ 的输入头位置和工作头位置，并逐步模拟 }M\text{。''}
+\]
+
+这样，$N$ 需要的空间是“输入区 $n$ 格”加上“工作区至多 $f(n)$ 格”，总共不超过
+\[
+n+f(n)=O(f(n)),
+\]
+因为 $f(n)\ge n$。故 $N$ 仍在 $\mathrm{SPACE}(f(n))$ 内工作，从而
+\[
+\mathcal{C}_2\subseteq \mathcal{C}_1.
+\]
+
+综上，
+\[
+\mathrm{SPACE}(f(n))
+\]
+在这两种机器模型下定义相同。$\blacksquare$
+
+\subsection*{8.3}
+
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_3.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_3.png}
   \caption{}
   \label{fig:hw_8_3}
 \end{figure}
@@ -50,7 +110,7 @@
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_6.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_6.png}
   \caption{}
   \label{fig:hw_8_6}
 \end{figure}
@@ -75,7 +135,7 @@ A\leq_m^p B.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_10.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_10.png}
   \caption{}
   \label{fig:hw_8_10}
 \end{figure}
@@ -105,7 +165,7 @@ GM\in\mathrm{PSPACE}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_13.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_13.png}
   \caption{}
   \label{fig:hw_8_13}
 \end{figure}
@@ -141,7 +201,7 @@ A_{\mathrm{LBA}}\ \text{是 PSPACE 完全的}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_20.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_20.png}
   \caption{}
   \label{fig:hw_8_20}
 \end{figure}
@@ -176,7 +236,7 @@ MULT\in\mathrm{L}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_21.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_21.png}
   \caption{}
   \label{fig:hw_8_21}
 \end{figure}
@@ -212,7 +272,7 @@ A_3\in\mathrm{L}.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_24.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_24.png}
   \caption{}
   \label{fig:hw_8_24}
 \end{figure}
@@ -258,7 +318,7 @@ P_n\geq 2^n.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_28.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_28.png}
   \caption{}
   \label{fig:hw_8_28}
 \end{figure}
@@ -291,7 +351,7 @@ L(M_1)\cap L(M_2)\neq\varnothing
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_30.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_30.png}
   \caption{}
   \label{fig:hw_8_30}
 \end{figure}
@@ -338,7 +398,7 @@ L(M_x)=\varnothing
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_8_33.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_8_33.png}
   \caption{}
   \label{fig:hw_8_33}
 \end{figure}

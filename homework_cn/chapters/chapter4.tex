@@ -6,37 +6,39 @@
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_4_3.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_4_3.png}
   \caption{}
   \label{fig:hw_4_3}
 \end{figure}
 
-证明。构造判定器 $T$ 来判定
+证明。构造判定器 $M$ 来判定
 \[
     \mathrm{ALL}_{\mathrm{DFA}}
     =\{\langle A\rangle\mid A\text{ 是 DFA 且 }L(A)=\Sigma^*\}.
 \]
 
-在输入 $\langle A\rangle$ 上，其中
-\[
-    A=(Q,\Sigma,\delta,q_0,F),
-\]
-$T$ 做如下工作：
+ \begin{quote}
+ $M=$ ``对于输入 $\langle A\rangle$，其中
+ \[
+     A=(Q,\Sigma,\delta,q_0,F),
+ \]
+ 做如下工作：
+
+ \medskip
+ \noindent
+ 1. 从开始状态 $q_0$ 出发，在状态图中做一次可达性搜索，求出所有从 $q_0$ 可达的状态。
+
+ \medskip
+ \noindent
+ 2. 若在这些可达状态中发现某个状态
+ \[
+     q\notin F,
+ \]
+ 则拒绝；否则接受。''
+ \end{quote}
 
 \medskip
-\noindent
-1. 从开始状态 $q_0$ 出发，在状态图中做一次可达性搜索，求出所有从 $q_0$ 可达的状态。
-
-\medskip
-\noindent
-2. 若在这些可达状态中发现某个状态
-\[
-    q\notin F,
-\]
-则拒绝；否则接受。
-
-\medskip
-证明该算法正确。若 $T$ 接受，则每个从 $q_0$ 可达的状态都是接受态。对任意字符串 $w$，DFA $A$ 读入 $w$ 后必停在某个从 $q_0$ 可达的状态上，因此该状态接受，从而
+证明该算法正确。若 $M$ 接受，则每个从 $q_0$ 可达的状态都是接受态。对任意字符串 $w$，DFA $A$ 读入 $w$ 后必停在某个从 $q_0$ 可达的状态上，因此该状态接受，从而
 \[
     w\in L(A).
 \]
@@ -51,7 +53,7 @@ $T$ 做如下工作：
 \]
 矛盾。
 
-因此 $T$ 当且仅当
+因此 $M$ 当且仅当
 \[
     \langle A\rangle\in \mathrm{ALL}_{\mathrm{DFA}}
 \]
@@ -64,37 +66,44 @@ $T$ 做如下工作：
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_4_4.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_4_4.png}
   \caption{}
   \label{fig:hw_4_4}
 \end{figure}
 
-证明。构造判定器 $T$ 来判定
+证明。构造判定器 $M$ 来判定
 \[
     A_{\varepsilon\mathrm{CFG}}
     =\{\langle G\rangle\mid G\text{ 是 CFG 且 }\varepsilon\in L(G)\}.
 \]
 
-设
-\[
-    G=(V,\Sigma,R,S).
-\]
-我们计算所有能够生成 $\varepsilon$ 的变量。令集合 $N\subseteq V$ 初始为空，并反复执行下述标记规则：
+ \begin{quote}
+ $M=$ ``对于输入 $\langle G\rangle$，其中
+ \[
+     G=(V,\Sigma,R,S),
+ \]
+ 做如下工作：
 
-\medskip
-\noindent
-若某条产生式
-\[
-    A\to X_1X_2\cdots X_k
-\]
-满足每个 $X_i$ 都属于 $N$，或者右边为空串，则把 $A$ 加入 $N$。
+ \medskip
+ \noindent
+ 1. 令集合 $N\subseteq V$ 初始为空。
 
-\medskip
-由于变量个数有限，这个过程在有限步后稳定。最后若
-\[
-    S\in N,
-\]
-则接受；否则拒绝。
+ \medskip
+ \noindent
+ 2. 重复执行下述操作，直到 $N$ 不再变化：若某条产生式
+ \[
+     A\to X_1X_2\cdots X_k
+ \]
+ 满足右边为空串，或者每个 $X_i$ 都已在 $N$ 中，则把 $A$ 加入 $N$。
+
+ \medskip
+ \noindent
+ 3. 若
+ \[
+     S\in N,
+ \]
+ 则接受；否则拒绝。''
+ \end{quote}
 
 \medskip
 下面证明正确性。先证：若某个变量 $A$ 被标记，则
@@ -137,228 +146,387 @@ $T$ 做如下工作：
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_4_6.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_4_6.png}
   \caption{}
   \label{fig:hw_4_6}
 \end{figure}
 
-解答如下。
-
-\paragraph{(a)}
-$f$ 不是一一对应（one-to-one），因为
+证明。设
 \[
-    f(1)=6=f(3).
+    B=\{(b_1,b_2,b_3,\dots)\mid b_i\in\{0,1\}\text{ 对每个 }i\ge 1\}.
 \]
+我们用反证法和对角化证明 $B$ 不可数。
 
-\paragraph{(b)}
-$f$ 不是满射（onto），因为
+\medskip
+假设 $B$ 是可数的，则可以把 $B$ 中所有无限 $0$-$1$ 序列排成一个表：
 \[
-    8,9,10
+    s_1,s_2,s_3,\dots
 \]
-都不在 $f$ 的值域中。
-
-\paragraph{(c)}
-$f$ 不是 correspondence，因为 correspondence 就是双射，而 $f$ 既不是单射也不是满射。
-
-\paragraph{(d)}
-$g$ 是一一对应的，因为
+其中
 \[
-    g(1)=10,\ g(2)=9,\ g(3)=8,\ g(4)=7,\ g(5)=6
+    s_i=(a_{i1},a_{i2},a_{i3},\dots),\qquad a_{ij}\in\{0,1\}.
 \]
-两两不同。
+也就是说，这张表的第 $i$ 行是第 $i$ 个序列，第 $j$ 列是该序列的第 $j$ 项。
 
-\paragraph{(e)}
-$g$ 是满射的，因为它的值域恰为
+\medskip
+现在构造一个新序列
 \[
-    \{6,7,8,9,10\}=Y.
+    c=(c_1,c_2,c_3,\dots),
 \]
+其中对每个 $i\ge 1$，定义
+\[
+    c_i=
+    \begin{cases}
+        1,& a_{ii}=0,\\
+        0,& a_{ii}=1.
+    \end{cases}
+\]
+换言之，$c_i$ 总是取成与第 $i$ 个序列的第 $i$ 项相反的值。
 
-\paragraph{(f)}
-$g$ 是 correspondence，因为它既是一一对应又是满射，即为双射。$\blacksquare$
+\medskip
+于是对任意 $i\ge 1$，序列 $c$ 与 $s_i$ 在第 $i$ 个位置不同，因为
+\[
+    c_i\ne a_{ii}.
+\]
+所以 $c$ 不可能等于 $s_i$。这说明 $c$ 不在我们列出的序列
+\[
+    s_1,s_2,s_3,\dots
+\]
+之中。
+
+\medskip
+但另一方面，$c$ 的每一项也是 $0$ 或 $1$，因此
+\[
+    c\in B.
+\]
+这与“上面的表已经列出了 $B$ 的所有元素”矛盾。
+
+\medskip
+故假设错误，$B$ 不是可数集，也就是说 $B$ 是不可数的。$\blacksquare$
+
+\paragraph{解释.}
+对角化的关键是：如果你声称已经把所有无限二进制序列都列出来了，我就沿着第 $1$ 行第 $1$ 列、第 $2$ 行第 $2$ 列、第 $3$ 行第 $3$ 列这样走下去，并把这些位置上的值逐个取反，造出一个新序列。这个新序列会和第 $i$ 个序列至少在第 $i$ 位不同，所以它不可能出现在你的列表里。
 
 \subsection*{4.10}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_4_10.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_4_10.png}
   \caption{}
   \label{fig:hw_4_10}
 \end{figure}
 
-证明。设
+证明。构造判定器 $M$ 来判定
 \[
-    P=(Q,\Sigma,\Gamma,\delta,q_0,F)
+    \mathrm{INFINITE}_{\mathrm{PDA}}
+    =\{\langle P\rangle\mid P\text{ 是 PDA 且 }L(P)\text{ 是无限语言}\}.
 \]
-是一台 DPDA。我们需要判定给定的
-\[
-    \langle P,q,x\rangle
-\]
-是否满足：从状态 $q$ 开始、以 $x$ 为当前栈顶时，机器接下来永远不读输入符号，且永远不弹出 $x$ 之下的内容。
 
-\medskip
-关键在于：在这种过程中，输入始终不被读取，因此机器的行为只取决于当前状态与栈内容；而 DPDA 又是确定的，所以从
-\[
-    (q,x)
-\]
-出发的这段 $\varepsilon$-计算是唯一的。
-
-\medskip
-定义一个有限关系
-\[
-    R\subseteq Q\times \Gamma\times Q,
-\]
-其中
-\[
-    (p,a,r)\in R
-\]
-表示：若机器处于状态 $p$，栈顶为 $a$，并且在 $a$ 之下的栈内容被冻结不动，那么机器可以仅靠 $\varepsilon$-转移，在不读取输入、也不碰到 $a$ 之下内容的前提下，最终把 $a$ 弹出并进入状态 $r$。
-
-\medskip
-关系 $R$ 可以通过有限的不动点计算得到。因为 $Q$ 和 $\Gamma$ 都有限，三元组总数有限；而某个三元组是否属于 $R$，只需检查有限多种 $\varepsilon$-转移，并递归地组合更短的“返回”情况。直观上说，这就是对 DPDA 的 $\varepsilon$-阶段做一个有限的摘要分析。
-
-\medskip
-一旦 $R$ 算出，我们便可判定 $(q,x)$ 是否为 looping situation：
+\begin{quote}
+$M=$ ``对于输入 $\langle P\rangle$：
 
 \medskip
 \noindent
-1. 若从 $(q,x)$ 出发的唯一 $\varepsilon$-计算在某一步需要读取输入，或者在有限步后停住，则它不是 looping situation。
+1. 把 PDA $P$ 有效地转换成一个等价的 CFG $G$。
 
 \medskip
 \noindent
-2. 若该计算能够通过 $R$ 所描述的某种返回，最终越过 $x$ 到达其下方的栈内容，则它也不是 looping situation。
-
-\medskip
-\noindent
-3. 其余情形下，这段计算只能永远停留在 $x$ 及其上方，通过 $\varepsilon$-转移无限运行，因此 $(q,x)$ 正是 looping situation。
-
-\medskip
-由于上述分析完全建立在有限集合 $Q\times\Gamma\times Q$ 上，故它是一个可判定过程。于是
+2. 删除 $G$ 中所有无用变量，并把所得文法转换成 Chomsky 范式，记结果为
 \[
-    F=\{\langle P,q,x\rangle\mid (q,x)\text{ is a looping situation for }P\}
+    G'=(V,\Sigma,R,S).
 \]
-是可判定语言。$\blacksquare$
+
+\medskip
+\noindent
+3. 构造有向图 $H$：顶点集为 $V$；若某条产生式
+\[
+    A\to BC
+\]
+属于 $R$，则在 $H$ 中加入边
+\[
+    A\to B
+    \quad\text{和}\quad
+    A\to C.
+\]
+
+\medskip
+\noindent
+4. 检查从开始变量 $S$ 可达的变量中，是否有某个变量位于 $H$ 的一个有向环上。若有，则接受；否则拒绝。''
+\end{quote}
+
+\medskip
+下面证明正确性。若 $M$ 接受，则存在某个从 $S$ 可达且位于有向环上的变量 $A$。由于 $G'$ 已删除无用变量，$A$ 必能推出某个终结符串；又由于 $A$ 在依赖图中处于环上，存在推导把 $A$ 再次带回自身。因为 $G'$ 处于 Chomsky 范式，没有单位产生式，所以绕环一次必然在 $A$ 的两侧添入某些最终能推出终结符串的部分。于是可得到
+\[
+    A\Rightarrow^* uAv
+\]
+其中 $u,v\in\Sigma^*$，且至少有一个非空。反复迭代这段推导，便得到无穷多个不同长度的字符串，因此
+\[
+    L(G')=L(P)
+\]
+是无限的。
+
+\medskip
+反之，若 $M$ 拒绝，则从 $S$ 可达的变量部分在图 $H$ 中无环。于是任何语法树的一条根到叶路径上都不会重复出现变量，所以语法树高度至多为
+\[
+    |V|.
+\]
+而在 Chomsky 范式下，高度至多为 $|V|$ 的语法树，其叶子数至多为
+\[
+    2^{|V|},
+\]
+因此它生成的终结符串长度也至多为 $2^{|V|}$。可见
+\[
+    L(G')
+\]
+只包含有限多个字符串，从而
+\[
+    L(P)
+\]
+也是有限的。
+
+\medskip
+因此 $M$ 当且仅当
+\[
+    \langle P\rangle\in \mathrm{INFINITE}_{\mathrm{PDA}}
+\]
+时接受，所以 $\mathrm{INFINITE}_{\mathrm{PDA}}$ 是可判定的。$\blacksquare$
 
 \paragraph{解释.}
-这题的难点在于栈可能无限增长，不能直接暴力模拟。但因为这里不读输入，而且 DPDA 是确定的，所以我们只需把“从某个栈顶符号出发，能否在不碰下面内容的情况下最终返回”做成有限摘要。摘要一旦算出，剩下就只是有限图上的分类：读输入、返回到底层、或永远在上面打转。
+PDA 是否接受无限多个串，可以先转成 CFG 来看。对 CFG 而言，真正决定“能不能无限生成”的，是变量依赖图里是否存在一个从开始变量可达的环：有环就能反复绕圈、不断增长；无环则语法树高度有统一上界，语言只能是有限的。
 
 \subsection*{4.12}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_4_12.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_4_12.png}
   \caption{}
   \label{fig:hw_4_12}
 \end{figure}
 
-证明。设
+证明。构造判定器 $M$ 来判定
 \[
-    A=\{\langle M_1\rangle,\langle M_2\rangle,\dots\}
+    A=\{\langle R,S\rangle\mid R\text{ 和 }S\text{ 是正则表达式，且 }L(R)\subseteq L(S)\}.
 \]
-是一个图灵可识别语言，且其中每个 $M_i$ 都是判定器。
+
+\begin{quote}
+$M=$ ``对于输入 $\langle R,S\rangle$：
 
 \medskip
-若 $A$ 是有限集，则结论显然成立：因为可判定语言有无穷多个，而 $A$ 中只包含有限台判定器，因此总有某个可判定语言不由其中任何一台机器判定。
+\noindent
+1. 把正则表达式 $R$ 和 $S$ 分别转换成等价的 DFA，记为 $A_R$ 和 $A_S$。
 
 \medskip
-下面设 $A$ 是无限的。由于 $A$ 图灵可识别，定理 3.13 告诉我们存在一个枚举器 $E$ 枚举 $A$ 中所有机器描述。删去重复项后，不妨设 $E$ 依次输出
+\noindent
+2. 把 $A_S$ 补全后取补，得到一个 DFA $B$，满足
 \[
-    \langle M_1\rangle,\langle M_2\rangle,\dots
+    L(B)=\overline{L(S)}.
 \]
 
-再把所有字符串按字典顺序列为
+\medskip
+\noindent
+3. 构造 DFA $C$ 来识别
 \[
-    w_1,w_2,w_3,\dots
-\]
-定义语言
-\[
-    D=\{w_i\mid M_i\text{ 不接受 }w_i\}.
+    L(A_R)\cap L(B)=L(R)\cap \overline{L(S)}.
 \]
 
-先证 $D$ 是可判定的。给定输入 $w_i$，先模拟枚举器 $E$，直到得到第 $i$ 个不同的机器描述 $\langle M_i\rangle$。然后运行判定器 $M_i$ 于 $w_i$ 上；若 $M_i$ 接受，则拒绝，若 $M_i$ 拒绝，则接受。因为 $M_i$ 是判定器，故此过程必停机，因此 $D$ 可判定。
-
-再证 $D$ 不被 $A$ 中任何机器判定。任取 $j\ge 1$。若 $M_j$ 判定 $D$，则看字符串 $w_j$：
-
+\medskip
+\noindent
+4. 运行 DFA 空性判定过程，检查
 \[
-    w_j\in D
+    L(C)=\varnothing
+\]
+是否成立。若成立，则接受；否则拒绝。''
+\end{quote}
+
+\medskip
+该机器正确，因为
+\[
+    L(R)\subseteq L(S)
     \iff
-    M_j\text{ 不接受 }w_j.
+    L(R)\cap \overline{L(S)}=\varnothing.
 \]
-
-但若 $M_j$ 判定 $D$，则
-\[
-    w_j\in D
-    \iff
-    M_j\text{ 接受 }w_j.
-\]
-
-二者矛盾。因此没有任何 $M_j$ 能判定 $D$。
-
-故存在一个可判定语言 $D$，不被 $A$ 中出现的任何判定器所判定。$\blacksquare$
+而正则表达式到 DFA 的转换、DFA 的补、正则语言的交以及 DFA 空性检测都是有效且可停机的过程。因此 $M$ 判定语言 $A$，从而 $A$ 是可判定的。$\blacksquare$
 
 \paragraph{解释.}
-这就是标准的对角化。把枚举出来的第 $i$ 台判定器和第 $i$ 个字符串配对，再在对角线上把答案反过来，于是得到的新语言和列表中第 $i$ 台机器至少在第 $i$ 个字符串上不同。
+“$L(R)\subseteq L(S)$”最标准的改写就是：不存在某个串被 $R$ 接受但不被 $S$ 接受。于是问题变成检查
+\[
+    L(R)\cap \overline{L(S)}
+\]
+是否为空，而这完全落在正则语言的可判定范围里。
 
 \subsection*{4.15}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_4_15.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_4_15.png}
   \caption{}
   \label{fig:hw_4_15}
 \end{figure}
 
-证明。设
+证明。构造判定器 $M$ 来判定
 \[
-    C_{>}=\{w\in\{0,1\}^*\mid \#_1(w)>\#_0(w)\}.
+    A=\{\langle R\rangle\mid R\text{ 是正则表达式，且 }L(R)\text{ 中至少有一个串含有子串 }111\}.
 \]
-先说明 $C_{>}$ 是上下文无关语言。令
-\[
-    E=\{w\in\{0,1\}^*\mid \#_1(w)=\#_0(w)\}.
-\]
-它可由文法
-\[
-    S\to 0S1S\mid 1S0S\mid \varepsilon
-\]
-生成。再令
-\[
-    T\to S1S\mid S1T,
-\]
-则 $T$ 生成的正是 $C_{>}$，故 $C_{>}$ 是上下文无关语言。
+
+\begin{quote}
+$M=$ ``对于输入 $\langle R\rangle$：
 
 \medskip
-现在给定一台 DFA $M$。构造一个上下文无关语言
-\[
-    L(M)\cap C_{>}.
-\]
-由于上下文无关语言对与正则语言求交封闭，而 $L(M)$ 正则、$C_{>}$ 上下文无关，因此
-\[
-    L(M)\cap C_{>}
-\]
-仍是上下文无关语言。
+\noindent
+1. 把正则表达式 $R$ 转换成等价的 DFA $A_R$。
 
 \medskip
-再由上下文无关语言的空性可判定，便可判断该交集是否为空。若
+\noindent
+2. 构造一个固定的 DFA $B$，使其识别语言
 \[
-    L(M)\cap C_{>}\ne\varnothing,
+    T=\{w\in\{0,1\}^*\mid w\text{ 含有子串 }111\}.
 \]
-则 $M$ 接受某个 $1$ 的个数多于 $0$ 的个数的字符串；反之则不存在这样的字符串。
 
-因此
+\medskip
+\noindent
+3. 构造 DFA $C$ 来识别
 \[
-    E=\{\langle M\rangle\mid M\text{ 是 DFA 且接受某个 }1\text{ 比 }0\text{ 多的串}\}
+    L(A_R)\cap T.
 \]
-是可判定的。$\blacksquare$
+
+\medskip
+\noindent
+4. 运行 DFA 空性判定过程，检查
+\[
+    L(C)=\varnothing
+\]
+是否成立。若为空，则拒绝；否则接受。''
+\end{quote}
+
+\medskip
+该机器正确，因为
+\[
+    \langle R\rangle\in A
+    \iff
+    L(R)\cap T\ne\varnothing.
+\]
+而
+\[
+    T=(0\cup 1)^*111(0\cup 1)^*
+\]
+是正则语言，所以第 2 步可有效完成；其余各步也都是正则语言上的标准可判定操作。因此 $A$ 是可判定的。$\blacksquare$
 
 \paragraph{解释.}
-题目问“DFA 是否接受某类特殊字符串”，常见套路就是和一个描述“特殊性质”的 CFL 求交，再做空性测试。这里“$1$ 比 $0$ 多”这件事本身是 CFL，所以问题就化成了一个 CFL 的空性判定。
+题目问的是“正则表达式描述的语言里，有没有某种特殊形状的串”。这类问题的标准套路就是：先把“特殊形状”本身写成一个固定正则语言，再与输入语言求交，最后检查交集是否为空。
 
 \subsection*{4.17}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_4_17.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_4_17.png}
   \caption{}
   \label{fig:hw_4_17}
+\end{figure}
+
+证明。我们证明如下双向命题：
+\[
+    C\text{ 是图灵可识别的}
+    \iff
+    \exists D\text{ 可判定，使得 }
+    C=\{x\mid \exists y\ (\langle x,y\rangle\in D)\}.
+\]
+
+\paragraph{正向。}
+设 $C$ 是图灵可识别的，令 $N$ 为 $C$ 的一个识别器。定义
+\[
+    D=\{\langle x,c\rangle\mid c\text{ 是 }N\text{ 在输入 }x\text{ 上的一个接受计算历史}\}.
+\]
+我们先说明 $D$ 是可判定的：给定输入 $\langle x,c\rangle$，只需检查
+
+\medskip
+\noindent
+1. $c$ 的第一项是否是 $N$ 在输入 $x$ 上的初始配置；
+
+\medskip
+\noindent
+2. $c$ 的最后一项是否为接受配置；
+
+\medskip
+\noindent
+3. $c$ 中每一对相邻配置是否满足 $N$ 的转移规则。
+
+\medskip
+这些检查都是有限且机械可做的，因此 $D$ 可判定。
+
+\medskip
+接着证明
+\[
+    x\in C
+    \iff
+    \exists c\ (\langle x,c\rangle\in D).
+\]
+若 $x\in C$，则识别器 $N$ 在输入 $x$ 上存在某条接受计算，于是这条接受计算的历史 $c$ 满足
+\[
+    \langle x,c\rangle\in D.
+\]
+反之，若存在某个 $c$ 使得
+\[
+    \langle x,c\rangle\in D,
+\]
+那么 $c$ 正是 $N$ 在输入 $x$ 上的一条接受计算历史，因此 $N$ 接受 $x$，即
+\[
+    x\in C.
+\]
+
+\paragraph{反向。}
+现在设存在某个可判定语言 $D$，使得
+\[
+    C=\{x\mid \exists y\ (\langle x,y\rangle\in D)\}.
+\]
+令 $T$ 为 $D$ 的判定器。构造图灵机 $N$ 来识别 $C$：
+
+\begin{quote}
+$N=$ ``对于输入 $x$：
+
+\medskip
+\noindent
+1. 按字典顺序枚举所有字符串
+\[
+    y_1,y_2,y_3,\dots
+\]
+
+\medskip
+\noindent
+2. 依次运行判定器 $T$ 于输入
+\[
+    \langle x,y_i\rangle
+\]
+上。
+
+\medskip
+\noindent
+3. 若某次运行接受，则接受。''
+\end{quote}
+
+因为 $T$ 是判定器，所以第 2 步的每次调用都停机。若
+\[
+    x\in C,
+\]
+则存在某个见证字符串 $y$ 使
+\[
+    \langle x,y\rangle\in D,
+\]
+于是机器 $N$ 最终会枚举到这个 $y$ 并接受。若
+\[
+    x\notin C,
+\]
+则不存在任何这样的 $y$，于是 $N$ 永远不会接受。这正说明 $N$ 识别 $C$，故 $C$ 是图灵可识别的。$\blacksquare$
+
+\paragraph{解释.}
+这一定理说明：图灵可识别语言恰好是“某个可判定二元关系对第二个参数做存在量词投影”得到的语言。正向里，见证 $y$ 可以取成“接受计算历史”；反向里，只要把所有可能的见证逐个试过去，就得到了一个识别器。
+
+\subsection*{4.23}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_4_23.png}
+  \caption{}
+  \label{fig:hw_4_23}
 \end{figure}
 
 证明。令
@@ -373,184 +541,158 @@ $g$ 是 correspondence，因为它既是一一对应又是满射，即为双射�
 生成。
 
 \medskip
-给定一台 DFA $M$，考虑语言
-\[
-    L(M)\cap C_{=}.
-\]
-因为正则语言与上下文无关语言求交后仍是上下文无关语言，所以该交集是上下文无关语言。又由于上下文无关语言的空性可判定，我们可以测试
-\[
-    L(M)\cap C_{=}
-\]
-是否为空。
+构造判定器 $M$：
+
+\begin{quote}
+$M=$ ``对于输入 $\langle A\rangle$：
 
 \medskip
-若交集非空，则存在某个被 $M$ 接受且满足
+\noindent
+1. 利用正则语言与上下文无关语言求交的有效构造，构造一个 CFG $G_A$，满足
+\[
+    L(G_A)=L(A)\cap C_{=}.
+\]
+
+\medskip
+\noindent
+2. 运行上下文无关语言空性问题的判定器，判断
+\[
+    L(G_A)=\varnothing
+\]
+是否成立。
+
+\medskip
+\noindent
+3. 若
+\[
+    L(G_A)=\varnothing,
+\]
+则拒绝；否则接受。''
+\end{quote}
+
+若 $M$ 接受，则存在某个被 $A$ 接受且满足
 \[
     \#_0=\#_1
 \]
-的字符串；若交集为空，则不存在这样的字符串。于是
+的字符串；若 $M$ 拒绝，则不存在这样的字符串。于是
 \[
     \mathrm{BAL}_{\mathrm{DFA}}
-    =\{\langle M\rangle\mid M\text{ 是 DFA 且接受某个 }0,1\text{ 个数相同的串}\}
+    =\{\langle A\rangle\mid A\text{ 是 DFA 且接受某个 }0,1\text{ 个数相同的串}\}
 \]
 是可判定的。$\blacksquare$
 
 \paragraph{解释.}
-这题和 4.15 完全同型，只是把“$1$ 比 $0$ 多”换成了“$0$ 与 $1$ 个数相同”。要点仍是：先把计数条件写成一个 CFL，再与 DFA 语言求交，最后检查空性。
-
-\subsection*{4.23}
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_4_23.png}
-  \caption{}
-  \label{fig:hw_4_23}
-\end{figure}
-
-证明。我们给出一个可判定语言 $C$ 和一个同态 $h$，使得
-\[
-    h(C)=A_{\mathrm{TM}}.
-\]
-这将说明可判定语言类在同态下并不封闭，因为
-\[
-    A_{\mathrm{TM}}
-\]
-是不可判定的。
-
-\medskip
-设
-\[
-    C=\{\overline{\langle M,w\rangle}\#c\mid c\text{ 是 }M\text{ 在 }w\text{ 上的一个接受计算历史}\}.
-\]
-这里 $\overline{\langle M,w\rangle}$ 表示把编码 $\langle M,w\rangle$ 中的每个符号都换成一个“带横线的副本”，从而使它们和计算历史 $c$ 所使用的普通字母表互不混淆。
-
-\medskip
-先证 $C$ 可判定。给定输入
-\[
-    \overline{\langle M,w\rangle}\#c,
-\]
-我们只需检查以下有限条件：
-
-\medskip
-\noindent
-1. $c$ 的第一项是否是 $M$ 在输入 $w$ 上的初始配置；
-
-\medskip
-\noindent
-2. $c$ 的最后一项是否为接受配置；
-
-\medskip
-\noindent
-3. $c$ 中每一对相邻配置是否满足 $M$ 的转移规则。
-
-\medskip
-这些检查都是机械可做的，因此 $C$ 是可判定语言。
-
-\medskip
-现在定义同态 $h$ 如下：
-
-\medskip
-\noindent
-对每个带横线的符号 $\overline a$，令
-\[
-    h(\overline a)=a;
-\]
-
-\medskip
-\noindent
-对分隔符 $\#$ 以及计算历史部分所使用的普通符号，令
-\[
-    h(b)=\varepsilon.
-\]
-
-\medskip
-于是对任意字符串
-\[
-    \overline{\langle M,w\rangle}\#c\in C,
-\]
-都有
-\[
-    h(\overline{\langle M,w\rangle}\#c)=\langle M,w\rangle.
-\]
-并且
-\[
-    \langle M,w\rangle\in h(C)
-    \iff
-    \exists c\ \big(c\text{ 是 }M\text{ 在 }w\text{ 上的接受计算历史}\big)
-    \iff
-    \langle M,w\rangle\in A_{\mathrm{TM}}.
-\]
-
-因此
-\[
-    h(C)=A_{\mathrm{TM}}.
-\]
-由于 $C$ 可判定而 $A_{\mathrm{TM}}$ 不可判定，可判定语言类在同态运算下不封闭。$\blacksquare$
-
-\paragraph{解释.}
-这里的技巧是把“不可判定性”藏在被擦掉的那一部分里。原语言 $C$ 本身只是在验证一个给定的接受计算历史，因此是可判定的；但一旦用同态把计算历史抹掉，只留下 $\langle M,w\rangle$，就恢复成了 $A_{\mathrm{TM}}$。
+这题的思路是把“$0$ 和 $1$ 个数相同”先写成一个 CFL，再和输入 DFA 的语言求交。这样原问题就化成了一个上下文无关语言的空性判定。
 
 \subsection*{4.27}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_4_27.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_4_27.png}
   \caption{}
   \label{fig:hw_4_27}
 \end{figure}
 
-证明。给定一个 CFG $G$，我们要判定是否有
+证明。构造判定器 $M$ 来判定
 \[
-    1^*\subseteq L(G).
+    C_{\mathrm{CFG}}
+    =\{\langle G,k\rangle\mid L(G)\text{ 恰好包含 }k\text{ 个字符串，其中 }k\ge 0\text{ 或 }k=\infty\}.
+\]
+
+\begin{quote}
+$M=$ ``对于输入 $\langle G,k\rangle$：
+
+\medskip
+\noindent
+1. 检查 $k$ 的编码是否表示一个非负整数，或特殊符号 $\infty$。若不是，则拒绝。
+
+\medskip
+\noindent
+2. 把 CFG $G$ 转换成等价文法 $G'$，删除其中的无用变量，并把结果化为 Chomsky 范式。记
+\[
+    G'=(V,\Sigma,R,S).
 \]
 
 \medskip
-先构造一个正则语言
+\noindent
+3. 构造变量依赖图 $H$：顶点集为 $V$；若某条产生式
 \[
-    R=1^*.
+    A\to BC
 \]
-由上下文无关语言对与正则语言求交封闭，可有效构造出一个 CFG $G'$，使得
+属于 $R$，则加入边
 \[
-    L(G')=L(G)\cap 1^*.
-\]
-
-\medskip
-于是 $L(G')$ 是一个一元字母表
-\[
-    \{1\}
-\]
-上的上下文无关语言。由经典定理可知：每个一元上下文无关语言都是正则语言，而且从其 CFG 可以有效构造出等价的 DFA。于是可有效得到某个 DFA $A$，满足
-\[
-    L(A)=L(G').
+    A\to B
+    \quad\text{和}\quad
+    A\to C.
 \]
 
 \medskip
-现在只需判断
-\[
-    L(A)=1^*
-\]
-是否成立。由于 DFA 的全语言问题 $\mathrm{ALL}_{\mathrm{DFA}}$ 是可判定的，等价地，也可判定两个 DFA 是否识别同一语言，因此这个测试是可判定的。
+\noindent
+4. 检查从 $S$ 可达的变量中是否存在落在有向环上的变量。
 
 \medskip
-最后注意到
+\noindent
+5. 若存在这样的变量，则 $L(G)$ 是无限的。此时若 $k=\infty$，则接受；否则拒绝。
+
+\medskip
+\noindent
+6. 若不存在这样的变量，则 $L(G)$ 是有限的。令
 \[
-    1^*\subseteq L(G)
-    \iff
-    L(G)\cap 1^*=1^*
-    \iff
-    L(G')=1^*.
+    N=2^{|V|}.
 \]
-因此
+枚举字母表 $\Sigma$ 上所有长度不超过 $N$ 的字符串。
+
+\medskip
+\noindent
+7. 对每个被枚举出的字符串 $w$，运行 CFG 成员性判定过程，检查
 \[
-    \{\langle G\rangle\mid G\text{ 是 }\{0,1\}\text{ 上的 CFG 且 }1^*\subseteq L(G)\}
+    w\in L(G)
 \]
-是可判定语言。$\blacksquare$
+是否成立，并统计满足条件的字符串个数，记为 $t$。
+
+\medskip
+\noindent
+8. 若 $k$ 是一个非负整数且
+\[
+    t=k,
+\]
+则接受；否则拒绝。''
+\end{quote}
+
+\medskip
+下面说明正确性。第 4 步与 4.10 中同理：若从开始变量可达的部分存在环，则可以反复绕环，从而推出无穷多个不同字符串，所以
+\[
+    |L(G)|=\infty.
+\]
+反之，若无环，则任何语法树的一条根到叶路径上都不会重复出现变量，因此语法树高度至多为
+\[
+    |V|.
+\]
+Chomsky 范式下高度至多为 $|V|$ 的语法树，其叶子数至多为
+\[
+    2^{|V|},
+\]
+故所生成字符串的长度也至多为 $2^{|V|}$。于是只要把所有长度不超过
+\[
+    N=2^{|V|}
+\]
+的字符串全部枚举并做成员性测试，就能穷尽
+\[
+    L(G)
+\]
+中的所有字符串，因而第 7 步得到的计数 $t$ 正是
+\[
+    |L(G)|.
+\]
+
+\medskip
+因此 $M$ 当且仅当
+\[
+    \langle G,k\rangle\in C_{\mathrm{CFG}}
+\]
+时接受，所以 $C_{\mathrm{CFG}}$ 是可判定的。$\blacksquare$
 
 \paragraph{解释.}
-题目的难点在于：一般 CFG 的“全包含”问题不可判定，但这里只要求覆盖
-\[
-    1^*
-\]
-这一条一元正则子语言。与 $1^*$ 相交后，问题落到一元 CFL 上，而一元 CFL 实际上就是正则语言，于是又回到了 DFA 可判定的范围。
+这题的本质是先区分“有限”还是“无限”。若文法存在可回到自身的变量环，就能无限地产生新串；若不存在这种环，语法树高度就有统一上界，于是所有生成串的长度也有统一上界，接下来只需暴力枚举并计数即可。
 
 \clearpage

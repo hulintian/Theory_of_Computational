@@ -6,7 +6,7 @@
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_2.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_2.png}
   \caption{}
   \label{fig:hw_5_2}
 \end{figure}
@@ -84,7 +84,7 @@
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_5.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_5.png}
   \caption{}
   \label{fig:hw_5_5}
 \end{figure}
@@ -177,884 +177,724 @@ $\blacksquare$
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_9.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_9.png}
   \caption{}
   \label{fig:hw_5_9}
 \end{figure}
 
-证明。反设存在图灵机 $R$ 判定
-\[
-    \mathrm{AMBIG}_{\mathrm{CFG}}
-    =\{\langle G\rangle\mid G\text{ 是二义的 CFG}\}.
-\]
-我们构造图灵机 $S$ 来判定 PCP。
+\subsubsection*{证明}
 
-\begin{myalgo}{构造的图灵机 $S$}
-\begin{algorithmic}[1]
-  \Require PCP 实例 $P=\bigl(\langle t_1,b_1\rangle,\langle t_2,b_2\rangle,\dots,\langle t_k,b_k\rangle\bigr)$
-  \Ensure 若 $P$ 有解则接受；否则拒绝
-  \State 引入新的终结符 $a_1,\dots,a_k$
-  \State 构造文法 $G$，其中
-  \[
-      S\to T\mid B,
-  \]
-  \[
-      T\to t_1Ta_1\mid\cdots\mid t_kTa_k\mid t_1a_1\mid\cdots\mid t_ka_k,
-  \]
-  \[
-      B\to b_1Ba_1\mid\cdots\mid b_kBa_k\mid b_1a_1\mid\cdots\mid b_ka_k.
-  \]
-  \State 在输入 $\langle G\rangle$ 上运行 $R$
-  \If{$R$ 接受}
-    \State \textbf{接受}
-  \Else
-    \State \textbf{拒绝}
-  \EndIf
-\end{algorithmic}
-\end{myalgo}
+设
+\[
+T=\{\langle M\rangle\mid M\text{ 是一台 TM，且当 }M\text{ 接受 }w\text{ 时也接受 }w^R\}.
+\]
+反设 $T$ 可判定，设判定器为 $R$。我们构造图灵机 $S$ 来判定
+\[
+A_{\mathrm{TM}}.
+\]
 
-\medskip
-下面证明 $S$ 的正确性。先证：若该 PCP 实例有解，则 $G$ 二义。设
-\[
-    i_1i_2\cdots i_m
-\]
-是一个解，即
-\[
-    t_{i_1}t_{i_2}\cdots t_{i_m}
-    =
-    b_{i_1}b_{i_2}\cdots b_{i_m}.
-\]
-则同一个字符串
-\[
-    x=
-    t_{i_1}t_{i_2}\cdots t_{i_m}a_{i_m}\cdots a_{i_2}a_{i_1}
-\]
-可由 $T$ 推导：
-\[
-    T\Rightarrow t_{i_1}Ta_{i_1}
-    \Rightarrow \cdots
-    \Rightarrow t_{i_1}\cdots t_{i_m}a_{i_m}\cdots a_{i_1},
-\]
-也可由 $B$ 推导：
-\[
-    B\Rightarrow b_{i_1}Ba_{i_1}
-    \Rightarrow \cdots
-    \Rightarrow b_{i_1}\cdots b_{i_m}a_{i_m}\cdots a_{i_1}.
-\]
-因为顶串与底串相等，这两个结果是同一个字符串 $x$。于是
-\[
-    S\Rightarrow T\Rightarrow^* x
-    \qquad\text{且}\qquad
-    S\Rightarrow B\Rightarrow^* x,
-\]
-故 $G$ 二义，因此 $R$ 接受 $\langle G\rangle$，从而 $S$ 接受该 PCP 实例。
+给定输入 $\langle M,w\rangle$，构造图灵机 $N$：
 
-\medskip
-再证：若 $G$ 二义，则该 PCP 实例有解。
+\[
+N=\text{``对于输入 }x\text{：}
+\]
+\[
+\text{1. 若 }x=01\text{，则模拟 }M\text{ 在 }w\text{ 上的运行。}
+\]
+\[
+\text{2. 若模拟接受，则接受；否则拒绝或继续模拟。}
+\]
+\[
+\text{3. 若 }x\neq 01\text{，则拒绝。''}
+\]
 
-注意，$T$ 和 $B$ 各自都是无二义的。因为任何由它们生成的字符串末尾都含有一个由
-\[
-    a_{i_m}\cdots a_{i_1}
-\]
-构成的后缀，而这段后缀唯一确定了所选取的指标序列
-\[
-    i_1,\dots,i_m.
-\]
-一旦指标序列确定，前面的部分也就唯一确定。因此，一个字符串若有两种不同推导，只能是其中一种从
-\[
-    S\to T
-\]
-开始，另一种从
-\[
-    S\to B
-\]
-开始。
+于是：
 
-于是存在某个字符串 $x$，既在 $L(T)$ 中，又在 $L(B)$ 中。由末尾的
 \[
-    a_{i_m}\cdots a_{i_1}
+\langle M,w\rangle\in A_{\mathrm{TM}}
+\implies
+L(N)=\{01\},
 \]
-可知，这两种推导使用的是同一个指标序列
+而
 \[
-    i_1,\dots,i_m.
+(01)^R=10\notin L(N),
 \]
-因此
+所以
 \[
-    t_{i_1}\cdots t_{i_m}
-    =
-    b_{i_1}\cdots b_{i_m},
+\langle N\rangle\notin T.
 \]
-即该 PCP 实例有解。于是 $R$ 接受 $\langle G\rangle$ 当且仅当输入 PCP 实例有解。
 
-\medskip
-因此，若 $R$ 存在，则 $S$ 判定 PCP，这与 PCP 不可判定矛盾。故
+若
 \[
-    \mathrm{AMBIG}_{\mathrm{CFG}}
+\langle M,w\rangle\notin A_{\mathrm{TM}},
 \]
-不可判定。$\blacksquare$
+则 $M$ 在 $w$ 上不接受，于是 $N$ 不接受任何字符串，从而
+\[
+L(N)=\varnothing.
+\]
+空语言显然满足题目中的条件，因此
+\[
+\langle N\rangle\in T.
+\]
 
-\paragraph{解释.}
-这个归约的核心是把“同一指标序列”编码在尾部的
+所以
 \[
-    a_{i_m}\cdots a_{i_1}
+\langle M,w\rangle\in A_{\mathrm{TM}}
+\iff
+\langle N\rangle\notin T.
 \]
-里。于是，若同一个字符串既能从 $T$ 生成又能从 $B$ 生成，就意味着同一串牌在顶部和底部拼出的结果相同，这正是 PCP 解。
+
+于是 $S$ 在输入 $\langle M,w\rangle$ 上先构造 $\langle N\rangle$，再运行 $R$；若 $R$ 接受则拒绝，若 $R$ 拒绝则接受。这样 $S$ 就判定了 $A_{\mathrm{TM}}$，矛盾。
+
+故 $T$ 不可判定。$\blacksquare$
 
 \subsection*{5.13}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_13.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_13.png}
   \caption{}
   \label{fig:hw_5_13}
 \end{figure}
 
-取
-\[
-    B=A_{\mathrm{TM}}.
-\]
-这是一个不可判定语言。
+\subsubsection*{形式化}
 
-\medskip
-定义可计算函数
+把题目形式化为语言
 \[
-    f(x)=x.
+\mathrm{HASUSELESS}_{\mathrm{TM}}
+=
+\{\langle M\rangle\mid M\text{ 是一台 TM，且 }M\text{ 有一个无用状态}\}.
 \]
-显然对任意 $x$，
+
+\subsubsection*{证明}
+
+我们从
 \[
-    x\in B
-    \iff
-    f(x)\in B.
+E_{\mathrm{TM}}=\{\langle M\rangle\mid L(M)=\varnothing\}
 \]
+归约到 $\mathrm{HASUSELESS}_{\mathrm{TM}}$。已知 $E_{\mathrm{TM}}$ 不可判定。
+
+给定输入 $\langle M\rangle$，构造图灵机 $N$。$N$ 含有一个特别指定的状态 $q_\star$，并使用一套固定的通用模拟器状态来模拟 $M$；这些模拟器状态与 $M$ 本身的状态无关。
+
+$N$ 的工作方式如下：
+
+\[
+N=\text{``对于输入 }z\text{：}
+\]
+\[
+\text{1. 若 }z\text{ 以 }1\text{ 开头，则沿一条预先写好的有限路径运行，依次访问 }N
+\]
+\[
+\text{\ \ \ \ 的每个状态（除了 }q_\star\text{）一次，然后停机。}
+\]
+\[
+\text{2. 若 }z\text{ 以 }0\text{ 开头，设 }z=0x\text{，则利用固定的通用模拟器模拟 }M\text{ 在 }x\text{ 上的运行。}
+\]
+\[
+\text{3. 若模拟发现 }M\text{ 接受 }x\text{，则进入 }q_\star\text{，随后接受。}
+\]
+\[
+\text{4. 否则按模拟结果拒绝或继续模拟。''}
+\]
+
+由第 1 步可知，$N$ 的所有状态除了 $q_\star$ 以外，都在某个以 $1$ 开头的输入上被访问，因此它们都不是无用状态。于是 $N$ 是否有无用状态，完全取决于 $q_\star$ 是否无用。
+
+现在考察 $q_\star$：
+
+\[
+q_\star\text{ 可达}
+\iff
+\exists x\, (M\text{ 接受 }x)
+\iff
+L(M)\neq\varnothing.
+\]
+
 因此
 \[
-    B\le_m B.
+L(M)=\varnothing
+\iff
+q_\star\text{ 是无用状态}
+\iff
+\langle N\rangle\in \mathrm{HASUSELESS}_{\mathrm{TM}}.
 \]
 
-所以 $B=A_{\mathrm{TM}}$ 就是所要求的例子。$\blacksquare$
+若 $\mathrm{HASUSELESS}_{\mathrm{TM}}$ 可判定，就可据此判定 $E_{\mathrm{TM}}$，矛盾。故
+\[
+\mathrm{HASUSELESS}_{\mathrm{TM}}
+\]
+不可判定。$\blacksquare$
 
 \subsection*{5.17}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_17.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_17.png}
   \caption{}
   \label{fig:hw_5_17}
 \end{figure}
 
-证明。Problem 5.16（Rice 定理）的两个条件分别是：
+\subsubsection*{证明}
 
-\medskip
-\noindent
-1. $P$ 是非平凡的，即它既不为空，也不包含所有图灵机描述；
+设 PCP 实例的字母表是一元字母表
+\[
+\Sigma=\{1\}.
+\]
+于是每张牌
+\[
+\left[\frac{t_i}{b_i}\right]
+\]
+只由两个正整数
+\[
+m_i=|t_i|,
+\qquad
+n_i=|b_i|
+\]
+决定，因为
+\[
+t_i=1^{m_i},
+\qquad
+b_i=1^{n_i}.
+\]
 
-\medskip
-\noindent
-2. $P$ 只取决于图灵机所识别的语言，即若
+对任意非空牌序列
 \[
-    L(M_1)=L(M_2),
+i_1,i_2,\dots,i_k,
 \]
-则
+其顶部与底部拼接后相等，当且仅当它们的长度相等，即
 \[
-    \langle M_1\rangle\in P
-    \iff
-    \langle M_2\rangle\in P.
+m_{i_1}+\cdots+m_{i_k}
+=
+n_{i_1}+\cdots+n_{i_k}.
+\]
+等价地，
+\[
+(m_{i_1}-n_{i_1})+\cdots+(m_{i_k}-n_{i_k})=0.
 \]
 
-\medskip
-下面分别说明这两个条件都必不可少。
+记
+\[
+d_i=m_i-n_i.
+\]
+问题就变成：能否取一个非空序列，使若干个 $d_i$ 的和为 $0$。
 
-\paragraph{(1) 非平凡性是必要的}
-若去掉“非平凡”条件，取
-\[
-    P=\varnothing
-\]
-或
-\[
-    P=\{\langle M\rangle\mid M\text{ 是图灵机}\},
-\]
-则 $P$ 显然是可判定的。前者总是拒绝，后者总是接受。因此，若不要求非平凡，就不能推出 $P$ 不可判定。
+这可以完全按符号分类：
 
-\paragraph{(2) “只取决于语言”这一条件是必要的}
-若去掉第二个条件，可以取一个非平凡但与语言无关的可判定性质，例如
-\[
-    P=\{\langle M\rangle\mid \langle M\rangle\text{ 的长度为偶数}\}.
-\]
-这个 $P$ 显然是非平凡的：有些机器描述长度为偶数，有些为奇数；同时 $P$ 也是可判定的，因为只需检查输入描述的长度奇偶性。
+\begin{enumerate}[label=(\arabic*)]
+  \item 若某个 $d_i=0$，则单独选这一张牌就是一个解。
+  \item 若存在 $d_i>0$ 且存在 $d_j<0$，则也一定有解。因为可以取 $|d_j|$ 张第 $i$ 张牌和 $d_i$ 张第 $j$ 张牌，于是总差为
+  \[
+  |d_j|d_i+d_i d_j=0.
+  \]
+  由于字母表是一元的，只要总长度相等，顶部串和底部串就必然相同。
+  \item 若所有 $d_i$ 都严格为正，或都严格为负，则任意非空序列的总差也严格为正或严格为负，不可能得到 $0$，因此无解。
+\end{enumerate}
 
-但这个性质并不只取决于语言，因为完全可能存在
+所以，一元字母表上的 PCP 实例有解，当且仅当满足下面两种情形之一：
 \[
-    L(M_1)=L(M_2)
+\exists i\ (d_i=0),
+\qquad\text{或}\qquad
+\exists i,j\ (d_i>0\text{ 且 }d_j<0).
 \]
-而
-\[
-    |\langle M_1\rangle|
-\]
-与
-\[
-    |\langle M_2\rangle|
-\]
-奇偶不同。
 
-\medskip
-因此，Rice 定理中的两个条件都不能删去。$\blacksquare$
-
-\paragraph{解释.}
-Rice 定理的力量来自两个限制同时成立：它讨论的是“真正关于语言本身的性质”，而且这个性质不是恒真也不是恒假。少了任何一个条件，问题都可能退化成一个简单的可判定性质。
+这只是对有限个整数做检查，因此是可判定的。故 PCP 在一元字母表上可判定。$\blacksquare$
 
 \subsection*{5.21}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_21.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_21.png}
   \caption{}
   \label{fig:hw_5_21}
 \end{figure}
 
-证明。设
+\subsubsection*{证明}
+
+反设存在图灵机 $R$ 判定
 \[
-    \mathrm{DUP}_{\mathrm{PDA}}
-    =
-    \{\langle P\rangle\mid P\text{ 是 PDA 且 }L(P)\cap\{ww\mid w\in\{0,1\}^*\}\ne\varnothing\}.
+\mathrm{AMBIG}_{\mathrm{CFG}}
+=
+\{\langle G\rangle\mid G\text{ 是歧义的 CFG}\}.
 \]
-我们用 computation history method 证明它不可判定。反设存在图灵机 $R$ 判定
+我们构造图灵机 $S$ 来判定 PCP。
+
+给定 PCP 实例
 \[
-    \mathrm{DUP}_{\mathrm{PDA}}.
+P=\left\{
+\left[\frac{t_1}{b_1}\right],
+\left[\frac{t_2}{b_2}\right],
+\dots,
+\left[\frac{t_k}{b_k}\right]
+\right\},
+\]
+引入新的终结符
+\[
+a_1,a_2,\dots,a_k,
+\]
+并按题目提示构造文法
+\[
+S\to T\mid B,
+\]
+\[
+T\to t_1Ta_1\mid\cdots\mid t_kTa_k\mid t_1a_1\mid\cdots\mid t_ka_k,
+\]
+\[
+B\to b_1Ba_1\mid\cdots\mid b_kBa_k\mid b_1a_1\mid\cdots\mid b_ka_k.
 \]
 
-\medskip
-我们构造图灵机 $S$ 来判定
+我们证明：
 \[
-    A_{\mathrm{TM}}
-\]
-如下。给定输入
-\[
-    \langle M,w\rangle,
-\]
-$S$ 将构造一个 PDA $P_{M,w}$，再把它交给 $R$。
-
-\medskip
-首先回忆接受计算历史。若 $M$ 在输入 $w$ 上接受，则存在一串配置
-\[
-    C_1,C_2,\dots,C_m,
-\]
-其中 $C_1$ 是初始配置，$C_m$ 是接受配置，且每个 $C_{i+1}$ 都是 $C_i$ 的合法后继。
-
-\medskip
-考虑如下编码：
-\[
-    x=C_1\#C_2^R\#C_3\#C_4^R\#\cdots,
-\]
-即把偶数项配置反转后插入分隔符 $\#$。
-
-\medskip
-定义两个语言：
-
-\medskip
-\noindent
-$A_{M,w}$：所有上述形式的字符串 $x$，满足
-\[
-    C_1
-\]
-是 $M$ 在 $w$ 上的初始配置，
-\[
-    C_m
-\]
-是接受配置，并且每一对奇偶相邻配置
-\[
-    (C_1,C_2),\ (C_3,C_4),\dots
-\]
-都是合法一步转移；
-
-\medskip
-\noindent
-$B_{M,w}$：所有上述形式的字符串 $x$，满足相同的首尾条件，并且每一对偶奇相邻配置
-\[
-    (C_2,C_3),\ (C_4,C_5),\dots
-\]
-都是合法一步转移。
-
-\medskip
-由于相邻的两项中恰有一项被反转，PDA 可以把其中一项压栈，再逐符号比较另一项，从而检查某一对配置是否满足合法转移关系。因此
-\[
-    A_{M,w}
-\]
-和
-\[
-    B_{M,w}
-\]
-都是上下文无关语言。
-
-\medskip
-并且
-\[
-    M\text{ 接受 }w
-    \iff
-    A_{M,w}\cap B_{M,w}\ne\varnothing.
-\]
-这是 computation history method 的标准结论：一个串同时通过“奇数步检查”和“偶数步检查”，当且仅当它编码了一条完整的接受计算历史。
-
-\medskip
-现在引入一个新符号 $\$$，它不出现在配置编码中。构造上下文无关语言
-\[
-    L_{M,w}
-    =
-    \{x\$y\$\mid x\in A_{M,w},\ y\in B_{M,w}\}.
-\]
-因为上下文无关语言对连接封闭，所以 $L_{M,w}$ 由某台 PDA $P_{M,w}$ 识别。
-
-\begin{myalgo}{构造的图灵机 $S$}
-\begin{algorithmic}[1]
-  \Require 输入 $\langle M,w\rangle$
-  \Ensure 若 $\langle M,w\rangle\in A_{\mathrm{TM}}$ 则接受；否则拒绝
-  \State 构造 PDA $P_{M,w}$，使
-  \[
-      L(P_{M,w})=L_{M,w}=\{x\$y\$\mid x\in A_{M,w},\ y\in B_{M,w}\}
-  \]
-  \State 在输入 $\langle P_{M,w}\rangle$ 上运行 $R$
-  \If{$R$ 接受}
-    \State \textbf{接受}
-  \Else
-    \State \textbf{拒绝}
-  \EndIf
-\end{algorithmic}
-\end{myalgo}
-
-\medskip
-下面证明 $S$ 的正确性。我们先证明
-\[
-    L_{M,w}\cap\{uu\mid u\in\Sigma^*\}\ne\varnothing
-    \iff
-    A_{M,w}\cap B_{M,w}\ne\varnothing.
+P\text{ 有解}
+\iff
+G\text{ 是歧义文法}.
 \]
 
-\medskip
-\noindent
-若
+\paragraph{若 $P$ 有解，则 $G$ 歧义}
+设
 \[
-    x\in A_{M,w}\cap B_{M,w},
+i_1i_2\cdots i_m
 \]
-则
+是一个 PCP 解，即
 \[
-    x\$x\$
+t_{i_1}t_{i_2}\cdots t_{i_m}
+=
+b_{i_1}b_{i_2}\cdots b_{i_m}.
 \]
-属于 $L_{M,w}$，且它显然具有形式
+于是字符串
 \[
-    uu
+x=t_{i_1}t_{i_2}\cdots t_{i_m}a_{i_m}\cdots a_{i_2}a_{i_1}
 \]
-其中
+既可由 $T$ 推导，也可由 $B$ 推导，因此
 \[
-    u=x\$.
+S\Rightarrow T\Rightarrow^* x
+\qquad\text{且}\qquad
+S\Rightarrow B\Rightarrow^* x.
 \]
+所以 $G$ 歧义。
 
-\medskip
-\noindent
-反之，若某个
+\paragraph{若 $G$ 歧义，则 $P$ 有解}
+注意，由 $T$ 生成的任意字符串末尾的
 \[
-    uu\in L_{M,w},
+a_{i_m}\cdots a_{i_1}
 \]
-则它必可写成
+唯一确定所使用的牌序列
 \[
-    uu=x\$y\$,
-\qquad
-    x\in A_{M,w},\ y\in B_{M,w}.
+i_1,\dots,i_m,
 \]
-由于整个字符串中恰好出现两个符号 $\$$，而
-\[
-    uu
-\]
-由两个相同的半串组成，所以每一半中恰好含有一个 $\$$。因此这两半只能是
-\[
-    x\$
-\quad\text{和}\quad
-    y\$,
-\]
-从而
-\[
-    x=y.
-\]
-于是
-\[
-    x\in A_{M,w}\cap B_{M,w}.
-\]
+因此 $T$ 本身不歧义；同理 $B$ 也不歧义。故 $G$ 的歧义只能来自某个字符串同时属于 $L(T)$ 和 $L(B)$。
 
-\medskip
+于是存在某个字符串 $x$，既可写成
+\[
+t_{i_1}\cdots t_{i_m}a_{i_m}\cdots a_{i_1},
+\]
+也可写成
+\[
+b_{i_1}\cdots b_{i_m}a_{i_m}\cdots a_{i_1}.
+\]
+比较其前缀部分，就得到
+\[
+t_{i_1}\cdots t_{i_m}
+=
+b_{i_1}\cdots b_{i_m},
+\]
+故牌序列 $i_1,\dots,i_m$ 是 PCP 的一个解。
+
 因此
 \[
-    L(P_{M,w})\cap\{uu\mid u\in\Sigma^*\}\ne\varnothing
-    \iff
-    A_{M,w}\cap B_{M,w}\ne\varnothing.
+\langle P\rangle\in \mathrm{PCP}
+\iff
+\langle G\rangle\in \mathrm{AMBIG}_{\mathrm{CFG}}.
 \]
-再由 computation history method 的标准结论，
+若 $R$ 存在，就能判定 PCP，矛盾。故
 \[
-    A_{M,w}\cap B_{M,w}\ne\varnothing
-    \iff
-    \langle M,w\rangle\in A_{\mathrm{TM}}.
+\mathrm{AMBIG}_{\mathrm{CFG}}
 \]
-综上，
-\[
-    \langle M,w\rangle\in A_{\mathrm{TM}}
-    \iff
-    \langle P_{M,w}\rangle\in \mathrm{DUP}_{\mathrm{PDA}}.
-\]
-因此 $S$ 判定了
-\[
-    A_{\mathrm{TM}},
-\]
-这与
-\[
-    A_{\mathrm{TM}}
-\]
-不可判定矛盾。
-
-故“某个 PDA 是否接受某个形如 $ww$ 的字符串”这一问题不可判定。$\blacksquare$
-
-\paragraph{解释.}
-直接让 PDA 检查“是不是合法接受历史”太难，于是把检查拆成两半：一个只查奇数步，另一个只查偶数步。二者的交集才是真正的接受历史。最后再用
-\[
-    x\$y\$
-\]
-和“存在某个 $uu$”把“交集非空”重新编码成一个单一 PDA 的问题。
+不可判定。$\blacksquare$
 
 \subsection*{5.22}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_22.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_22.png}
   \caption{}
   \label{fig:hw_5_22}
 \end{figure}
 
-答案：$X$ 不可判定。
+\subsubsection*{证明}
 
-\medskip
-证明。反设存在图灵机 $R$ 判定
-\[
-    X.
-\]
-我们构造图灵机 $S$ 来判定
-\[
-    A_{\mathrm{TM}}
-\]
-如下。给定输入
-\[
-    \langle M,w\rangle,
-\]
-$S$ 构造一台单带图灵机 $N$，并把固定输入串 $0$ 交给 $R$ 检查。
+我们证明下面两个方向。
 
-\begin{myalgo}{构造的单带图灵机 $N$}
-\begin{algorithmic}[1]
-  \Require 任意输入
-  \Ensure 仅当 $M$ 接受 $w$ 时修改原输入区域
-  \State 向右移动到初始输入区域之后的第一个空白格
-  \State 从该空白格开始，只在输入区域右边模拟 $M$ 在输入 $w$ 上的计算
-  \If{模拟发现 $M$ 接受 $w$}
-    \State 返回输入区域，并改写其最左端输入符号，然后接受
-  \ElsIf{$M$ 拒绝 $w$}
-    \State \textbf{拒绝}
-  \Else
-    \State 在右侧工作区继续循环
-  \EndIf
-\end{algorithmic}
-\end{myalgo}
-
-\begin{myalgo}{构造的图灵机 $S$}
-\begin{algorithmic}[1]
-  \Require 输入 $\langle M,w\rangle$
-  \Ensure 若 $\langle M,w\rangle\in A_{\mathrm{TM}}$ 则接受；否则拒绝
-  \State 构造上述单带图灵机 $N$
-  \State 在输入 $\langle N,0\rangle$ 上运行 $R$
-  \If{$R$ 接受}
-    \State \textbf{拒绝}
-  \Else
-    \State \textbf{接受}
-  \EndIf
-\end{algorithmic}
-\end{myalgo}
-
-\medskip
-下面验证正确性。若
+\paragraph{若 $A\le_m A_{\mathrm{TM}}$，则 $A$ 是图灵可识别的}
+设 $f$ 是一个可计算函数，满足对任意字符串 $w$，
 \[
-    \langle M,w\rangle\in A_{\mathrm{TM}},
+w\in A
+\iff
+f(w)\in A_{\mathrm{TM}}.
 \]
-则 $N$ 最终会改写输入串 $0$ 所在的那一段输入区域，所以
-\[
-    \langle N,0\rangle\notin X.
-\]
-于是 $R$ 拒绝，$S$ 接受。
+又因为 $A_{\mathrm{TM}}$ 是图灵可识别的，设 $U$ 是其识别器。构造识别器 $R$：
 
-\medskip
-若
 \[
-    \langle M,w\rangle\notin A_{\mathrm{TM}},
+R=\text{``对于输入 }w\text{：}
 \]
-则 $N$ 永远不会改写输入区域，因此
 \[
-    \langle N,0\rangle\in X.
+\text{1. 计算 }f(w)\text{。}
 \]
-于是 $R$ 接受，$S$ 拒绝。
-
-\medskip
-因此 $S$ 判定了
 \[
-    A_{\mathrm{TM}},
+\text{2. 在输入 }f(w)\text{ 上运行 }U\text{。}
 \]
-矛盾。
+\[
+\text{3. 若 }U\text{ 接受，则接受。''}
+\]
 
-故 $X$ 不可判定。$\blacksquare$
+若 $w\in A$，则 $f(w)\in A_{\mathrm{TM}}$，于是 $U$ 接受，$R$ 接受。若 $w\notin A$，则 $f(w)\notin A_{\mathrm{TM}}$，于是 $U$ 不会接受，$R$ 也不接受。因此 $R$ 识别 $A$，故 $A$ 图灵可识别。
 
-\paragraph{解释.}
-题目问的是一个“具体输入上的运行行为”，不是语言性质，所以不能直接套 Rice 定理。但 reduction 很直接：让机器先把真正的模拟全部放到输入右边，只在“模拟成功”时才回头碰原输入。于是“会不会修改输入区”就等价于“$M$ 会不会接受 $w$”。
+\paragraph{若 $A$ 是图灵可识别的，则 $A\le_m A_{\mathrm{TM}}$}
+设 $M$ 是 $A$ 的识别器。定义可计算函数
+\[
+f(w)=\langle M,w\rangle.
+\]
+显然 $f$ 可计算，且对任意 $w$，
+\[
+w\in A
+\iff
+M\text{ 接受 }w
+\iff
+\langle M,w\rangle\in A_{\mathrm{TM}}
+\iff
+f(w)\in A_{\mathrm{TM}}.
+\]
+因此
+\[
+A\le_m A_{\mathrm{TM}}.
+\]
+
+综上，
+\[
+A\text{ 是图灵可识别的}
+\iff
+A\le_m A_{\mathrm{TM}}.
+\]
+$\blacksquare$
 
 \subsection*{5.24}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_24.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_24.png}
   \caption{}
   \label{fig:hw_5_24}
 \end{figure}
 
-\paragraph{(a)}
-证明。设
+\subsubsection*{证明}
+
+记
 \[
-    G=(V,\Sigma,R,S)
-\]
-是一部 CFG，规则集为
-\[
-    R=\{r_1,\dots,r_m\}.
-\]
-对每条规则 $r_i$，记
-\[
-    G_i=(V,\Sigma,R\setminus\{r_i\},S).
+J=\{w\mid w=0x\text{ 对于某个 }x\in A_{\mathrm{TM}},\ \text{或 }w=1y\text{ 对于某个 }y\in \overline{A_{\mathrm{TM}}}\}.
 \]
 
-构造识别器 $T$ 来识别 $\mathrm{MIN}_{\mathrm{CFG}}$。在输入 $\langle G\rangle$ 上，$T$ 并行地对每个 $i=1,\dots,m$ 搜索一个见证串 $w_i$，满足
+\paragraph{$J$ 不是图灵可识别的}
+反设 $J$ 是图灵可识别的，设 $R$ 是其识别器。构造图灵机 $S$ 来识别
 \[
-    w_i\in L(G)\setminus L(G_i).
+\overline{A_{\mathrm{TM}}}
+\]
+如下：
+
+\[
+S=\text{``对于输入 }y\text{：}
+\]
+\[
+\text{1. 构造字符串 }1y\text{。}
+\]
+\[
+\text{2. 在输入 }1y\text{ 上运行 }R\text{。}
+\]
+\[
+\text{3. 若 }R\text{ 接受，则接受。''}
 \]
 
-更具体地，$T$ 交错枚举所有字符串
+因为
 \[
-    w_1,w_2,w_3,\dots
+y\in \overline{A_{\mathrm{TM}}}
+\iff
+1y\in J,
 \]
-并对每条规则 $r_i$ 同时进行如下测试：寻找某个字符串 $w$，使得
-\[
-    w\in L(G)
-    \qquad\text{且}\qquad
-    w\notin L(G_i).
-\]
-由于 CFG 成员资格问题可判定，这两个测试都能停机。
+所以 $S$ 识别了 $\overline{A_{\mathrm{TM}}}$。这与 $\overline{A_{\mathrm{TM}}}$ 不是图灵可识别的矛盾。故 $J$ 不是图灵可识别的。
 
-\medskip
-若 $G$ 是最小的，则删除任意一条规则都会改变语言。因此对每个 $i$ 都存在某个见证串 $w_i$，于是上述搜索最终会为每条规则都找到见证，机器 $T$ 接受。
+\paragraph{$\overline{J}$ 也不是图灵可识别的}
+注意
+\[
+\overline{J}
+=
+\{0x\mid x\in \overline{A_{\mathrm{TM}}}\}
+\cup
+\{1y\mid y\in A_{\mathrm{TM}}\}.
+\]
+反设 $\overline{J}$ 是图灵可识别的，设其识别器为 $R'$。构造图灵机 $S'$ 来识别 $\overline{A_{\mathrm{TM}}}$：
 
-\medskip
-反之，若 $G$ 不是最小的，则存在某条规则 $r_j$ 满足
 \[
-    L(G_j)=L(G).
+S'=\text{``对于输入 }x\text{：}
 \]
-于是对该 $j$ 而言，不存在见证串
 \[
-    w\in L(G)\setminus L(G_j),
+\text{1. 构造字符串 }0x\text{。}
 \]
-所以搜索永远不会结束，$T$ 也不会接受。
-
-\medskip
-因此 $T$ 恰好识别 $\mathrm{MIN}_{\mathrm{CFG}}$。故 $\mathrm{MIN}_{\mathrm{CFG}}$ 是 Turing-recognizable 的。$\blacksquare$
-
-\paragraph{(b)}
-证明。利用前一题 5.23(b) 的结论：语言
 \[
-    \mathrm{NECESSARY}_{\mathrm{CFG}}
-    =\{\langle G,A\rangle\mid A\text{ 是 }G\text{ 的必要变量}\}
+\text{2. 在输入 }0x\text{ 上运行 }R'\text{。}
 \]
-是不可判定的。反设存在图灵机 $R$ 判定
 \[
-    \mathrm{MIN}_{\mathrm{CFG}}.
-\]
-我们构造图灵机 $S$ 来判定
-\[
-    \mathrm{NECESSARY}_{\mathrm{CFG}}.
+\text{3. 若 }R'\text{ 接受，则接受。''}
 \]
 
-\medskip
-给定输入
+因为
 \[
-    \langle G,A\rangle,
+x\in \overline{A_{\mathrm{TM}}}
+\iff
+0x\in \overline{J},
 \]
-构造一个新文法 $H$。做法是：引入新变量 $A_0$，把 $G$ 中右部出现的每个 $A$ 都替换成 $A_0$，并加入唯一的桥接规则
-\[
-    A_0\to A.
-\]
-若原来的开始变量就是 $A$，则再引入新的开始变量 $S_0$，令
-\[
-    S_0\to A_0;
-\]
-否则开始变量保持不变。
+所以 $S'$ 识别了 $\overline{A_{\mathrm{TM}}}$，再次矛盾。
 
-\medskip
-这样构造后，$H$ 与 $G$ 生成同一语言，但 $H$ 中一切对变量 $A$ 的使用都必须经过这条桥接规则
+因此
 \[
-    A_0\to A.
+J
+\quad\text{和}\quad
+\overline{J}
 \]
-因此，删除这条规则后，恰好相当于“禁止一切含有 $A$ 的推导”。
-
-\medskip
-于是
-\[
-    A\text{ 是 }G\text{ 的必要变量}
-    \iff
-    A_0\to A\text{ 是 }H\text{ 的必要规则}.
-\]
-换言之，
-\[
-    A\text{ 必要}
-    \iff
-    \text{删去 }A_0\to A\text{ 会改变 }H\text{ 的语言}.
-\]
-
-\medskip
-最后，对 $H$ 的其余规则加上标准的 witness-padding：为每一条非桥接规则附加一个只通过该规则才能生成的私有见证串。这样做不影响上面这条桥接规则是否可删，但会保证所有其他规则都自动成为必要规则。于是得到的新文法 $\widehat H$ 满足
-\[
-    \widehat H\in \mathrm{MIN}_{\mathrm{CFG}}
-    \iff
-    A\text{ 是 }G\text{ 的必要变量}.
-\]
-
-于是定义
-\begin{myalgo}{构造的图灵机 $S$}
-\begin{algorithmic}[1]
-  \Require 输入 $\langle G,A\rangle$
-  \Ensure 若 $A$ 是 $G$ 的必要变量则接受；否则拒绝
-  \State 按上述步骤构造文法 $\widehat H$
-  \State 在输入 $\langle \widehat H\rangle$ 上运行 $R$
-  \If{$R$ 接受}
-    \State \textbf{接受}
-  \Else
-    \State \textbf{拒绝}
-  \EndIf
-\end{algorithmic}
-\end{myalgo}
-
-\medskip
-由
-\[
-    \widehat H\in \mathrm{MIN}_{\mathrm{CFG}}
-    \iff
-    A\text{ 是 }G\text{ 的必要变量}
-\]
-可知，$S$ 判定了
-\[
-    \mathrm{NECESSARY}_{\mathrm{CFG}},
-\]
-矛盾。故
-\[
-    \mathrm{MIN}_{\mathrm{CFG}}
-\]
-不可判定。$\blacksquare$
-
-\paragraph{解释.}
-(a) 的思路很直接：最小文法的定义本身就是“每条规则都能找到一个删掉后失去的见证串”。(b) 的关键是把“变量 $A$ 是否必要”压缩成“一条桥接规则是否必要”，然后用标准 padding 技巧把别的规则都强制成必要的，于是最小性就只剩下这一条规则在起作用。
+都不是图灵可识别的。$\blacksquare$
 
 \subsection*{5.28}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_28.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_28.png}
   \caption{}
   \label{fig:hw_5_28}
 \end{figure}
 
-设
+\subsubsection*{证明}
+
+设 $\mathcal{P}$ 是 TM 语言的一个非平凡属性。定义描述语言
 \[
-    \mathrm{BLANKWRITE}
-    =
-    \{\langle M\rangle\mid M\text{ 是单带 TM，且在某个输入上曾把一个非空白符改写为空白符}\}.
+L_{\mathcal{P}}
+=
+\{\langle M\rangle\mid L(M)\text{ 具有属性 }\mathcal{P}\}.
+\]
+我们证明 $L_{\mathcal{P}}$ 不可判定。
+
+因为 $\mathcal{P}$ 非平凡，所以存在两台图灵机 $M_{\mathrm{yes}}$ 和 $M_{\mathrm{no}}$，满足
+\[
+L(M_{\mathrm{yes}})\text{ 具有 }\mathcal{P},
+\qquad
+L(M_{\mathrm{no}})\text{ 不具有 }\mathcal{P}.
 \]
 
-证明 $\mathrm{BLANKWRITE}$ 不可判定。反设存在图灵机 $R$ 判定
-\[
-    \mathrm{BLANKWRITE}.
-\]
-我们构造图灵机 $S$ 来判定
-\[
-    A_{\mathrm{TM}}
-\]
-如下。给定输入
-\[
-    \langle M,w\rangle,
-\]
-$S$ 构造一台单带图灵机 $N$：
+分两种情形讨论。
 
-\begin{myalgo}{构造的单带图灵机 $N$}
-\begin{algorithmic}[1]
-  \Require 任意输入
-  \Ensure 仅当 $M$ 接受 $w$ 时发生“把非空白改写为空白”
-  \State 忽略外部输入，先在带上某个固定位置写下一个非空白符，例如 $1$
-  \State 模拟 $M$ 在输入 $w$ 上的运行
-  \If{模拟发现 $M$ 接受 $w$}
-    \State 回到第 1 步写下的那个 $1$，把它改写成空白符，再接受
-  \ElsIf{$M$ 拒绝 $w$}
-    \State \textbf{拒绝}
-  \Else
-    \State 继续循环
-  \EndIf
-\end{algorithmic}
-\end{myalgo}
+\paragraph{情形 1：$\varnothing$ 不具有属性 $\mathcal{P}$}
+反设 $L_{\mathcal{P}}$ 可判定，设判定器为 $R$。我们构造图灵机 $S$ 来判定 $A_{\mathrm{TM}}$。
 
-\begin{myalgo}{构造的图灵机 $S$}
-\begin{algorithmic}[1]
-  \Require 输入 $\langle M,w\rangle$
-  \Ensure 若 $\langle M,w\rangle\in A_{\mathrm{TM}}$ 则接受；否则拒绝
-  \State 构造上述单带图灵机 $N$
-  \State 在输入 $\langle N\rangle$ 上运行 $R$
-  \If{$R$ 接受}
-    \State \textbf{接受}
-  \Else
-    \State \textbf{拒绝}
-  \EndIf
-\end{algorithmic}
-\end{myalgo}
+给定输入 $\langle M,w\rangle$，构造图灵机 $N$：
+\[
+N=\text{``对于输入 }x\text{：}
+\]
+\[
+\text{1. 模拟 }M\text{ 在 }w\text{ 上的运行。}
+\]
+\[
+\text{2. 若 }M\text{ 接受 }w\text{，则模拟 }M_{\mathrm{yes}}\text{ 在 }x\text{ 上的运行。}
+\]
+\[
+\text{3. 若 }M\text{ 不接受 }w\text{，则永不接受 }x\text{。''}
+\]
 
-\medskip
-下面验证正确性。若
+若 $\langle M,w\rangle\in A_{\mathrm{TM}}$，则
 \[
-    \langle M,w\rangle\in A_{\mathrm{TM}},
+L(N)=L(M_{\mathrm{yes}}),
 \]
-则 $M$ 接受 $w$，于是 $N$ 在某次计算中会把先前写下的非空白符擦成空白，因此
+因而 $L(N)$ 具有属性 $\mathcal{P}$。若 $\langle M,w\rangle\notin A_{\mathrm{TM}}$，则
 \[
-    \langle N\rangle\in \mathrm{BLANKWRITE},
+L(N)=\varnothing,
 \]
-从而 $R$ 接受，$S$ 接受。
+而按本情形假设，$\varnothing$ 不具有属性 $\mathcal{P}$。所以
+\[
+\langle M,w\rangle\in A_{\mathrm{TM}}
+\iff
+\langle N\rangle\in L_{\mathcal{P}}.
+\]
+运行 $R$ 即可判定 $A_{\mathrm{TM}}$，矛盾。
 
-\medskip
-若
+\paragraph{情形 2：$\varnothing$ 具有属性 $\mathcal{P}$}
+此时仍反设 $L_{\mathcal{P}}$ 可判定。给定 $\langle M,w\rangle$，构造图灵机 $N$：
 \[
-    \langle M,w\rangle\notin A_{\mathrm{TM}},
+N=\text{``对于输入 }x\text{：}
 \]
-则这种改写永不发生，所以
 \[
-    \langle N\rangle\notin \mathrm{BLANKWRITE},
+\text{1. 模拟 }M\text{ 在 }w\text{ 上的运行。}
 \]
-从而 $R$ 拒绝，$S$ 拒绝。
+\[
+\text{2. 若 }M\text{ 接受 }w\text{，则模拟 }M_{\mathrm{no}}\text{ 在 }x\text{ 上的运行。}
+\]
+\[
+\text{3. 若 }M\text{ 不接受 }w\text{，则永不接受 }x\text{。''}
+\]
 
-\medskip
-因此 $S$ 判定了
+若 $\langle M,w\rangle\in A_{\mathrm{TM}}$，则
 \[
-    A_{\mathrm{TM}},
+L(N)=L(M_{\mathrm{no}}),
 \]
-矛盾。故 $\mathrm{BLANKWRITE}$ 不可判定。$\blacksquare$
+不具有属性 $\mathcal{P}$。若 $\langle M,w\rangle\notin A_{\mathrm{TM}}$，则
+\[
+L(N)=\varnothing,
+\]
+而按本情形假设，$\varnothing$ 具有属性 $\mathcal{P}$。因此
+\[
+\langle M,w\rangle\in A_{\mathrm{TM}}
+\iff
+\langle N\rangle\notin L_{\mathcal{P}}.
+\]
+再次得到 $A_{\mathrm{TM}}$ 可判定，矛盾。
 
-\paragraph{解释.}
-这是一个很典型的“先埋一个记号，再决定是否擦掉它”的 reduction。题目问“是否曾经发生过某种写带行为”，就把这次行为安排成“只在原问题答案为 yes 时发生”即可。
+两种情形都导出矛盾，所以
+\[
+L_{\mathcal{P}}
+\]
+不可判定。这就是 Rice 定理。$\blacksquare$
 
 \subsection*{5.33}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{chapters/imgs/hw_5_33.png}
+  \includegraphics[width=\textwidth]{chapters/imgs/hw_5_33.png}
   \caption{}
   \label{fig:hw_5_33}
 \end{figure}
 
-证明。设 PCP 的字母表为一元字母表
+\subsubsection*{证明 $S$ 不是图灵可识别的}
+
+我们从
 \[
-    \Sigma=\{1\}.
+E_{\mathrm{TM}}=\{\langle M\rangle\mid L(M)=\varnothing\}
 \]
-于是每个牌
+归约到 $S$。已知 $E_{\mathrm{TM}}$ 不是图灵可识别的。
+
+给定输入 $\langle M\rangle$，利用递归定理构造一台图灵机 $N$，使它知道自己的描述
 \[
-    \langle t_i,b_i\rangle
+d=\langle N\rangle.
 \]
-实际上只由两个正整数
+$N$ 的行为定义为：
+
 \[
-    m_i=|t_i|,
-    \qquad
-    n_i=|b_i|
+N=\text{``对于输入 }x\text{：}
 \]
-决定，因为
 \[
-    t_i=1^{m_i},
-    \qquad
-    b_i=1^{n_i}.
+\text{1. 枚举所有长度不超过 }|x|\text{ 的字符串，并把 }M\text{ 在这些字符串上的计算并行模拟 }|x|\text{ 步。}
+\]
+\[
+\text{2. 若在上述有限搜索中发现 }M\text{ 接受了某个字符串，则接受 }x\text{。}
+\]
+\[
+\text{3. 若没有发现接受且 }x=d\text{，则接受；否则拒绝。''}
 \]
 
-\medskip
-对任意牌序列
+若
 \[
-    i_1,\dots,i_k,
+L(M)=\varnothing,
 \]
-其顶部和底部拼接结果相同，当且仅当
+则第 1 步永远找不到接受，故 $N$ 只接受 $d$。于是
 \[
-    m_{i_1}+\cdots+m_{i_k}
-    =
-    n_{i_1}+\cdots+n_{i_k}.
+L(N)=\{d\}=\{\langle N\rangle\},
 \]
-等价地，
+所以
 \[
-    (m_{i_1}-n_{i_1})+\cdots+(m_{i_k}-n_{i_k})=0.
+\langle N\rangle\in S.
 \]
 
-\medskip
-因此，一元字母表上的 PCP 是否有解，只取决于整数集合
+若
 \[
-    d_i=m_i-n_i.
+L(M)\neq\varnothing,
 \]
-现在分情况讨论：
-
-\medskip
-\noindent
-1. 若某个 $d_i=0$，则单独选这块牌就得到一个解。
-
-\medskip
-\noindent
-2. 若存在
+设 $M$ 在某个字符串 $y$ 上经过 $t$ 步接受。取任意字符串 $x$，满足
 \[
-    d_i>0
-    \quad\text{且}\quad
-    d_j<0,
+|x|\ge \max\{|y|,t\}
+\qquad\text{且}\qquad
+x\neq d.
 \]
-则也一定有解。因为取
+则第 1 步会发现这一接受计算，从而 $N$ 接受这个 $x$。因此 $L(N)$ 至少包含一个不同于 $d$ 的字符串，故
 \[
-    |d_j|
+L(N)\neq \{d\}.
 \]
-张第 $i$ 块牌和
+于是
 \[
-    d_i
+\langle N\rangle\notin S.
 \]
-张第 $j$ 块牌，就有
+
+所以
 \[
-    |d_j|d_i+d_i d_j=0.
+\langle M\rangle\in E_{\mathrm{TM}}
+\iff
+\langle N\rangle\in S.
 \]
-于是可得到顶部与底部总长度相等的拼接。
-
-\medskip
-\noindent
-3. 若所有 $d_i$ 都严格为正，或都严格为负，则任意非空牌序列的总差也严格为正或严格为负，不可能为 $0$，因而无解。
-
-\medskip
-所以，一个一元 PCP 实例有解，当且仅当满足以下二者之一：
-
-\medskip
-\noindent
-1. 某个 $d_i=0$；
-
-\medskip
-\noindent
-2. 同时存在正的 $d_i$ 和负的 $d_j$。
-
-\medskip
-这是一个显然可判定的有限检查过程。故 PCP 在一元字母表上是可判定的。$\blacksquare$
-
-\paragraph{解释.}
-一旦字母表只剩下
+这说明
 \[
-    1,
+E_{\mathrm{TM}}\le_m S.
 \]
-串本身就不再携带结构信息，唯一重要的只是长度。于是 PCP 退化成一个整数平衡问题：能不能把若干个差值
+若 $S$ 图灵可识别，则 $E_{\mathrm{TM}}$ 也图灵可识别，矛盾。故 $S$ 不是图灵可识别的。
+
+\subsubsection*{证明 $\overline{S}$ 也不是图灵可识别的}
+
+仍从 $E_{\mathrm{TM}}$ 归约。给定 $\langle M\rangle$，再次利用递归定理构造一台知道自己描述
 \[
-    d_i=|t_i|-|b_i|
+d=\langle N\rangle
 \]
-相加得到 $0$。这在一元情形下就完全变成了有限算术判断。
+的图灵机 $N$，令
+\[
+N=\text{``对于输入 }x\text{：}
+\]
+\[
+\text{1. 若 }x\neq d\text{，则立即拒绝。}
+\]
+\[
+\text{2. 若 }x=d\text{，则并行模拟 }M\text{ 在所有字符串上的计算。}
+\]
+\[
+\text{3. 一旦发现 }M\text{ 接受了某个字符串，就接受。''}
+\]
+
+若
+\[
+L(M)=\varnothing,
+\]
+则第 3 步永远不会发生，因此 $N$ 不接受任何字符串，故
+\[
+L(N)=\varnothing\neq \{d\}.
+\]
+于是
+\[
+\langle N\rangle\in \overline{S}.
+\]
+
+若
+\[
+L(M)\neq\varnothing,
+\]
+则第 3 步最终会在输入 $d$ 上接受，而对任何 $x\neq d$，第 1 步立即拒绝。因此
+\[
+L(N)=\{d\}=\{\langle N\rangle\},
+\]
+于是
+\[
+\langle N\rangle\in S,
+\qquad
+\langle N\rangle\notin \overline{S}.
+\]
+
+所以
+\[
+\langle M\rangle\in E_{\mathrm{TM}}
+\iff
+\langle N\rangle\in \overline{S}.
+\]
+这说明
+\[
+E_{\mathrm{TM}}\le_m \overline{S}.
+\]
+若 $\overline{S}$ 图灵可识别，则 $E_{\mathrm{TM}}$ 也图灵可识别，矛盾。故 $\overline{S}$ 不是图灵可识别的。$\blacksquare$
 
 \clearpage

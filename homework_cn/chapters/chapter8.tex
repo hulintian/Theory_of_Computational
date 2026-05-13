@@ -172,13 +172,13 @@ GM\in\mathrm{PSPACE}.
 
 \subsubsection*{证明}
 
-先证 $A_{\mathrm{LBA}}\in\mathrm{PSPACE}$。给定输入 $\langle M,w\rangle$，其中 $M$ 是一台 LBA。因为 LBA 只能使用与输入长度线性相关的带空间，所以 $M$ 在 $w$ 上的每个配置长度为多项式。配置总数至多为指数个。构造配置图 $G$：结点是 $M$ 在 $w$ 上的合法配置，边表示一步计算关系。于是
+先证 $A_{\mathrm{LBA}}\in\mathrm{PSPACE}$。给定输入 $\langle M,w\rangle$，其中 $M$ 是一台 LBA。因为 LBA 只能使用与输入长度线性相关的带空间，所以 $M$ 在 $w$ 上的每个格局长度为多项式。格局总数至多为指数个。构造格局图 $G$：结点是 $M$ 在 $w$ 上的合法格局，边表示一步计算关系。于是
 \[
 \langle M,w\rangle\in A_{\mathrm{LBA}}
 \]
-当且仅当在 $G$ 中，初始配置能够到达某个接受配置。
+当且仅当在 $G$ 中，初始格局能够到达某个接受格局。
 
-可用 Savitch 定理中的递归可达性算法判定这个可达性问题。递归过程中只需保存常数个配置和一个步数界，所用空间为配置长度的多项式。因此 $A_{\mathrm{LBA}}\in\mathrm{PSPACE}$。
+可用 Savitch 定理中的递归可达性算法判定这个可达性问题。递归过程中只需保存常数个格局和一个步数界，所用空间为格局长度的多项式。因此 $A_{\mathrm{LBA}}\in\mathrm{PSPACE}$。
 
 再证 PSPACE 难。设 $A\in\mathrm{PSPACE}$，则存在图灵机 $M$ 和多项式 $p$，使得 $M$ 在每个长度为 $n$ 的输入上只使用 $p(n)$ 个带格。对输入 $w$，构造 LBA $B_w$ 以及输入
 \[

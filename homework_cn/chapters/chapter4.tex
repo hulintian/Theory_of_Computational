@@ -440,15 +440,15 @@ $M=$ ``对于输入 $\langle R\rangle$：
 
 \medskip
 \noindent
-1. $c$ 的第一项是否是 $N$ 在输入 $x$ 上的初始配置；
+1. $c$ 的第一项是否是 $N$ 在输入 $x$ 上的初始格局；
 
 \medskip
 \noindent
-2. $c$ 的最后一项是否为接受配置；
+2. $c$ 的最后一项是否为接受格局；
 
 \medskip
 \noindent
-3. $c$ 中每一对相邻配置是否满足 $N$ 的转移规则。
+3. $c$ 中每一对相邻格局是否满足 $N$ 的转移规则。
 
 \medskip
 这些检查都是有限且机械可做的，因此 $D$ 可判定。
@@ -541,23 +541,23 @@ $N=$ ``对于输入 $x$：
 生成。
 
 \medskip
-构造判定器 $M$：
+构造判定器 $D$：
 
 \begin{quote}
-$M=$ ``对于输入 $\langle A\rangle$：
+$D=$ ``对于输入 $\langle M\rangle$：
 
 \medskip
 \noindent
-1. 利用正则语言与上下文无关语言求交的有效构造，构造一个 CFG $G_A$，满足
+1. 利用正则语言与上下文无关语言求交的有效构造，构造一个 CFG $G_M$，满足
 \[
-    L(G_A)=L(A)\cap C_{=}.
+    L(G_M)=L(M)\cap C_{=}.
 \]
 
 \medskip
 \noindent
 2. 运行上下文无关语言空性问题的判定器，判断
 \[
-    L(G_A)=\varnothing
+    L(G_M)=\varnothing
 \]
 是否成立。
 
@@ -565,19 +565,19 @@ $M=$ ``对于输入 $\langle A\rangle$：
 \noindent
 3. 若
 \[
-    L(G_A)=\varnothing,
+    L(G_M)=\varnothing,
 \]
 则拒绝；否则接受。''
 \end{quote}
 
-若 $M$ 接受，则存在某个被 $A$ 接受且满足
+若 $D$ 接受输入 $\langle M\rangle$，则存在某个被 $M$ 接受且满足
 \[
     \#_0=\#_1
 \]
-的字符串；若 $M$ 拒绝，则不存在这样的字符串。于是
+的字符串；若 $D$ 拒绝输入 $\langle M\rangle$，则不存在这样的字符串。于是
 \[
     \mathrm{BAL}_{\mathrm{DFA}}
-    =\{\langle A\rangle\mid A\text{ 是 DFA 且接受某个 }0,1\text{ 个数相同的串}\}
+    =\{\langle M\rangle\mid M\text{ 是 DFA 且接受某个 }0,1\text{ 个数相同的串}\}
 \]
 是可判定的。$\blacksquare$
 

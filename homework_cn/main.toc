@@ -99,131 +99,131 @@
 \contentsline {paragraph}{$\overline {J}$ 也不是图灵可识别的}{95}{figure.caption.80}%
 \contentsline {paragraph}{情形 1：$\varnothing $ 不具有属性 $\mathcal {P}$}{96}{figure.caption.81}%
 \contentsline {paragraph}{情形 2：$\varnothing $ 具有属性 $\mathcal {P}$}{96}{figure.caption.81}%
-\contentsline {section}{Chapter 6}{99}{section*.83}%
-\contentsline {paragraph}{解释.}{99}{figure.caption.84}%
-\contentsline {paragraph}{解释.}{101}{myalgo.2}%
-\contentsline {paragraph}{解答.}{101}{figure.caption.86}%
-\contentsline {paragraph}{解释.}{102}{figure.caption.86}%
-\contentsline {paragraph}{解答.}{102}{figure.caption.87}%
-\contentsline {paragraph}{(1) 自反性}{102}{figure.caption.87}%
-\contentsline {paragraph}{(2) 对称性}{102}{figure.caption.87}%
-\contentsline {paragraph}{(3) 传递性}{102}{figure.caption.87}%
-\contentsline {paragraph}{解释.}{103}{figure.caption.87}%
-\contentsline {paragraph}{解答.}{103}{figure.caption.88}%
-\contentsline {paragraph}{解释.}{104}{Item.52}%
-\contentsline {paragraph}{解答.}{104}{figure.caption.89}%
-\contentsline {paragraph}{证明 \(A\le _T J\).}{104}{figure.caption.89}%
-\contentsline {paragraph}{证明 \(B\le _T J\).}{105}{figure.caption.89}%
-\contentsline {paragraph}{解释.}{105}{figure.caption.89}%
-\contentsline {paragraph}{解答.}{105}{figure.caption.90}%
-\contentsline {paragraph}{1. \(A\) 与 \(B\) 不相交且都是图灵可识别的.}{105}{figure.caption.90}%
-\contentsline {paragraph}{2. 证明它们不能被任何可判定语言分离.}{106}{figure.caption.90}%
-\contentsline {paragraph}{解释.}{106}{myalgo.3}%
-\contentsline {paragraph}{解答.}{107}{figure.caption.91}%
-\contentsline {paragraph}{解释.}{108}{myalgo.4}%
-\contentsline {section}{Chapter 7}{109}{section*.92}%
-\contentsline {paragraph}{(a) $2n = O(n)$ —— \textbf {真}.}{109}{figure.caption.93}%
-\contentsline {paragraph}{(b) $n^2 = O(n)$ —— \textbf {假}.}{109}{figure.caption.93}%
-\contentsline {paragraph}{(c) $n^2 = O(n \log ^2 n)$ —— \textbf {假}.}{109}{figure.caption.93}%
-\contentsline {paragraph}{(d) $n \log n = O(n^2)$ —— \textbf {真}.}{109}{figure.caption.93}%
-\contentsline {paragraph}{(e) $3^n = 2^{O(n)}$ —— \textbf {真}.}{109}{figure.caption.93}%
-\contentsline {paragraph}{(f) $2^{2^n} = O(2^{2^n})$ —— \textbf {真}.}{109}{figure.caption.93}%
-\contentsline {paragraph}{案：}{110}{figure.caption.93}%
-\contentsline {paragraph}{小 $o$ 的定义回顾.}{110}{figure.caption.94}%
-\contentsline {paragraph}{(a) $n = o(2n)$ —— \textbf {假}.}{110}{figure.caption.94}%
-\contentsline {paragraph}{(b) $2n = o(n^2)$ —— \textbf {真}.}{110}{figure.caption.94}%
-\contentsline {paragraph}{(c) $2^n = o(3^n)$ —— \textbf {真}.}{110}{figure.caption.94}%
-\contentsline {paragraph}{(d) $1 = o(n)$ —— \textbf {真}.}{110}{figure.caption.94}%
-\contentsline {paragraph}{(e) $n = o(\log n)$ —— \textbf {假}.}{110}{figure.caption.94}%
-\contentsline {paragraph}{(f) $1 = o(1/n)$ —— \textbf {假}.}{110}{figure.caption.94}%
-\contentsline {paragraph}{案：}{111}{figure.caption.94}%
-\contentsline {paragraph}{枚举验证.}{111}{figure.caption.95}%
-\contentsline {paragraph}{结构化解释.}{111}{figure.caption.95}%
-\contentsline {paragraph}{结论.}{111}{figure.caption.95}%
-\contentsline {paragraph}{总体思路.}{111}{figure.caption.96}%
-\contentsline {paragraph}{构造 $N_\cup $.}{112}{figure.caption.96}%
-\contentsline {paragraph}{正确性.}{112}{Item.53}%
-\contentsline {paragraph}{时间分析.}{112}{Item.53}%
-\contentsline {paragraph}{构造 $N_\circ $.}{112}{Item.53}%
-\contentsline {paragraph}{正确性.}{112}{Item.57}%
-\contentsline {paragraph}{时间分析.}{112}{Item.57}%
-\contentsline {paragraph}{（$\Rightarrow $）充分性：}{113}{myalgo.5}%
-\contentsline {paragraph}{（$\Leftarrow $）必要性：}{113}{myalgo.5}%
-\contentsline {paragraph}{案：}{113}{myalgo.5}%
-\contentsline {paragraph}{关键思路：将问题转化为图的可达性问题.}{114}{myalgo.5}%
-\contentsline {paragraph}{（$\Rightarrow $）充分性：}{114}{myalgo.6}%
-\contentsline {paragraph}{（$\Leftarrow $）必要性：}{114}{myalgo.6}%
-\contentsline {paragraph}{案：}{115}{myalgo.6}%
-\contentsline {paragraph}{关键思路：动态规划.}{115}{figure.caption.97}%
-\contentsline {paragraph}{递推关系.}{116}{figure.caption.97}%
-\contentsline {paragraph}{基础情形：$\ell =1$.}{116}{myalgo.7}%
-\contentsline {paragraph}{归纳步骤：$\ell \ge 2$.}{117}{myalgo.7}%
-\contentsline {paragraph}{案：}{117}{myalgo.7}%
-\contentsline {paragraph}{案：}{118}{figure.caption.98}%
-\contentsline {paragraph}{(a) 证明 \(CNF_2\in P\).}{119}{figure.caption.99}%
-\contentsline {paragraph}{算法保持的性质.}{120}{myalgo.8}%
-\contentsline {paragraph}{正确性证明.}{120}{myalgo.8}%
-\contentsline {paragraph}{第一种情形：$x$ 只以同一种极性出现.}{120}{myalgo.8}%
-\contentsline {paragraph}{第二种情形：$x$ 一正一负各出现一次.}{120}{myalgo.8}%
-\contentsline {paragraph}{时间复杂度分析.}{121}{myalgo.8}%
-\contentsline {paragraph}{(b) 证明 \(CNF_3\) 是 NP 完全的。}{121}{myalgo.8}%
-\contentsline {paragraph}{第一步：证明 \(CNF_3\in NP\).}{121}{myalgo.8}%
-\contentsline {paragraph}{第二步：证明 \(CNF_3\) 是 NP-hard.}{121}{myalgo.8}%
-\contentsline {paragraph}{归约的大小与出现次数控制.}{122}{myalgo.8}%
-\contentsline {paragraph}{正确性：若 \(\phi \) 可满足，则 \(\psi \) 可满足.}{122}{myalgo.8}%
-\contentsline {paragraph}{正确性：若 \(\psi \) 可满足，则 \(\phi \) 可满足.}{122}{myalgo.8}%
-\contentsline {paragraph}{归约结论.}{123}{myalgo.8}%
-\contentsline {paragraph}{解答.}{123}{figure.caption.100}%
-\contentsline {paragraph}{1. 调色板.}{123}{figure.caption.100}%
-\contentsline {paragraph}{2. 变量构件.}{124}{figure.caption.100}%
-\contentsline {paragraph}{3. OR 构件.}{124}{figure.caption.100}%
-\contentsline {paragraph}{4. 子句构件.}{125}{figure.caption.100}%
-\contentsline {paragraph}{5. 正确性.}{125}{figure.caption.100}%
-\contentsline {paragraph}{若 $\phi $ 可满足，则 $G_\phi $ 可 3-着色.}{125}{figure.caption.100}%
-\contentsline {paragraph}{若 $G_\phi $ 可 3-着色，则 $\phi $ 可满足.}{125}{figure.caption.100}%
-\contentsline {paragraph}{解答.}{126}{figure.caption.101}%
-\contentsline {paragraph}{若 $\phi $ 可满足，则 $\langle S,C\rangle \in SET\text {-}SPLITTING$.}{127}{figure.caption.101}%
-\contentsline {paragraph}{若 $\langle S,C\rangle \in SET\text {-}SPLITTING$，则 $\phi $ 可满足.}{128}{figure.caption.101}%
-\contentsline {paragraph}{解答.}{129}{figure.caption.102}%
-\contentsline {paragraph}{1. 证明 \(EXAM\text {-}SCHEDULE\in NP\).}{129}{figure.caption.102}%
-\contentsline {paragraph}{2. 证明 NP-hard.}{129}{figure.caption.102}%
-\contentsline {paragraph}{正确性.}{129}{figure.caption.102}%
-\contentsline {paragraph}{若 \(G\) 可 3-着色，则该考试实例可在 3 个时段内安排.}{130}{figure.caption.102}%
-\contentsline {paragraph}{若该考试实例可在 3 个时段内安排，则 \(G\) 可 3-着色.}{130}{figure.caption.102}%
-\contentsline {paragraph}{解答.}{131}{figure.caption.103}%
-\contentsline {paragraph}{1. 证明 \(MINE\in NP\).}{131}{figure.caption.103}%
-\contentsline {paragraph}{2. 证明 NP-hard.}{131}{figure.caption.103}%
-\contentsline {paragraph}{若 \(G\) 有大小为 \(k\) 的独立集，则 \(G'\in MINE\).}{132}{figure.caption.103}%
-\contentsline {paragraph}{若 \(G'\in MINE\)，则 \(G\) 有大小为 \(k\) 的独立集.}{132}{figure.caption.103}%
-\contentsline {paragraph}{解答.}{133}{figure.caption.104}%
-\contentsline {paragraph}{1. 证明 \(U\in NP\).}{133}{figure.caption.104}%
-\contentsline {paragraph}{2. 证明 \(U\) 是 NP-hard.}{134}{figure.caption.104}%
-\contentsline {paragraph}{解答.}{134}{figure.caption.105}%
-\contentsline {paragraph}{若 \(G\) 有大小为 \(k\) 的顶点覆盖，则 \(G'\) 有大小为 \(k\) 的支配集.}{135}{figure.caption.105}%
-\contentsline {paragraph}{若 \(G'\) 有大小为 \(k\) 的支配集，则 \(G\) 有大小为 \(k\) 的顶点覆盖.}{136}{figure.caption.105}%
-\contentsline {paragraph}{解答.}{137}{figure.caption.106}%
-\contentsline {paragraph}{正确性证明.}{138}{myalgo.9}%
-\contentsline {paragraph}{时间复杂度.}{138}{myalgo.9}%
-\contentsline {paragraph}{解答.}{139}{figure.caption.107}%
-\contentsline {paragraph}{解答.}{141}{figure.caption.109}%
-\contentsline {paragraph}{(a) 证明 \(M\) 与 \(M'\) 等价.}{141}{figure.caption.109}%
-\contentsline {paragraph}{“有边 \(\Rightarrow \) 可区分”.}{141}{figure.caption.109}%
-\contentsline {paragraph}{“可区分 \(\Rightarrow \) 有边”.}{142}{figure.caption.109}%
-\contentsline {paragraph}{(b) 证明 \(M'\) 极小.}{143}{figure.caption.109}%
-\contentsline {paragraph}{(c) 证明 \(MINIMIZE\) 在多项式时间内运行.}{143}{figure.caption.109}%
-\contentsline {paragraph}{解答.}{144}{figure.caption.110}%
-\contentsline {paragraph}{1. 构造蕴含图.}{145}{figure.caption.110}%
-\contentsline {paragraph}{2. 关键判据.}{145}{figure.caption.110}%
-\contentsline {paragraph}{必要性.}{145}{figure.caption.110}%
-\contentsline {paragraph}{充分性.}{145}{figure.caption.110}%
-\contentsline {paragraph}{3. 算法与复杂度.}{146}{figure.caption.110}%
-\contentsline {section}{Chapter 8}{147}{section*.111}%
-\contentsline {paragraph}{$\mathcal {C}_1\subseteq \mathcal {C}_2$}{147}{figure.caption.112}%
-\contentsline {paragraph}{$\mathcal {C}_2\subseteq \mathcal {C}_1$}{147}{figure.caption.112}%
-\contentsline {section}{Chapter 9}{155}{section*.123}%
-\contentsline {paragraph}{(a) $O(n^2)$ 规模电路.}{161}{figure.caption.133}%
-\contentsline {paragraph}{(b) $O(n\log n)$ 规模电路.}{161}{figure.caption.133}%
-\contentsline {section}{Chapter 10}{162}{section*.134}%
-\contentsline {paragraph}{第一步：$\DOTSB \bigcup@ \slimits@ _k\mathrm {PDA}_k\subseteq \mathrm {P}$.}{164}{figure.caption.139}%
-\contentsline {paragraph}{第二步：$\mathrm {P}\subseteq \DOTSB \bigcup@ \slimits@ _k\mathrm {PDA}_k$.}{164}{figure.caption.139}%
+\contentsline {section}{Chapter 6}{102}{section*.83}%
+\contentsline {paragraph}{解释.}{102}{figure.caption.84}%
+\contentsline {paragraph}{解释.}{104}{myalgo.2}%
+\contentsline {paragraph}{解答.}{104}{figure.caption.86}%
+\contentsline {paragraph}{解释.}{105}{figure.caption.86}%
+\contentsline {paragraph}{解答.}{105}{figure.caption.87}%
+\contentsline {paragraph}{(1) 自反性}{105}{figure.caption.87}%
+\contentsline {paragraph}{(2) 对称性}{105}{figure.caption.87}%
+\contentsline {paragraph}{(3) 传递性}{105}{figure.caption.87}%
+\contentsline {paragraph}{解释.}{106}{figure.caption.87}%
+\contentsline {paragraph}{解答.}{106}{figure.caption.88}%
+\contentsline {paragraph}{解释.}{107}{Item.60}%
+\contentsline {paragraph}{解答.}{107}{figure.caption.89}%
+\contentsline {paragraph}{证明 \(A\le _T J\).}{107}{figure.caption.89}%
+\contentsline {paragraph}{证明 \(B\le _T J\).}{108}{figure.caption.89}%
+\contentsline {paragraph}{解释.}{108}{figure.caption.89}%
+\contentsline {paragraph}{解答.}{108}{figure.caption.90}%
+\contentsline {paragraph}{1. \(A\) 与 \(B\) 不相交且都是图灵可识别的.}{108}{figure.caption.90}%
+\contentsline {paragraph}{2. 证明它们不能被任何可判定语言分离.}{109}{figure.caption.90}%
+\contentsline {paragraph}{解释.}{109}{myalgo.3}%
+\contentsline {paragraph}{解答.}{110}{figure.caption.91}%
+\contentsline {paragraph}{解释.}{111}{myalgo.4}%
+\contentsline {section}{Chapter 7}{112}{section*.92}%
+\contentsline {paragraph}{(a) $2n = O(n)$ —— \textbf {真}.}{112}{figure.caption.93}%
+\contentsline {paragraph}{(b) $n^2 = O(n)$ —— \textbf {假}.}{112}{figure.caption.93}%
+\contentsline {paragraph}{(c) $n^2 = O(n \log ^2 n)$ —— \textbf {假}.}{112}{figure.caption.93}%
+\contentsline {paragraph}{(d) $n \log n = O(n^2)$ —— \textbf {真}.}{112}{figure.caption.93}%
+\contentsline {paragraph}{(e) $3^n = 2^{O(n)}$ —— \textbf {真}.}{112}{figure.caption.93}%
+\contentsline {paragraph}{(f) $2^{2^n} = O(2^{2^n})$ —— \textbf {真}.}{112}{figure.caption.93}%
+\contentsline {paragraph}{案：}{113}{figure.caption.93}%
+\contentsline {paragraph}{小 $o$ 的定义回顾.}{113}{figure.caption.94}%
+\contentsline {paragraph}{(a) $n = o(2n)$ —— \textbf {假}.}{113}{figure.caption.94}%
+\contentsline {paragraph}{(b) $2n = o(n^2)$ —— \textbf {真}.}{113}{figure.caption.94}%
+\contentsline {paragraph}{(c) $2^n = o(3^n)$ —— \textbf {真}.}{113}{figure.caption.94}%
+\contentsline {paragraph}{(d) $1 = o(n)$ —— \textbf {真}.}{113}{figure.caption.94}%
+\contentsline {paragraph}{(e) $n = o(\log n)$ —— \textbf {假}.}{113}{figure.caption.94}%
+\contentsline {paragraph}{(f) $1 = o(1/n)$ —— \textbf {假}.}{113}{figure.caption.94}%
+\contentsline {paragraph}{案：}{114}{figure.caption.94}%
+\contentsline {paragraph}{枚举验证.}{114}{figure.caption.95}%
+\contentsline {paragraph}{结构化解释.}{114}{figure.caption.95}%
+\contentsline {paragraph}{结论.}{114}{figure.caption.95}%
+\contentsline {paragraph}{总体思路.}{114}{figure.caption.96}%
+\contentsline {paragraph}{构造 $N_\cup $.}{115}{figure.caption.96}%
+\contentsline {paragraph}{正确性.}{115}{Item.61}%
+\contentsline {paragraph}{时间分析.}{115}{Item.61}%
+\contentsline {paragraph}{构造 $N_\circ $.}{115}{Item.61}%
+\contentsline {paragraph}{正确性.}{115}{Item.65}%
+\contentsline {paragraph}{时间分析.}{115}{Item.65}%
+\contentsline {paragraph}{（$\Rightarrow $）充分性：}{116}{myalgo.5}%
+\contentsline {paragraph}{（$\Leftarrow $）必要性：}{116}{myalgo.5}%
+\contentsline {paragraph}{案：}{116}{myalgo.5}%
+\contentsline {paragraph}{关键思路：将问题转化为图的可达性问题.}{117}{myalgo.5}%
+\contentsline {paragraph}{（$\Rightarrow $）充分性：}{117}{myalgo.6}%
+\contentsline {paragraph}{（$\Leftarrow $）必要性：}{117}{myalgo.6}%
+\contentsline {paragraph}{案：}{118}{myalgo.6}%
+\contentsline {paragraph}{关键思路：动态规划.}{118}{figure.caption.97}%
+\contentsline {paragraph}{递推关系.}{119}{figure.caption.97}%
+\contentsline {paragraph}{基础情形：$\ell =1$.}{119}{myalgo.7}%
+\contentsline {paragraph}{归纳步骤：$\ell \ge 2$.}{120}{myalgo.7}%
+\contentsline {paragraph}{案：}{120}{myalgo.7}%
+\contentsline {paragraph}{案：}{121}{figure.caption.98}%
+\contentsline {paragraph}{(a) 证明 \(CNF_2\in P\).}{122}{figure.caption.99}%
+\contentsline {paragraph}{算法保持的性质.}{123}{myalgo.8}%
+\contentsline {paragraph}{正确性证明.}{123}{myalgo.8}%
+\contentsline {paragraph}{第一种情形：$x$ 只以同一种极性出现.}{123}{myalgo.8}%
+\contentsline {paragraph}{第二种情形：$x$ 一正一负各出现一次.}{123}{myalgo.8}%
+\contentsline {paragraph}{时间复杂度分析.}{124}{myalgo.8}%
+\contentsline {paragraph}{(b) 证明 \(CNF_3\) 是 NP 完全的。}{124}{myalgo.8}%
+\contentsline {paragraph}{第一步：证明 \(CNF_3\in NP\).}{124}{myalgo.8}%
+\contentsline {paragraph}{第二步：证明 \(CNF_3\) 是 NP-hard.}{124}{myalgo.8}%
+\contentsline {paragraph}{归约的大小与出现次数控制.}{125}{myalgo.8}%
+\contentsline {paragraph}{正确性：若 \(\phi \) 可满足，则 \(\psi \) 可满足.}{125}{myalgo.8}%
+\contentsline {paragraph}{正确性：若 \(\psi \) 可满足，则 \(\phi \) 可满足.}{125}{myalgo.8}%
+\contentsline {paragraph}{归约结论.}{126}{myalgo.8}%
+\contentsline {paragraph}{解答.}{126}{figure.caption.100}%
+\contentsline {paragraph}{1. 调色板.}{126}{figure.caption.100}%
+\contentsline {paragraph}{2. 变量构件.}{127}{figure.caption.100}%
+\contentsline {paragraph}{3. OR 构件.}{127}{figure.caption.100}%
+\contentsline {paragraph}{4. 子句构件.}{128}{figure.caption.100}%
+\contentsline {paragraph}{5. 正确性.}{128}{figure.caption.100}%
+\contentsline {paragraph}{若 $\phi $ 可满足，则 $G_\phi $ 可 3-着色.}{128}{figure.caption.100}%
+\contentsline {paragraph}{若 $G_\phi $ 可 3-着色，则 $\phi $ 可满足.}{128}{figure.caption.100}%
+\contentsline {paragraph}{解答.}{129}{figure.caption.101}%
+\contentsline {paragraph}{若 $\phi $ 可满足，则 $\langle S,C\rangle \in SET\text {-}SPLITTING$.}{130}{figure.caption.101}%
+\contentsline {paragraph}{若 $\langle S,C\rangle \in SET\text {-}SPLITTING$，则 $\phi $ 可满足.}{131}{figure.caption.101}%
+\contentsline {paragraph}{解答.}{132}{figure.caption.102}%
+\contentsline {paragraph}{1. 证明 \(EXAM\text {-}SCHEDULE\in NP\).}{132}{figure.caption.102}%
+\contentsline {paragraph}{2. 证明 NP-hard.}{132}{figure.caption.102}%
+\contentsline {paragraph}{正确性.}{132}{figure.caption.102}%
+\contentsline {paragraph}{若 \(G\) 可 3-着色，则该考试实例可在 3 个时段内安排.}{133}{figure.caption.102}%
+\contentsline {paragraph}{若该考试实例可在 3 个时段内安排，则 \(G\) 可 3-着色.}{133}{figure.caption.102}%
+\contentsline {paragraph}{解答.}{134}{figure.caption.103}%
+\contentsline {paragraph}{1. 证明 \(MINE\in NP\).}{134}{figure.caption.103}%
+\contentsline {paragraph}{2. 证明 NP-hard.}{134}{figure.caption.103}%
+\contentsline {paragraph}{若 \(G\) 有大小为 \(k\) 的独立集，则 \(G'\in MINE\).}{135}{figure.caption.103}%
+\contentsline {paragraph}{若 \(G'\in MINE\)，则 \(G\) 有大小为 \(k\) 的独立集.}{135}{figure.caption.103}%
+\contentsline {paragraph}{解答.}{136}{figure.caption.104}%
+\contentsline {paragraph}{1. 证明 \(U\in NP\).}{136}{figure.caption.104}%
+\contentsline {paragraph}{2. 证明 \(U\) 是 NP-hard.}{137}{figure.caption.104}%
+\contentsline {paragraph}{解答.}{137}{figure.caption.105}%
+\contentsline {paragraph}{若 \(G\) 有大小为 \(k\) 的顶点覆盖，则 \(G'\) 有大小为 \(k\) 的支配集.}{138}{figure.caption.105}%
+\contentsline {paragraph}{若 \(G'\) 有大小为 \(k\) 的支配集，则 \(G\) 有大小为 \(k\) 的顶点覆盖.}{139}{figure.caption.105}%
+\contentsline {paragraph}{解答.}{140}{figure.caption.106}%
+\contentsline {paragraph}{正确性证明.}{141}{myalgo.9}%
+\contentsline {paragraph}{时间复杂度.}{141}{myalgo.9}%
+\contentsline {paragraph}{解答.}{142}{figure.caption.107}%
+\contentsline {paragraph}{解答.}{144}{figure.caption.109}%
+\contentsline {paragraph}{(a) 证明 \(M\) 与 \(M'\) 等价.}{144}{figure.caption.109}%
+\contentsline {paragraph}{“有边 \(\Rightarrow \) 可区分”.}{144}{figure.caption.109}%
+\contentsline {paragraph}{“可区分 \(\Rightarrow \) 有边”.}{145}{figure.caption.109}%
+\contentsline {paragraph}{(b) 证明 \(M'\) 极小.}{146}{figure.caption.109}%
+\contentsline {paragraph}{(c) 证明 \(MINIMIZE\) 在多项式时间内运行.}{146}{figure.caption.109}%
+\contentsline {paragraph}{解答.}{147}{figure.caption.110}%
+\contentsline {paragraph}{1. 构造蕴含图.}{148}{figure.caption.110}%
+\contentsline {paragraph}{2. 关键判据.}{148}{figure.caption.110}%
+\contentsline {paragraph}{必要性.}{148}{figure.caption.110}%
+\contentsline {paragraph}{充分性.}{148}{figure.caption.110}%
+\contentsline {paragraph}{3. 算法与复杂度.}{149}{figure.caption.110}%
+\contentsline {section}{Chapter 8}{150}{section*.111}%
+\contentsline {paragraph}{$\mathcal {C}_1\subseteq \mathcal {C}_2$}{150}{figure.caption.112}%
+\contentsline {paragraph}{$\mathcal {C}_2\subseteq \mathcal {C}_1$}{150}{figure.caption.112}%
+\contentsline {section}{Chapter 9}{158}{section*.123}%
+\contentsline {paragraph}{(a) $O(n^2)$ 规模电路.}{164}{figure.caption.133}%
+\contentsline {paragraph}{(b) $O(n\log n)$ 规模电路.}{164}{figure.caption.133}%
+\contentsline {section}{Chapter 10}{165}{section*.134}%
+\contentsline {paragraph}{第一步：$\DOTSB \bigcup@ \slimits@ _k\mathrm {PDA}_k\subseteq \mathrm {P}$.}{167}{figure.caption.139}%
+\contentsline {paragraph}{第二步：$\mathrm {P}\subseteq \DOTSB \bigcup@ \slimits@ _k\mathrm {PDA}_k$.}{167}{figure.caption.139}%
 \contentsfinish 

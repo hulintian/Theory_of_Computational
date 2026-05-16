@@ -11,6 +11,7 @@
   \label{fig:hw_8_1}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设 $\mathcal{C}_1$ 是用单带 TM 定义得到的空间复杂性类 $\mathrm{SPACE}(f(n))$，$\mathcal{C}_2$ 是用“两带且输入带只读”的 TM 定义得到的 $\mathrm{SPACE}(f(n))$。我们证明
@@ -69,6 +70,7 @@ n+f(n)=O(f(n)),
 \]
 在这两种机器模型下定义相同。$\blacksquare$
 
+\end{answerred}
 \subsection*{8.3}
 
 \begin{figure}[H]
@@ -78,6 +80,7 @@ n+f(n)=O(f(n)),
   \label{fig:hw_8_3}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 选手 II 有必胜策略，选手 I 没有必胜策略。
@@ -106,6 +109,7 @@ n+f(n)=O(f(n)),
 \]
 于是选手 I 在结点 $6$ 无合法移动而失败。故选手 II 的必胜策略是在到达结点 $2$ 后走向结点 $4$。
 
+\end{answerred}
 \subsection*{8.6}
 
 \begin{figure}[H]
@@ -115,6 +119,7 @@ n+f(n)=O(f(n)),
   \label{fig:hw_8_6}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设语言 $B$ 是 PSPACE 难的。按定义，对任意 $A\in\mathrm{PSPACE}$，都有多项式时间多对一归约
@@ -131,6 +136,7 @@ A\leq_m^p B.
 \]
 这正是 $B$ 为 NP 难的定义。因此任意 PSPACE 难语言也是 NP 难语言。$\blacksquare$
 
+\end{answerred}
 \subsection*{8.10}
 
 \begin{figure}[H]
@@ -140,6 +146,7 @@ A\leq_m^p B.
   \label{fig:hw_8_10}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 给定一个 $n\times n$ 的推广五子棋局面 $B$，棋盘上至多还有 $n^2$ 个空位。因此从任意局面继续下去，游戏长度至多为 $n^2$ 步；不存在无限对局。
@@ -161,6 +168,7 @@ A\leq_m^p B.
 GM\in\mathrm{PSPACE}.
 \]
 
+\end{answerred}
 \subsection*{8.13}
 
 \begin{figure}[H]
@@ -170,6 +178,7 @@ GM\in\mathrm{PSPACE}.
   \label{fig:hw_8_13}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 先证 $A_{\mathrm{LBA}}\in\mathrm{PSPACE}$。给定输入 $\langle M,w\rangle$，其中 $M$ 是一台 LBA。因为 LBA 只能使用与输入长度线性相关的带空间，所以 $M$ 在 $w$ 上的每个格局长度为多项式。格局总数至多为指数个。构造格局图 $G$：结点是 $M$ 在 $w$ 上的合法格局，边表示一步计算关系。于是
@@ -197,6 +206,7 @@ w\in A
 A_{\mathrm{LBA}}\ \text{是 PSPACE 完全的}.
 \]
 
+\end{answerred}
 \subsection*{8.20}
 
 \begin{figure}[H]
@@ -206,6 +216,7 @@ A_{\mathrm{LBA}}\ \text{是 PSPACE 完全的}.
   \label{fig:hw_8_20}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设输入为 $a\#b\#c$，三者均为二进制自然数。记最低位为第 $0$ 位。我们逐位验证乘积
@@ -232,6 +243,7 @@ k,\quad i,\quad j,\quad \gamma_k
 MULT\in\mathrm{L}.
 \]
 
+\end{answerred}
 \subsection*{8.21}
 
 \begin{figure}[H]
@@ -241,6 +253,7 @@ MULT\in\mathrm{L}.
   \label{fig:hw_8_21}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 先看 $A_2$。设 $x$ 的二进制长度为 $m$。在计算
@@ -268,6 +281,7 @@ A_2\in\mathrm{L}
 A_3\in\mathrm{L}.
 \]
 
+\end{answerred}
 \subsection*{8.24}
 
 \begin{figure}[H]
@@ -277,6 +291,7 @@ A_3\in\mathrm{L}.
   \label{fig:hw_8_24}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 取字母表为 $\{a\}$。令 $p_1,\ldots,p_n$ 为前 $n$ 个素数，并令
@@ -314,6 +329,7 @@ P_n\geq 2^n.
 \]
 取任意常数 $0<\varepsilon\leq 1$ 即得题设要求。
 
+\end{answerred}
 \subsection*{8.28}
 
 \begin{figure}[H]
@@ -323,6 +339,7 @@ P_n\geq 2^n.
   \label{fig:hw_8_28}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 先证 $BOTH_{\mathrm{NFA}}\in\mathrm{NL}$。给定 $\langle M_1,M_2\rangle$，非确定型对数空间机只需在两个 NFA 的乘积自动机上猜一条路径。它保存当前状态对
@@ -347,6 +364,7 @@ L(M_1)\cap L(M_2)\neq\varnothing
 
 综上，$BOTH_{\mathrm{NFA}}$ 是 NL 完全的。
 
+\end{answerred}
 \subsection*{8.30}
 
 \begin{figure}[H]
@@ -356,6 +374,7 @@ L(M_1)\cap L(M_2)\neq\varnothing
   \label{fig:hw_8_30}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 这里
@@ -394,6 +413,7 @@ L(M_x)=\varnothing
 
 综上，$E_{\mathrm{DFA}}$ 是 NL 完全的。
 
+\end{answerred}
 \subsection*{8.33}
 
 \begin{figure}[H]
@@ -403,6 +423,7 @@ L(M_x)=\varnothing
   \label{fig:hw_8_33}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 先证 $CYCLE\in\mathrm{NL}$。给定有向图 $G$，非确定地猜一个起点 $v$，再猜一条长度在 $1$ 到 $|V|$ 之间的有向路径。机器只保存当前结点、起点 $v$ 和步数计数器。若在至少走了一条边后回到 $v$，则接受。若图中存在有向回路，则存在一个长度至多 $|V|$ 的简单有向回路，所以该算法正确，并且只使用对数空间。
@@ -425,5 +446,6 @@ L(M_x)=\varnothing
 该构造可在对数空间内完成，所以 $\mathrm{PATH}\leq_m^L CYCLE$。故 $CYCLE$ 是 NL 难的。
 
 因此 $CYCLE$ 是 NL 完全的。
+\end{answerred}
 
 \clearpage

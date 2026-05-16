@@ -11,6 +11,7 @@
   \label{fig:hw_2_4}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 以下各小题默认字母表为 $\Sigma=\{0,1\}$。
@@ -64,6 +65,7 @@
     即没有任何产生式，因此从开始变量 $S$ 无法推出任何终结符串，故 $L(G)=\varnothing$。
 \end{enumerate}
 
+\end{answerred}
 \subsection*{2.6}
 
 \begin{figure}[H]
@@ -73,6 +75,7 @@
   \label{fig:hw_2_6}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 \begin{enumerate}[label=(\alph*), leftmargin=2.5em]
@@ -168,6 +171,7 @@
     第一部分 $LCR$ 处理存在 $i\ne j$ 且 $x_i=x_j^R$ 的情形；第二部分 $LPR$ 处理 $i=j$ 时某一块本身就是回文的情形。故该文法生成的正是题目所给语言。
 \end{enumerate}
 
+\end{answerred}
 \subsection*{2.8}
 
 \begin{figure}[H]
@@ -177,6 +181,7 @@
   \label{fig:hw_2_8}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设 $A,B$ 是上下文无关语言。分别取生成它们的上下文无关文法
@@ -249,9 +254,12 @@
 
 综上，上下文无关语言类在并、连接与星号运算下封闭。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这类闭包证明的核心思路是：已知原语言能由 CFG 生成，就直接在 CFG 上做拼装。并运算是在新开始变量处“二选一”；连接运算是让新开始变量先展开成两个旧开始变量；星号运算则是在新开始变量上加入“停止”与“继续接一个块”两种选择。由于这些改动都只引入有限多个新变量和产生式，所得仍是上下文无关文法。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.10}
 
 
@@ -269,6 +277,7 @@
   \label{fig:hw_2_10_p2}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 将该语言写成两个较简单语言的并：
@@ -419,6 +428,7 @@
   \label{fig:hw_2_10_parse_trees}
 \end{figure}
 
+\begin{answernote}
 \paragraph{解释.}
 证明一个文法有歧义，只需找出一个字符串 $w\in L(G)$，使它有两棵不同的语法树，或等价地，有两种不同的最左推导（也可用最右推导）。常见做法是先观察文法的不同分支是否会生成重叠的子语言；若文法形如并集拼装
 \[
@@ -430,6 +440,8 @@
 \]
 中的字符串，因为这样的字符串往往天然会对应两种推导。需要注意的是，证明“这个文法有歧义”只说明当前这套产生式有两种分析方式，并不自动推出该语言本身是固有歧义的；后者要求证明任何文法都会歧义，难度更高。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.14}
 
 \begin{figure}[H]
@@ -439,6 +451,7 @@
   \label{fig:hw_2_14}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 \begin{enumerate}[label=(\alph*), leftmargin=2.5em]
@@ -544,6 +557,7 @@
     \]
 \end{enumerate}
 
+\begin{answernote}
 \paragraph{解释.}
 这题的关键是把文法分成两部分看。变量 $T$ 只是在一个固定的 $\#$ 左右自由添 $0$，所以它生成的是
 \[
@@ -555,6 +569,8 @@
 \]
 证明非正则时，不必直接处理整个并集；只要与正则语言 $0^*\#0^*$ 相交，就能把前一部分滤掉，只剩下后一部分，再对这一部分应用 pumping lemma 即可。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.16}
 
 \begin{figure}[H]
@@ -564,6 +580,7 @@
   \label{fig:hw_2_16}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 取
@@ -608,6 +625,7 @@
 
 所以，仅仅给原文法增加一条规则 $S\to SS$，并不能保证得到 $A^*$ 的文法，因而这个构造不能用来证明上下文无关语言类在星号运算下封闭。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这个构造失败的根本原因是：星号允许取零次连接，因此结果语言必须包含 $\varepsilon$；而在原文法不生成 $\varepsilon$ 时，单加一条 $S\to SS$ 只能实现“重复一次以上”，做不到“零次重复”。正确构造通常要新建一个开始变量，并显式加入
 \[
@@ -615,6 +633,8 @@
 \]
 这一分支。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.18}
 
 \begin{figure}[H]
@@ -624,6 +644,7 @@
   \label{fig:hw_2_28}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 \begin{enumerate}[label=(\alph*), leftmargin=2.5em]
@@ -722,9 +743,12 @@
     \]
 \end{enumerate}
 
+\begin{answernote}
 \paragraph{解释.}
 这题的核心是：正则语言所需的“记忆”是有限的，因此可以直接并入 PDA 的有限控制中；栈仍只负责上下文无关那部分信息。于是 “CFL 条件” 与 “regular 条件” 可以同时检查。第 (b) 问则是反过来用这个封闭性：若一个复杂语言真是 CFL，那么与合适的正则语言相交后也应仍是 CFL；只要把它切出一个已知非 CFL 的子语言，就得到反证。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.19}
 
 \begin{figure}[H]
@@ -734,6 +758,7 @@
   \label{fig:hw_2_19}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 先注意
@@ -878,6 +903,7 @@
     S_0\to aS_0b\mid \varepsilon.
 \]
 
+\begin{answernote}
 \paragraph{解释.}
 这个文法的两条非递归分支已经覆盖了“以 $b$ 开头”与“以 $a$ 结尾”的所有串；递归分支 $S\to aSb$ 只是在外面再加一层配对的 $a,b$。因此，它恰好漏掉的就是那些既不以 $b$ 开头、也不以 $a$ 结尾、并且不断去掉首尾配对后最终只剩空串的字符串，也就是
 \[
@@ -889,6 +915,8 @@
 \]
 文法。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.22}
 
 \begin{figure}[H]
@@ -898,6 +926,7 @@
   \label{fig:hw_2_22}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 由定理“一个语言是上下文无关语言，当且仅当某个 PDA 识别它”，只需构造一个识别
@@ -938,9 +967,12 @@
 
 故该 PDA 恰好识别语言 $C$，从而 $C$ 是上下文无关语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 你指出的那个问题本质上在于：CFG 很难直接保证“第 $i$ 个位置”对应“第 $i$ 个位置”。而 PDA 用栈天然适合从右往左对齐，所以更自然的做法不是去找“第一次失配”，而是去找“从右边数的某个失配见证”。这里所谓“猜”并不是额外魔法，而正是非确定自动机的标准工作方式：当机器读到某个位置时，它可以沿着多条合法转移同时分支，例如“一条分支把当前位置记为候选失配位置，另一条分支继续向后扫描”。若输入串确实满足 $x\ne y$，那么总存在至少一个真正的失配位置，于是至少有一条分支会恰好选中这个位置并最终验证成功；若输入串不满足条件，则所有分支最终都会失败。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.24}
 
 \begin{figure}[H]
@@ -950,6 +982,7 @@
   \label{fig:hw_2_24}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 将
@@ -1094,6 +1127,7 @@
 \]
 因此 $E$ 是上下文无关语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这题本质上是把平面上所有点 $(i,j)$ 去掉两条直线
 \[
@@ -1105,6 +1139,8 @@
 \]
 稍微麻烦一点，但只要把每个 $a$ 对应产生 $1$ 个或 $2$ 个 $b$，并且强制这两种情况都至少出现一次，就正好落在两条直线之间。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.26}
 
 \begin{figure}[H]
@@ -1114,6 +1150,7 @@
   \label{fig:hw_2_26}
 \end{figure}
 
+\begin{answerred}
 证明。设某个派生
 \[
     S\Rightarrow^* w
@@ -1163,9 +1200,12 @@
 \]
 步。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这题的关键是：CNF 中只有两种规则。一种把一个非终结符变成两个，因此“未展开的非终结符数”加 $1$；另一种把一个非终结符变成一个终结符，因此这个数减 $1$。终结符一共要产生 $n$ 个，所以第二类规则用了 $n$ 次；从 $1$ 个非终结符降到 $0$ 个，就反推出第一类规则必用 $n-1$ 次。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.32}
 
 \begin{figure}[H]
@@ -1175,6 +1215,7 @@
   \label{fig:hw_2_32}
 \end{figure}
 
+\begin{answerred}
 证明。反设
 \[
     C=\{w\in\Sigma^*\mid \#_1(w)=\#_2(w),\ \#_3(w)=\#_4(w)\}
@@ -1257,6 +1298,7 @@
 
 因此 $C$ 不是上下文无关语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这题和
 \[
@@ -1271,6 +1313,8 @@
     \#_1=\#_2,\qquad \#_3=\#_4.
 \]
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.33}
 
 \begin{figure}[H]
@@ -1280,6 +1324,7 @@
   \label{fig:hw_2_33}
 \end{figure}
 
+\begin{answerred}
 \paragraph{说明.}
 按题意，这里应理解为证明
 \[
@@ -1411,6 +1456,7 @@
 \medskip
 三种情形都得到矛盾，因此 $F$ 不是上下文无关语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这题的关键不是“比例关系难描述”，而是要找到一个对抽引非常敏感的样本。取
 \[
@@ -1418,6 +1464,8 @@
 \]
 以后，原来的比例恰好是整数倍；但只要把前面的 $a$ 或后面的 $b$ 稍微改动一点，这种整除关系就会立刻失效。选素数 $q$ 的作用，就是让“谁能整除 $q^2$”这件事非常刚性。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.44}
 
 
@@ -1428,6 +1476,7 @@
   \label{fig:hw_2_44}
 \end{figure}
 
+\begin{answerred}
 证明。设 $A,B$ 是正则语言。取识别它们的 DFA
 \[
     M_A=(Q_A,\Sigma,\delta_A,q_A,F_A),
@@ -1556,9 +1605,12 @@
 \]
 因此 $A\diamond B$ 是上下文无关语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这题的本质是把“属于 $A$”“属于 $B$”和“前后两段长度相等”三件事同时检查。前两件事因为 $A,B$ 正则，只需在有限控制中模拟两个 DFA；第三件事则由栈完成，用“前半段压栈、后半段弹栈”的方式记录长度差。非确定性只用来猜分界点。
 
+\end{answernote}
+\end{answerred}
 \subsection*{2.45}
 
 \begin{figure}[H]
@@ -1568,6 +1620,7 @@
   \label{fig:hw_2_45}
 \end{figure}
 
+\begin{answerred}
 证明。设
 \[
     A=\{wtw^R\mid w,t\in\{0,1\}^*,\ |w|=|t|\}.
@@ -1698,6 +1751,7 @@
 \]
 不是上下文无关语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 原语言里“前一段”和“后一段的反转”之间没有分隔符，直接泵会比较别扭。和正则语言
 \[
@@ -1882,5 +1936,7 @@
 
 \paragraph{解释.}
 简言之：要证明“是 CFL”，就去构造；要证明“不是 CFL”，就去找不可能由单栈有限控制完成的全局约束，再用泵引理或闭包性把这种不可能性写成严格矛盾。前者的关键词是“构造并证明等于”，后者的关键词是“反设、选串、分类、抽坏”。
+\end{answernote}
+\end{answerred}
 
 \clearpage

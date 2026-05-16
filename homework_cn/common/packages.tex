@@ -1,5 +1,6 @@
 % the common used packages
 
+\usepackage{xcolor}
 \usepackage[unicode=true,colorlinks,urlcolor=blue,linkcolor=blue,bookmarksnumbered=true]{hyperref}
 \usepackage{ccaption}
 \usepackage{booktabs}
@@ -53,6 +54,18 @@
     \noindent\textbf{证明.}\;
 }{%
     \hfill$\square$\par\medskip
+}
+
+\newenvironment{answerred}{%
+    \par\begingroup\color{red}%
+}{%
+    \par\endgroup
+}
+
+\newenvironment{answernote}{%
+    \par\begingroup\color{black}%
+}{%
+    \par\endgroup
 }
 
 % ----- 通用样式 -----

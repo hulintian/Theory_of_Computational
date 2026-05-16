@@ -11,6 +11,7 @@
   \label{fig:hw_4_3}
 \end{figure}
 
+\begin{answerred}
 证明。构造判定器 $M$ 来判定
 \[
     \mathrm{ALL}_{\mathrm{DFA}}
@@ -59,9 +60,12 @@
 \]
 时接受。由于状态图有限，搜索必定停机，所以 $\mathrm{ALL}_{\mathrm{DFA}}$ 是可判定的。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 对 DFA 而言，“接受所有串”只需看一件事：从开始状态真正能到达的状态里，有没有非接受态。若有，就有某个串把机器带到那里；若没有，每个输入都会落在接受态。
 
+\end{answernote}
+\end{answerred}
 \subsection*{4.4}
 
 \begin{figure}[H]
@@ -71,6 +75,7 @@
   \label{fig:hw_4_4}
 \end{figure}
 
+\begin{answerred}
 证明。构造判定器 $M$ 来判定
 \[
     A_{\varepsilon\mathrm{CFG}}
@@ -139,9 +144,12 @@
 \]
 故 $A_{\varepsilon\mathrm{CFG}}$ 是可判定的。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这题的本质是求“可空变量”集合。因为一个 CFG 生成 $\varepsilon$，当且仅当开始变量是可空的；而可空性是一个有限的闭包计算问题。
 
+\end{answernote}
+\end{answerred}
 \subsection*{4.6}
 
 \begin{figure}[H]
@@ -151,6 +159,7 @@
   \label{fig:hw_4_6}
 \end{figure}
 
+\begin{answerred}
 证明。设
 \[
     B=\{(b_1,b_2,b_3,\dots)\mid b_i\in\{0,1\}\text{ 对每个 }i\ge 1\}.
@@ -204,9 +213,12 @@
 \medskip
 故假设错误，$B$ 不是可数集，也就是说 $B$ 是不可数的。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 对角化的关键是：如果你声称已经把所有无限二进制序列都列出来了，我就沿着第 $1$ 行第 $1$ 列、第 $2$ 行第 $2$ 列、第 $3$ 行第 $3$ 列这样走下去，并把这些位置上的值逐个取反，造出一个新序列。这个新序列会和第 $i$ 个序列至少在第 $i$ 位不同，所以它不可能出现在你的列表里。
 
+\end{answernote}
+\end{answerred}
 \subsection*{4.10}
 
 \begin{figure}[H]
@@ -216,6 +228,7 @@
   \label{fig:hw_4_10}
 \end{figure}
 
+\begin{answerred}
 证明。构造判定器 $M$ 来判定
 \[
     \mathrm{INFINITE}_{\mathrm{PDA}}
@@ -291,9 +304,12 @@ $M=$ ``对于输入 $\langle P\rangle$：
 \]
 时接受，所以 $\mathrm{INFINITE}_{\mathrm{PDA}}$ 是可判定的。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 PDA 是否接受无限多个串，可以先转成 CFG 来看。对 CFG 而言，真正决定“能不能无限生成”的，是变量依赖图里是否存在一个从开始变量可达的环：有环就能反复绕圈、不断增长；无环则语法树高度有统一上界，语言只能是有限的。
 
+\end{answernote}
+\end{answerred}
 \subsection*{4.12}
 
 \begin{figure}[H]
@@ -303,6 +319,7 @@ PDA 是否接受无限多个串，可以先转成 CFG 来看。对 CFG 而言，
   \label{fig:hw_4_12}
 \end{figure}
 
+\begin{answerred}
 证明。构造判定器 $M$ 来判定
 \[
     A=\{\langle R,S\rangle\mid R\text{ 和 }S\text{ 是正则表达式，且 }L(R)\subseteq L(S)\}.
@@ -347,6 +364,7 @@ $M=$ ``对于输入 $\langle R,S\rangle$：
 \]
 而正则表达式到 DFA 的转换、DFA 的补、正则语言的交以及 DFA 空性检测都是有效且可停机的过程。因此 $M$ 判定语言 $A$，从而 $A$ 是可判定的。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 “$L(R)\subseteq L(S)$”最标准的改写就是：不存在某个串被 $R$ 接受但不被 $S$ 接受。于是问题变成检查
 \[
@@ -354,6 +372,8 @@ $M=$ ``对于输入 $\langle R,S\rangle$：
 \]
 是否为空，而这完全落在正则语言的可判定范围里。
 
+\end{answernote}
+\end{answerred}
 \subsection*{4.15}
 
 \begin{figure}[H]
@@ -363,6 +383,7 @@ $M=$ ``对于输入 $\langle R,S\rangle$：
   \label{fig:hw_4_15}
 \end{figure}
 
+\begin{answerred}
 证明。构造判定器 $M$ 来判定
 \[
     A=\{\langle R\rangle\mid R\text{ 是正则表达式，且 }L(R)\text{ 中至少有一个串含有子串 }111\}.
@@ -411,9 +432,12 @@ $M=$ ``对于输入 $\langle R\rangle$：
 \]
 是正则语言，所以第 2 步可有效完成；其余各步也都是正则语言上的标准可判定操作。因此 $A$ 是可判定的。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 题目问的是“正则表达式描述的语言里，有没有某种特殊形状的串”。这类问题的标准套路就是：先把“特殊形状”本身写成一个固定正则语言，再与输入语言求交，最后检查交集是否为空。
 
+\end{answernote}
+\end{answerred}
 \subsection*{4.17}
 
 \begin{figure}[H]
@@ -423,6 +447,7 @@ $M=$ ``对于输入 $\langle R\rangle$：
   \label{fig:hw_4_17}
 \end{figure}
 
+\begin{answerred}
 证明。我们证明如下双向命题：
 \[
     C\text{ 是图灵可识别的}
@@ -517,9 +542,12 @@ $N=$ ``对于输入 $x$：
 \]
 则不存在任何这样的 $y$，于是 $N$ 永远不会接受。这正说明 $N$ 识别 $C$，故 $C$ 是图灵可识别的。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这一定理说明：图灵可识别语言恰好是“某个可判定二元关系对第二个参数做存在量词投影”得到的语言。正向里，见证 $y$ 可以取成“接受计算历史”；反向里，只要把所有可能的见证逐个试过去，就得到了一个识别器。
 
+\end{answernote}
+\end{answerred}
 \subsection*{4.23}
 
 \begin{figure}[H]
@@ -529,6 +557,7 @@ $N=$ ``对于输入 $x$：
   \label{fig:hw_4_23}
 \end{figure}
 
+\begin{answerred}
 证明。令
 \[
     C_{=}
@@ -581,9 +610,12 @@ $D=$ ``对于输入 $\langle M\rangle$：
 \]
 是可判定的。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这题的思路是把“$0$ 和 $1$ 个数相同”先写成一个 CFL，再和输入 DFA 的语言求交。这样原问题就化成了一个上下文无关语言的空性判定。
 
+\end{answernote}
+\end{answerred}
 \subsection*{4.27}
 
 \begin{figure}[H]
@@ -593,6 +625,7 @@ $D=$ ``对于输入 $\langle M\rangle$：
   \label{fig:hw_4_27}
 \end{figure}
 
+\begin{answerred}
 证明。构造判定器 $M$ 来判定
 \[
     C_{\mathrm{CFG}}
@@ -692,7 +725,10 @@ Chomsky 范式下高度至多为 $|V|$ 的语法树，其叶子数至多为
 \]
 时接受，所以 $C_{\mathrm{CFG}}$ 是可判定的。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这题的本质是先区分“有限”还是“无限”。若文法存在可回到自身的变量环，就能无限地产生新串；若不存在这种环，语法树高度就有统一上界，于是所有生成串的长度也有统一上界，接下来只需暴力枚举并计数即可。
+\end{answernote}
+\end{answerred}
 
 \clearpage

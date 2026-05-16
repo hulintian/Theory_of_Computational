@@ -11,6 +11,7 @@
   \label{fig:hw_7_1}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
  
 \paragraph{(a) $2n = O(n)$ —— \textbf{真}.}
@@ -59,8 +60,11 @@ $n \log_2 3 \leq c n$。因此 $3^n = 2^{O(n)}$。
 \]
 故 $2^{2^n} = O(2^{2^n})$。
  
+\begin{answernote}
 \paragraph{案：} 结合Big-O和Small-O记号的定义，可无惑。
 
+\end{answernote}
+\end{answerred}
 \subsection*{7.2}
 
 \begin{figure}[H]
@@ -70,6 +74,7 @@ $n \log_2 3 \leq c n$。因此 $3^n = 2^{O(n)}$。
   \label{fig:hw_7_2}
 \end{figure}
 
+\begin{answerred}
 \paragraph{小 $o$ 的定义回顾.}
 $f(n) = o\bigl(g(n)\bigr)$ 当且仅当
 \[
@@ -120,8 +125,11 @@ $n$ 与 $2n$ 只相差常数因子,属于同阶,不满足小 $o$ 关系。
 比值发散,故 $1 \neq o(1/n)$。
 正确的关系是 $1/n = o(1)$。
  
+\begin{answernote}
 \paragraph{案：} 结合Big-O和Small-O记号的定义，可无惑。
 
+\end{answernote}
+\end{answerred}
 \subsection*{7.5}
 
 \begin{figure}[H]
@@ -131,6 +139,7 @@ $n$ 与 $2n$ 只相差常数因子,属于同阶,不满足小 $o$ 关系。
   \label{fig:hw_7_5}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
  
 \paragraph{枚举验证.}
@@ -156,6 +165,7 @@ $x$ & $y$ & $x \vee y$ & $x \vee \bar{y}$ & $\bar{x} \vee y$ & $\bar{x} \vee \ba
  
 \noindent 对于每一组赋值,总能找到至少一个子句的取值为 $0$,于是整个合取式为 $0$。
  
+\begin{answernote}
 \paragraph{结构化解释.}
 两变量的二元析取子句一共恰好有 $4$ 个,而每个子句 $(\ell_1 \vee \ell_2)$ 只在令 $\ell_1, \ell_2$ 同时为假时取 $0$,即恰好排除 $\{0,1\}^2$ 中的一个赋值:
 \[
@@ -175,6 +185,8 @@ $x$ & $y$ & $x \vee y$ & $x \vee \bar{y}$ & $\bar{x} \vee y$ & $\bar{x} \vee \ba
 即 $\varphi$ 是一个矛盾式,\textbf{不可满足}(unsatisfiable)。
  
 
+\end{answernote}
+\end{answerred}
 \subsection*{7.7}
 
 \begin{figure}[H]
@@ -185,6 +197,7 @@ $x$ & $y$ & $x \vee y$ & $x \vee \bar{y}$ & $\bar{x} \vee y$ & $\bar{x} \vee \ba
 \end{figure}
 
  
+\begin{answerred}
 即:若 $A, B \in \mathbf{NP}$,则 $A \cup B \in \mathbf{NP}$ 且 $A \circ B \in \mathbf{NP}$。
  
 \paragraph{总体思路.}
@@ -251,10 +264,12 @@ $N_\circ$ 接受 $w$ 当且仅当 $w \in A \circ B$。
 仍为多项式。故 $A \circ B \in \mathbf{NP}$。
 \hfill$\blacksquare$
 
+\end{answerred}
 \subsection*{7.9}
 
 无向图中的三角形是一个3团。证明 $TRIANGLE \in P$ ，其中 $TRIANGLE=\{<G>|G$ 包含一个三角形 $\}$ 。
 
+\begin{answerred}
 \subsubsection*{证明}
  
 要证明 $\textsc{Triangle} \in P$，只需构造一个确定性多项式时间算法，能够正确判定任意无向图 $G$ 是否包含三角形。
@@ -313,12 +328,16 @@ $N_\circ$ 接受 $w$ 当且仅当 $w \in A \circ B$。
  
 $O(n^3)$ 是关于输入规模 $n$ 的多项式，故算法 $M$ 是一个\textbf{确定性多项式时间算法}。
 
+\begin{answernote}
 \paragraph{案：} 证明问题属于P，即能够给出一个多项式时间的算法，并分析时间负责度。
 
+\end{answernote}
+\end{answerred}
 \subsection*{7.10}
 
 证明 $ALL_{DFA}$ 属于 $P$ 。
 
+\begin{answerred}
 \subsubsection*{证明}
 
 记
@@ -411,8 +430,11 @@ $O(n^3)$ 是关于输入规模 $n$ 的多项式，故算法 $M$ 是一个\textbf
     \textsc{All}_{DFA} \in \mathbf{P}.
 \]
 
+\begin{answernote}
 \paragraph{案：} 先把问题翻译成“是否存在可达的拒绝状态”，再在状态图上做可达性搜索。由于状态数和字母表大小都是有限的，整个过程在多项式时间内完成。
 
+\end{answernote}
+\end{answerred}
 \subsection*{7.14}
 
 \begin{figure}[H]
@@ -422,6 +444,7 @@ $O(n^3)$ 是关于输入规模 $n$ 的多项式，故算法 $M$ 是一个\textbf
   \label{fig:hw_7_14}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 我们证明：若 $A \in \mathbf{P}$，则 $A^* \in \mathbf{P}$。
@@ -571,8 +594,11 @@ $O(n^3)$ 是关于输入规模 $n$ 的多项式，故算法 $M$ 是一个\textbf
 \]
 故 $\mathbf{P}$ 在星号运算下封闭。
 
+\begin{answernote}
 \paragraph{案：} 用动态规划记录每个子串是否已经能被分解成若干个属于 $A$ 的片段；这样避免了对所有切分方式做指数级回溯，从而保持了多项式时间。
 
+\end{answernote}
+\end{answerred}
 \subsection*{7.17}
 
 \begin{figure}[H]
@@ -582,6 +608,7 @@ $O(n^3)$ 是关于输入规模 $n$ 的多项式，故算法 $M$ 是一个\textbf
   \label{fig:hw_7_17}
 \end{figure}
 
+\begin{answerred}
 \begin{proof}
 采用多项式时间 many-one 归约作为 NP 完全性的定义。假设
 \[
@@ -640,8 +667,11 @@ L\leq_p A.
 综上，$A\in NP$ 且 $A$ 是 NP-hard，所以 $A$ 是 NP 完全的。
 \end{proof}
 
+\begin{answernote}
 \paragraph{案：} 这道题最值得玩味的地方在于，规约并不只是“把一个难题机械地变成另一个难题”，而是在不同问题的表述之间传递同一个判定结构。平时我们把多项式时间规约理解为“把未知问题压到一个已知的标准问题上”；而在假设 $P=NP$ 之后，原本“难”与“易”的边界被彻底抹平了。于是，任何一个既不是空集、也不是全集的语言 $A\in P$，都可以作为这种传递的落点。证明里只需固定一个属于 $A$ 的字符串 $y_1$ 和一个不属于 $A$ 的字符串 $y_0$，就能把任意 $L\in NP$ 的真假判定压缩成对 $A$ 的真假判定。换句话说，从一个问题到另一个问题的规约，可以理解成是在不断切换看问题的视角；而当这些视角被压缩到极致时，最后剩下的其实只是最基本的“是或否”的数学判定。
 
+\end{answernote}
+\end{answerred}
 \subsection*{7.23}
 
 \begin{figure}[H]
@@ -651,6 +681,7 @@ L\leq_p A.
   \label{fig:hw_7_23}
 \end{figure}
 
+\begin{answerred}
 \[
 CNF_k=\{\langle \phi\rangle \mid \phi \text{ 是可满足的 CNF 公式，且每个变量至多出现 }k\text{ 次}\}.
 \]
@@ -908,6 +939,7 @@ CNF_3 \text{ 是 NP-hard}.
 CNF_3 \text{ 是 NP 完全的}.
 \]
 
+\end{answerred}
 \subsection*{7.27}
 
 \begin{figure}[h]
@@ -917,6 +949,7 @@ CNF_3 \text{ 是 NP 完全的}.
   \label{fig:hw_7_27}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 先证
 \[
@@ -1115,6 +1148,7 @@ G_\phi\in 3COLOR.
 是 NP 完全的。$\blacksquare$
 
 
+\end{answerred}
 \subsection*{7.28}
 
 
@@ -1125,6 +1159,7 @@ G_\phi\in 3COLOR.
   \label{fig:hw_7_28}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 先证
 \[
@@ -1306,6 +1341,7 @@ SET\text{-}SPLITTING
 \]
 是 NP 完全的。$\blacksquare$
 
+\end{answerred}
 \subsection*{7.29}
 
 \begin{figure}[H]
@@ -1315,6 +1351,7 @@ SET\text{-}SPLITTING
   \label{fig:hw_7_29}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 把该问题形式化为语言
 \[
@@ -1455,6 +1492,7 @@ EXAM\text{-}SCHEDULE\in NP,
 \]
 得到该语言是 NP 完全的。$\blacksquare$
 
+\end{answerred}
 \subsection*{7.30}
 
 \begin{figure}[H]
@@ -1464,6 +1502,7 @@ EXAM\text{-}SCHEDULE\in NP,
   \label{fig:hw_7_30}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 把题目形式化为语言
 \[
@@ -1604,6 +1643,7 @@ MINE
 \]
 是 NP 完全的。$\blacksquare$
 
+\end{answerred}
 \subsection*{7.32}
 
 \begin{figure}[H]
@@ -1613,6 +1653,7 @@ MINE
   \label{fig:hw_7_32}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 这里把输入中的
 \[
@@ -1697,6 +1738,7 @@ U
 \]
 是 NP 完全的。$\blacksquare$
 
+\end{answerred}
 \subsection*{7.34}
 
 
@@ -1707,6 +1749,7 @@ U
   \label{fig:hw_7_34}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 先证
 \[
@@ -1878,6 +1921,7 @@ DOMINATING\text{-}SET\in NP,
 \]
 得到它是 NP 完全的。$\blacksquare$
 
+\end{answerred}
 \subsection*{7.36}
 
 \begin{figure}[H]
@@ -1887,6 +1931,7 @@ DOMINATING\text{-}SET\in NP,
   \label{fig:hw_7_36}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 假设
 \[
@@ -2001,6 +2046,7 @@ P=NP
 \]
 之下，确实存在一个多项式时间算法，可以在输入一个可满足布尔公式时输出它的一个满足赋值。$\blacksquare$
 
+\end{answerred}
 \subsection*{7.39}
 
 \begin{figure}[H]
@@ -2010,6 +2056,7 @@ P=NP
   \label{fig:hw_7_39}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 在 Cook--Levin 定理的证明里，窗口的作用是刻画“相邻两行是否对应一次合法的图灵机转移”。关键点在于：一次转移会同时影响头所在位置及其左右相邻位置，总共三个相邻单元。因此需要一个
 \[
@@ -2110,6 +2157,7 @@ q'y,
 \]
 窗口，Cook--Levin 证明中的局部一致性条件就不再足够，整个证明会失效。$\blacksquare$
 
+\end{answerred}
 \subsection*{7.40}
 
 
@@ -2127,6 +2175,7 @@ q'y,
   \label{fig:hw_7_40_p2}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 设输入 DFA 为
 \[
@@ -2355,6 +2404,7 @@ MINIMIZE
 \]
 在多项式时间内运行。$\blacksquare$
 
+\end{answerred}
 \subsection*{7.42}
 
 \begin{figure}[H]
@@ -2364,6 +2414,7 @@ MINIMIZE
   \label{fig:hw_7_42}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 设
 \[
@@ -2525,5 +2576,6 @@ O(n+m)
 2SAT\in P.
 \]
 $\blacksquare$
+\end{answerred}
 
 \clearpage

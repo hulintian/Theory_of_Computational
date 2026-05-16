@@ -11,39 +11,58 @@
   \label{fig:hw_6_3}
 \end{figure}
 
-证明。设
+\begin{answerred}
+证明。先回忆定义：
+\[
+    A\le_T B
+\]
+表示 $A$ 可相对于 $B$ 判定。也就是说，存在一台带预言机 $B$ 的图灵机 $M^B$ 判定 $A$。直观地说，如果我们有能力回答
+\[
+    x\in B?
+\]
+这样的询问，那么就能判定
+\[
+    w\in A?
+\]
+因此方向是：假设能判定右边的语言 $B$，就能判定左边的语言 $A$。
+
+\medskip
+现在设
 \[
     A \le_T B
     \qquad\text{且}\qquad
     B \le_T C.
 \]
-于是存在带预言机 $B$ 的图灵机 $M_1^B$ 判定 $A$，以及带预言机 $C$ 的图灵机 $M_2^C$ 判定 $B$。
+由定义，存在带预言机 $B$ 的图灵机 $M^B$ 判定 $A$，也存在带预言机 $C$ 的图灵机 $N^C$ 判定 $B$。
 
 \medskip
-构造带预言机 $C$ 的图灵机 $M_3^C$ 来判定 $A$。机器 $M_3$ 模拟 $M_1$ 的运行。每当 $M_1$ 向其预言机询问某个字符串 $x$ 是否属于 $B$ 时，$M_3$ 就启动子过程，利用 $M_2^C$ 来判定
+构造一台带预言机 $C$ 的图灵机 $T^C$ 来判定 $A$。在输入 $w$ 上，$T^C$ 模拟 $M^B(w)$ 的运行。每当 $M^B$ 向其 $B$-预言机询问某个字符串 $x$ 是否属于 $B$ 时，$T^C$ 不直接询问 $B$，而是在输入 $x$ 上运行 $N^C$。由于 $N^C$ 判定 $B$，所以它会正确判定
 \[
     x\in B
 \]
-是否成立，然后把答案返回给这次询问。除此之外，$M_3$ 完全照着 $M_1$ 的步骤运行。
+是否成立。若 $N^C$ 接受，则 $T^C$ 把这次预言机询问回答为“是”；若 $N^C$ 拒绝，则回答为“否”。除此之外，$T^C$ 完全照着 $M^B$ 的步骤运行。
 
 \medskip
-因为 $M_2^C$ 判定 $B$，所以 $M_3^C$ 对每次关于 $B$ 的预言机询问都能给出正确答案。因此，$M_3^C$ 的整个计算与 $M_1^B$ 的计算完全一致。于是对任意输入 $w$，
+因为 $N^C$ 判定 $B$，所以 $T^C$ 对每次关于 $B$ 的预言机询问都能给出和真正的 $B$-预言机相同的答案。于是 $T^C$ 的整个计算与 $M^B$ 的计算完全一致。对任意输入 $w$，
 \[
-    M_3^C \text{ 接受 } w
+    T^C \text{ 接受 } w
     \iff
-    M_1^B \text{ 接受 } w
+    M^B \text{ 接受 } w
     \iff
     w\in A.
 \]
-故 $M_3^C$ 判定 $A$，从而
+而且 $M^B$ 是判定器，每次调用的 $N^C$ 也是判定器，所以 $T^C$ 也总会停机。故 $T^C$ 判定 $A$。这说明存在一台带预言机 $C$ 的图灵机判定 $A$，从而
 \[
     A \le_T C.
 \]
 这就证明了图灵可归约性的传递性。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
-这是预言机版本的“函数复合”。既然求解 $A$ 只需要会问 $B$，而求解 $B$ 又只需要会问 $C$，那么把所有“问 $B$”的地方改成“调用一个以 $C$ 为预言机的判定器”，就得到了 $A \le_T C$。
+这是预言机版本的“函数复合”。$A\le_T B$ 的意思不是“由 $A$ 判定 $B$”，而是“如果有 $B$ 的答案，就能判定 $A$”。所以在证明传递性时，先用 $M^B$ 把 $A$ 的问题转化成若干个 $B$ 的问题，再用 $N^C$ 把每个 $B$ 的问题转化成 $C$ 的问题，最终得到一个 $T^C$ 来判定 $A$。
 
+\end{answernote}
+\end{answerred}
 \subsection*{6.4}
 
 \begin{figure}[H]
@@ -53,6 +72,7 @@
   \label{fig:hw_6_4}
 \end{figure}
 
+\begin{answerred}
 设
 \[
     A_{\mathrm{TM}}^{A_{\mathrm{TM}}}
@@ -140,6 +160,7 @@
 \]
 不可判定。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这就是普通
 \[
@@ -151,6 +172,8 @@
 \]
 预言机，我们仍然可以对“带这个预言机的机器是否接受”做对角化，所以再强一层的接受问题依然超出这一层预言机的能力。
 
+\end{answernote}
+\end{answerred}
 \subsection*{6.7}
 
 \begin{figure}[H]
@@ -160,6 +183,7 @@
   \label{fig:hw_6_7}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 令 $t$ 是这样一个可计算变换：对任意图灵机描述
 \[
@@ -214,9 +238,12 @@ L(M)=\varnothing=L(t(\langle M\rangle)).
 \]
 故这台“对所有输入都循环”的图灵机就是 $t$ 的一个不动点例子。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这里的不动点不是说机器描述字面上一模一样，而是说变换前后识别的语言相同。若一台机器从来不进入接受态或拒绝态，那么交换这两个状态根本不会改变它的行为，因此自然就是一个不动点。
 
+\end{answernote}
+\end{answerred}
 \subsection*{6.10}
 
 \begin{figure}[H]
@@ -226,6 +253,7 @@ L(M)=\varnothing=L(t(\langle M\rangle)).
   \label{fig:hw_6_10}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 一个最简单的模型是
 \[
@@ -302,9 +330,12 @@ R_1(x,z).
 \]
 就是题目所求的一个模型。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这个句子正是在刻画“等价关系”：自反、对称、传递。最直接的例子就是把 $R_1$ 解释成真正的“等于”。当然，像“同奇偶”这样的关系也同样给出一个模型。
 
+\end{answernote}
+\end{answerred}
 \subsection*{6.12}
 
 \begin{figure}[H]
@@ -314,6 +345,7 @@ R_1(x,z).
   \label{fig:hw_6_12}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 我们把语言
 \[
@@ -392,6 +424,7 @@ x<y
 \]
 可判定。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这里的核心不是重新发明一个关于 $<$ 的判定器，而是把“小于”翻译成“加法存在一个正增量”。一旦这个翻译是有效的，而
 \[
@@ -403,6 +436,8 @@ x<y
 \]
 的理论也就跟着可判定。
 
+\end{answernote}
+\end{answerred}
 \subsection*{6.14}
 
 \begin{figure}[H]
@@ -412,6 +447,7 @@ x<y
   \label{fig:hw_6_14}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 定义语言
 \[
@@ -467,9 +503,12 @@ B\le_T J.
 \]
 命题得证。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这个构造就是把两个语言“并排打包”进一个新语言里。前缀 $0$ 表示“这是关于 $A$ 的问题”，前缀 $1$ 表示“这是关于 $B$ 的问题”。于是同一个预言机 $J$ 同时包含了两边的信息。
 
+\end{answernote}
+\end{answerred}
 \subsection*{6.17}
 
 \begin{figure}[H]
@@ -479,6 +518,7 @@ B\le_T J.
   \label{fig:hw_6_17}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 取
 \[
@@ -564,9 +604,12 @@ A\subseteq C,
 \medskip
 因此不存在任何可判定语言 $C$ 能把 $A$ 与 $B$ 分离开。故题目所求的两个语言就是上述 $A$ 与 $B$。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这两个语言分别记录“机器在自己描述上接受”和“机器在自己描述上拒绝”。如果某个可判定语言真能把这两种情况完全分开，就能像标准对角化那样造出一台在自己描述上永远与这个分离器作对的机器，于是立刻矛盾。
 
+\end{answernote}
+\end{answerred}
 \subsection*{6.22}
 
 \begin{figure}[H]
@@ -576,6 +619,7 @@ A\subseteq C,
   \label{fig:hw_6_22}
 \end{figure}
 
+\begin{answerred}
 \paragraph{解答.}
 反设函数
 \[
@@ -658,7 +702,10 @@ K(x)
 \]
 不是可计算函数。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这是 Kolmogorov 复杂度版本的 Berry 悖论。若 $K$ 真能计算，我们就能有效地找到“第一个复杂度大于 $n$ 的串”。但这样一个串又被“这台寻找它的机器 + 参数 $n$”简短地描述了，于是它反而不该那么复杂。
+\end{answernote}
+\end{answerred}
 
 \clearpage

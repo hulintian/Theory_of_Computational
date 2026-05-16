@@ -11,6 +11,7 @@
   \label{fig:hw_10_2}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 取费马测试的底数
@@ -35,6 +36,7 @@ a=5.
 \]
 因此 $12$ 不能通过该费马测试。故 $12$ 不是伪素数。
 
+\end{answerred}
 \subsection*{10.4}
 
 \begin{figure}[H]
@@ -44,6 +46,7 @@ a=5.
   \label{fig:hw_10_4}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 构造一个按顺序读取 $x_1,\ldots,x_n$ 的分支程序。第 $i$ 层保存读完前 $i-1$ 个输入后的奇偶状态：
@@ -67,6 +70,7 @@ O_i \xrightarrow{x_i=0} O_{i+1}, && O_i \xrightarrow{x_i=1} E_{i+1}.
 \]
 它接受当且仅当输入中 $1$ 的个数为奇数，因此计算的是 $n$ 输入奇偶函数。
 
+\end{answerred}
 \subsection*{10.7}
 
 \begin{figure}[H]
@@ -76,6 +80,7 @@ O_i \xrightarrow{x_i=0} O_{i+1}, && O_i \xrightarrow{x_i=1} E_{i+1}.
   \label{fig:hw_10_7}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设 $A\in\mathrm{BPP}$，由概率多项式时间图灵机 $M$ 判定。对长度为 $n$ 的输入，可假设 $M$ 恰好使用
@@ -95,6 +100,7 @@ r(n)
 \mathrm{BPP}\subseteq\mathrm{PSPACE}.
 \]
 
+\end{answerred}
 \subsection*{10.8}
 
 \begin{figure}[H]
@@ -104,6 +110,7 @@ r(n)
   \label{fig:hw_10_8}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设正则语言 $A$ 由 DFA
@@ -129,6 +136,7 @@ T_{x_n}\circ T_{x_{n-1}}\circ\cdots\circ T_{x_1}
 (O(n),O(\log n)).
 \]
 
+\end{answerred}
 \subsection*{10.10}
 
 \begin{figure}[H]
@@ -138,6 +146,7 @@ T_{x_n}\circ T_{x_{n-1}}\circ\cdots\circ T_{x_1}
   \label{fig:hw_10_10}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 记
@@ -180,6 +189,7 @@ R_\gamma(p,q),
 \mathrm{P}=\bigcup_k\mathrm{PDA}_k.
 \]
 
+\end{answerred}
 \subsection*{10.13}
 
 \begin{figure}[H]
@@ -189,6 +199,7 @@ R_\gamma(p,q),
   \label{fig:hw_10_13}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 假设
@@ -230,6 +241,7 @@ A\in\Sigma_m^p.
 \]
 这说明从第 $m$ 层开始，多项式时间层次全部坍缩到 $\Sigma_m^p$。因此多项式时间层次至多只有有限个不同的层次。
 
+\end{answerred}
 \subsection*{10.19}
 
 \begin{figure}[H]
@@ -239,6 +251,7 @@ A\in\Sigma_m^p.
   \label{fig:hw_10_19}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 总有
@@ -273,5 +286,6 @@ A\in\Sigma_m^p.
 \[
 \mathrm{NP}=\mathrm{RP}.
 \]
+\end{answerred}
 
 \clearpage

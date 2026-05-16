@@ -18,6 +18,7 @@
   \label{fig:hw_3_6_p2}
 \end{figure}
 
+\begin{answerred}
 证明。不能用题目中给出的更简单算法，是因为 $M$ 只是图灵可识别器，不一定对每个输入都停机。
 
 若按题目中的方法枚举，到了某个字符串 $s_i$ 时，步骤 2 会在 $s_i$ 上一直运行 $M$。如果
@@ -37,9 +38,12 @@
 
 这正是定理 3.13 正向证明里必须采用交错模拟（dovetailing）的原因：在第 $t$ 轮同时把前 $t$ 个输入都只模拟有限步，从而不会因为某一个输入上的无限循环而阻塞整个枚举过程。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 枚举器最怕“某个分支把全局卡死”。对图灵可识别器来说，某些输入上可能永远不停机，所以不能把全部时间都压在单个 $s_i$ 上；必须把时间公平地分给所有候选输入。
 
+\end{answernote}
+\end{answerred}
 \subsection*{3.8}
 
 \begin{figure}[H]
@@ -49,6 +53,7 @@
   \label{fig:hw_3_8}
 \end{figure}
 
+\begin{answerred}
 设带字母表中另外加入标记符号 $X$，表示“这个位置已经配对过”。
 
 \paragraph{(a)}
@@ -129,9 +134,12 @@
 \medskip
 于是 $M_C$ 判定 $C$。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这三小题的核心都是“反复做有限次配对并标记”。(a) 是每次配走一个 $0$ 和一个 $1$；(b) 是每次配走两个 $0$ 和一个 $1$；(c) 直接利用 (b) 的补语言即可，因为 (b) 已经是判定器。
 
+\end{answernote}
+\end{answerred}
 \subsection*{3.10}
 
 \begin{figure}[H]
@@ -141,6 +149,7 @@
   \label{fig:hw_3_10}
 \end{figure}
 
+\begin{answerred}
 证明。设双无限带图灵机所识别的语言类为 $\mathcal C$，普通图灵机所识别的语言类为 $\mathcal R$。
 
 \medskip
@@ -216,9 +225,12 @@
 \]
 即双无限带图灵机识别的正是图灵可识别语言类。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 双无限带并没有增加本质能力，因为“头左边的内容”和“头右边的内容”都可以用一条普通带上的有限编码保存。真正重要的不是带子朝哪边无限，而是机器是否能进行任意长的有限控制和重写。
 
+\end{answernote}
+\end{answerred}
 \subsection*{3.12}
 
 \begin{figure}[H]
@@ -228,6 +240,7 @@
   \label{fig:hw_3_12}
 \end{figure}
 
+\begin{answerred}
 证明。设左复位图灵机识别的语言类为 $\mathcal C$，普通图灵机识别的语言类为 $\mathcal R$。
 
 \medskip
@@ -321,9 +334,12 @@ $P$ 在自己的带上保存 $M$ 当前格局的编码
 \]
 即左复位图灵机识别的也是图灵可识别语言类。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 左复位看起来比“向左移动一格”弱很多，但它仍然足以模拟普通图灵机。原因是：虽然它不能原地左移，但它可以反复回到左端，再把整个当前格局重新扫描并重写成“下一格局”。代价只是时间变慢，而不是能力变弱。
 
+\end{answernote}
+\end{answerred}
 \subsection*{3.15}
 
 
@@ -334,6 +350,7 @@ $P$ 在自己的带上保存 $M$ 当前格局的编码
   \label{fig:hw_3_15}
 \end{figure}
 
+\begin{answerred}
 设 $A,B$ 都是可判定语言，分别由判定器 $M_A,M_B$ 判定。
 
 \paragraph{(a) 并}
@@ -411,9 +428,12 @@ $P$ 在自己的带上保存 $M$ 当前格局的编码
 
 因此可判定语言类在并、连接、星号、补、交这五种运算下都封闭。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 证明“可判定”最关键的一点是：所有子过程都必须停机。并、交、补只是在已有判定器上做有限次组合；连接和星号虽然要“猜切分”，但输入长度固定时，切分方式只有有限种，所以也仍然能穷尽。
 
+\end{answernote}
+\end{answerred}
 \subsection*{3.18}
 
 \begin{figure}[H]
@@ -423,6 +443,7 @@ $P$ 在自己的带上保存 $M$ 当前格局的编码
   \label{fig:hw_3_18}
 \end{figure}
 
+\begin{answerred}
 证明。
 
 \medskip
@@ -474,9 +495,12 @@ $P$ 在自己的带上保存 $M$ 当前格局的编码
 
 综上，一个语言是可判定的，当且仅当存在枚举器按字典顺序枚举它。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 普通枚举器只能说明“可识别”，因为你不知道某个串只是“还没轮到”，还是“永远不会出现”。一旦输出顺序被限制成字典序，这种不确定性就消失了：只要已经越过了 $w$，就能立刻断定 $w\notin A$。
 
+\end{answernote}
+\end{answerred}
 \subsection*{3.20}
 
 \begin{figure}[H]
@@ -486,6 +510,7 @@ $P$ 在自己的带上保存 $M$ 当前格局的编码
   \label{fig:hw_3_20}
 \end{figure}
 
+\begin{answerred}
 证明。设 $M$ 是一台单带图灵机，并且它从不在初始输入所在的那一段区域内写符号。记它识别的语言为 $L(M)$。下面证明 $L(M)$ 必为正则语言。
 
 \medskip
@@ -579,7 +604,10 @@ L(A)=L(M).
 
 由于 $A$ 是 DFA，$L(M)$ 为正则语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 核心就是把每个输入串 $w$ 看成一个有限摘要 $F_w$：它记录“机器在这段只读输入上能发生什么”。由于摘要只有有限多个，并且读入一个新符号 $a$ 时摘要按确定规则更新，于是这些摘要本身就组成了一个 DFA 的状态集，因此原机器识别的语言必为正则语言。
+\end{answernote}
+\end{answerred}
 
 \clearpage

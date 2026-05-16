@@ -11,6 +11,7 @@
   \label{fig:hw_5_2}
 \end{figure}
 
+\begin{answerred}
 证明。要证明
 \[
     \mathrm{EQ}_{\mathrm{CFG}}
@@ -77,9 +78,12 @@
 \]
 是 co-Turing-recognizable。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 “两个 CFG 不相等”只要找到一个见证串即可。因为 CFG 成员资格可判定，我们可以把所有字符串逐个检验；一旦发现落在对称差中的字符串，就识别出了补语言。
 
+\end{answernote}
+\end{answerred}
 \subsection*{5.5}
 
 \begin{figure}[H]
@@ -89,6 +93,7 @@
   \label{fig:hw_5_5}
 \end{figure}
 
+\begin{answerred}
 证明。反设存在一个可计算函数 $f$，把
 \[
     A_{\mathrm{TM}}
@@ -170,9 +175,12 @@
 \]
 $\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这题不是说两个语言都不可判定，就一定不能归约；关键在于它们的“可识别方向”不同。$E_{\mathrm{TM}}$ 是 co-Turing-recognizable，而 $A_{\mathrm{TM}}$ 不是；如果真能把 $A_{\mathrm{TM}}$ 归约到 $E_{\mathrm{TM}}$，补语言的可识别性就会被错误地传回去。
 
+\end{answernote}
+\end{answerred}
 \subsection*{5.9}
 
 \begin{figure}[H]
@@ -182,6 +190,7 @@ $\blacksquare$
   \label{fig:hw_5_9}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设
@@ -248,6 +257,7 @@ L(N)=\varnothing.
 
 故 $T$ 不可判定。$\blacksquare$
 
+\end{answerred}
 \subsection*{5.13}
 
 \begin{figure}[H]
@@ -257,6 +267,7 @@ L(N)=\varnothing.
   \label{fig:hw_5_13}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{形式化}
 
 把题目形式化为语言
@@ -324,6 +335,7 @@ q_\star\text{ 是无用状态}
 \]
 不可判定。$\blacksquare$
 
+\end{answerred}
 \subsection*{5.17}
 
 \begin{figure}[H]
@@ -333,6 +345,7 @@ q_\star\text{ 是无用状态}
   \label{fig:hw_5_17}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设 PCP 实例的字母表是一元字母表
@@ -398,6 +411,7 @@ d_i=m_i-n_i.
 
 这只是对有限个整数做检查，因此是可判定的。故 PCP 在一元字母表上可判定。$\blacksquare$
 
+\end{answerred}
 \subsection*{5.21}
 
 \begin{figure}[H]
@@ -407,6 +421,7 @@ d_i=m_i-n_i.
   \label{fig:hw_5_21}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 反设存在图灵机 $R$ 判定
@@ -510,6 +525,7 @@ b_{i_1}\cdots b_{i_m},
 \]
 不可判定。$\blacksquare$
 
+\end{answerred}
 \subsection*{5.22}
 
 \begin{figure}[H]
@@ -519,6 +535,7 @@ b_{i_1}\cdots b_{i_m},
   \label{fig:hw_5_22}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 我们证明下面两个方向。
@@ -575,6 +592,7 @@ A\le_m A_{\mathrm{TM}}.
 \]
 $\blacksquare$
 
+\end{answerred}
 \subsection*{5.24}
 
 \begin{figure}[H]
@@ -584,6 +602,7 @@ $\blacksquare$
   \label{fig:hw_5_24}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 记
@@ -659,6 +678,7 @@ J
 \]
 都不是图灵可识别的。$\blacksquare$
 
+\end{answerred}
 \subsection*{5.28}
 
 \begin{figure}[H]
@@ -668,6 +688,7 @@ J
   \label{fig:hw_5_28}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设 $\mathcal{P}$ 是 TM 语言的一个非平凡属性。定义描述语言
@@ -757,6 +778,7 @@ L_{\mathcal{P}}
 \]
 不可判定。这就是 Rice 定理。$\blacksquare$
 
+\end{answerred}
 \subsection*{5.33}
 
 \begin{figure}[H]
@@ -766,6 +788,7 @@ L_{\mathcal{P}}
   \label{fig:hw_5_33}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明 $S$ 不是图灵可识别的}
 
 我们从
@@ -896,5 +919,6 @@ L(N)=\{d\}=\{\langle N\rangle\},
 E_{\mathrm{TM}}\le_m \overline{S}.
 \]
 若 $\overline{S}$ 图灵可识别，则 $E_{\mathrm{TM}}$ 也图灵可识别，矛盾。故 $\overline{S}$ 不是图灵可识别的。$\blacksquare$
+\end{answerred}
 
 \clearpage

@@ -11,6 +11,7 @@
   \label{fig:hw_1_4}
 \end{figure}
 
+\begin{answerred}
 % ============================================================
 % 小题 a:至少 3 个 a 且至少 2 个 b
 % ============================================================
@@ -158,11 +159,13 @@
         (ODd) edge [loop below]      node        {b} ();
 \end{tikzpicture}
 \end{center}
+\begin{answernote}
 \textbf{案：}
 
 % ============================================================
 % 小题 e:以 a 开头且最多 1 个 b
 % ============================================================
+\end{answernote}
 \subsubsection*{(e) $\{w \mid w$ 从 a 开始且最多 1 个 b$\}$}
 
 只绘从起始态可达的 6 个状态。接受态 $(S_a, 0)$ 和 $(S_a, 1)$。
@@ -246,8 +249,11 @@
 \textbf{观察:}由 $|w| = \#_a + \#_b$,$|w|$ 偶且 $\#_a$ 奇 $\Longleftrightarrow \#_b$ 亦为奇数,
 所以此语言等价于 $\{w \mid \#_a, \#_b$ 均为奇数$\}$。
 
+\begin{answernote}
 \paragraph{案：}“和”、“并且”等表示的是
 
+\end{answernote}
+\end{answerred}
 \subsection*{1.5}
 
 \begin{figure}[H]
@@ -264,6 +270,7 @@
   \label{fig:hw_1_5_p2}
 \end{figure}
 
+\begin{answerred}
 解答：
 \noindent\textbf{方法总结:}对每小题先给简单语言 $L_1$ 构造完备 DFA $M$(所有状态对所有字符都必须有转移,必要时添加死状态),然后将接受态集 $F$ 换成 $Q\setminus F$,得到识别 $\overline{L_1}$ 的 DFA。转移保持不变。
 
@@ -593,6 +600,7 @@
 
 \noindent 注:$q_0$ 接受空串 $\varepsilon$;$q_d$ 接受所有长度 $\geq 2$ 的串。
 
+\end{answerred}
 \subsection*{1.6}
 
 \begin{figure}[H]
@@ -602,6 +610,7 @@
   \label{fig:hw_1_6}
 \end{figure}
 
+\begin{answerred}
 \noindent\textbf{约定:}字母表 $\Sigma = \{0, 1\}$。所有 DFA 都是完备的,死状态用红色底色标出,接受态用双圆。
 
 % ============================================================
@@ -962,6 +971,7 @@
 \end{center}
 
 
+\end{answerred}
 \subsection*{1.7}
 
 \begin{figure}[H]
@@ -971,6 +981,7 @@
   \label{fig:hw_1_7}
 \end{figure}
 
+\begin{answerred}
 \noindent\textbf{方法总结:}NFA 允许不完备的转移函数、对同一符号有多个去向、以及 $\varepsilon$ 转移。构造时常用技巧:(1) 用起始态自环"等待"匹配时机,由非确定性"猜"何时进入识别阶段;(2) 用 $\varepsilon$ 转移实现并运算和 Kleene 星号;(3) 缺失的转移即"拒绝当前分支"。
 
 % ============================================================
@@ -1139,6 +1150,7 @@ $q_0$ 即接受态(对应已完成一个合法串,包括空串)。$q_0$ 自环�
 \end{tikzpicture}
 \end{center}
 
+\end{answerred}
 \subsection*{1.11}
 
 \begin{figure}[H]
@@ -1156,6 +1168,8 @@ $q_0$ 即接受态(对应已完成一个合法串,包括空串)。$q_0$ 自环�
   \label{fig:ans_p_1_11}
 \end{figure}
 
+\begin{answerred}
+\begin{answernote}
 \textbf{案：} 中文版此处翻译错误，$\delta'$的第二行中的两个条件应该为“且” 
 
 \begin{figure}[H]
@@ -1165,6 +1179,8 @@ $q_0$ 即接受态(对应已完成一个合法串,包括空串)。$q_0$ 自环�
   \label{fig:err_ans_p_1_11}
 \end{figure}
 
+\end{answernote}
+\end{answerred}
 \subsection*{1.13}
 
 \begin{figure}[H]
@@ -1174,6 +1190,7 @@ $q_0$ 即接受态(对应已完成一个合法串,包括空串)。$q_0$ 自环�
   \label{fig:hw_1_13}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{1.13 $F = \{w \mid w$ 中任意两个 1 之间间隔的符号数都不是奇数$\}$}
 
 \noindent\textbf{题意分析:}要求 $F$ 中的串,其中任意两个 1 之间的 0 的个数都是偶数(包括 0 个)。没有 1 或只有一个 1 的串自动满足(空真)。
@@ -1253,6 +1270,7 @@ $E = \{q_0, q_2, q_3\}$         & $\{q_0, q_1, q_3\} = D$     & $\{q_0, q_1, q_3
 
 \noindent 关键转移:$C \xrightarrow{1} E$ 是唯一"发生违反"的转移——在距上一个 1 奇数个 0 后又读到了一个 1。一旦进入 $\{D, E\}$ 就永远困在其中(死区)。
 
+\end{answerred}
 \subsection*{1.14}
 
 \begin{figure}[H]
@@ -1262,6 +1280,7 @@ $E = \{q_0, q_2, q_3\}$         & $\{q_0, q_1, q_3\} = D$     & $\{q_0, q_1, q_3
   \label{fig:hw_1_14}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 先证明对 DFA 成立，再说明为什么对 NFA 直接交换接受状态与非接受状态并不正确。
@@ -1385,6 +1404,7 @@ DFA 的接受基于唯一计算路径，因此
 
 
 
+\end{answerred}
 \subsection*{1.15}
 
 \begin{figure}[H]
@@ -1394,6 +1414,7 @@ DFA 的接受基于唯一计算路径，因此
   \label{fig:hw_1_15}
 \end{figure}
 
+\begin{answerred}
 这题中文版的第二版和第三版均存在翻译错误，下图\ref{fig:hw_1_15_en} 是英文版的题干
 
 \begin{figure}[H]
@@ -1474,6 +1495,7 @@ DFA 的接受基于唯一计算路径，因此
 
 正确的做法是：新建一个\textbf{新的开始接受状态}，并从它向旧开始状态加一条 $\varepsilon$-边；同时从每个旧接受状态向旧开始状态加 $\varepsilon$-边。这样才能正确识别 $A_1^*$。$\blacksquare$
 
+\end{answerred}
 \subsection*{1.17}
 
 \begin{figure}[H]
@@ -1483,6 +1505,7 @@ DFA 的接受基于唯一计算路径，因此
   \label{fig:hw_1_17}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 \paragraph{识别 $(01 \cup 001 \cup 010)^*$ 的 NFA.}
@@ -1626,6 +1649,7 @@ $G$ & $G$ & $G$
 \end{tikzpicture}
 \end{center}
 
+\end{answerred}
 \subsection*{1.19}
 
 \begin{figure}[H]
@@ -1642,6 +1666,7 @@ $G$ & $G$ & $G$
   \label{fig:hw_1_19_p2}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 下面给出每个语言的两个成员和两个非成员。这里约定字母表为 $\Sigma=\{a,b\}$。
@@ -1664,6 +1689,7 @@ $G$ & $G$ & $G$
 
 \noindent 其中 (e) 要求字符串中存在一个按顺序出现的子序列 $a,b,a$；例如 $baaba$ 中第 $2,4,5$ 个字符可取为 $a,b,a$。而 (h) 表示字符串必须以 $a$、$ba$ 或 $bb$ 开头，所以空串和单独的 $b$ 都不属于该语言。
 
+\end{answerred}
 \subsection*{1.30}
 
 \begin{figure}[H]
@@ -1673,6 +1699,7 @@ $G$ & $G$ & $G$
   \label{fig:hw_1_30}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{解答}
 
 该证明的错误在于混淆了两个不同的语言。语言
@@ -1736,6 +1763,7 @@ $G$ & $G$ & $G$
 \]
 所以，泵引理是证明非正则的工具，而不是证明正则的工具。证明正则时应给出 RE、NFA、DFA，或把语言化归为正则语言闭包运算的结果。
 
+\end{answerred}
 \subsection*{1.32}
 
 \begin{figure}[H]
@@ -1745,6 +1773,7 @@ $G$ & $G$ & $G$
   \label{fig:hw_1_32}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 二进制加法应从最低位向最高位检查。故先证明反转语言 $B^R$ 正则，再由正则语言对反转封闭推出 $B$ 正则。
@@ -1794,6 +1823,7 @@ $G$ & $G$ & $G$
 \]
 也是正则语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这个证明的核心是找出二进制加法检查中真正需要记住的信息。若从右向左读，即从最低位向最高位读，那么已经读过的低位对后续检查的影响只体现为当前进位。进位只有两种可能，$0$ 或 $1$，所以这是有限信息，可以由 DFA 的有限状态记录。
 
@@ -1809,6 +1839,8 @@ $G$ & $G$ & $G$
 \]
 因此 DFA 并不需要记住已经读过的全部数字，只需要记住一个有限状态：进位是否为 $1$。这正是该语言正则的原因。
 
+\end{answernote}
+\end{answerred}
 \subsection*{1.34}
 
 \begin{figure}[H]
@@ -1818,6 +1850,7 @@ $G$ & $G$ & $G$
   \label{fig:hw_1_34}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设字母表为
@@ -1874,6 +1907,7 @@ $G$ & $G$ & $G$
 \]
 即上面一行表示的二进制数大于下面一行。因此 $L(M)=D$，故 $D$ 是正则语言。$\blacksquare$
 
+\end{answerred}
 \subsection*{1.35}
 
 \begin{figure}[H]
@@ -1883,6 +1917,7 @@ $G$ & $G$ & $G$
   \label{fig:hw_1_35}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设
@@ -1940,6 +1975,7 @@ $G$ & $G$ & $G$
 \]
 故 $xz\notin E$，与泵引理要求 $xy^0z\in E$ 矛盾。因此 $E$ 不是正则语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 该语言要求下行等于上行的反转。也就是说，自动机读到前面的上行信息后，必须在后面以相反顺序逐位比较。随着输入长度增加，需要保存的前缀可以任意长；而 DFA 只有有限多个状态，不能保存任意长的前缀信息。这就是 $E$ 非正则的本质原因。
 
@@ -1961,6 +1997,8 @@ $G$ & $G$ & $G$
 \]
 所以证明中令 $y=\begin{bmatrix}0\\1\end{bmatrix}^{k}$ 并不是任取一种情况，而是概括了所有合法分解。随后取 $i=0$，对任意这样的 $k>0$ 都会破坏上下两行的反转关系，故得到的矛盾满足泵引理反证所需的量词结构。
 
+\end{answernote}
+\end{answerred}
 \subsection*{1.36}
 
 \begin{figure}[H]
@@ -1970,6 +2008,7 @@ $G$ & $G$ & $G$
   \label{fig:hw_1_36}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 固定任意 $n\ge 1$。构造 DFA
@@ -2004,6 +2043,7 @@ $G$ & $G$ & $G$
 \]
 所以对每个 $n\ge 1$，$B_n$ 都由一个有限状态自动机识别，故 $B_n$ 是正则语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这里 DFA 需要记住的不是完整的长度 $k$，而只是 $k$ 除以 $n$ 的余数。余数只有
 \[
@@ -2011,6 +2051,8 @@ $G$ & $G$ & $G$
 \]
 这 $n$ 种可能，因此可以用有限多个状态记录。每读入一个 $a$，余数加 $1$ 并对 $n$ 取模；最终回到余数 $0$ 的状态，正好表示长度是 $n$ 的整数倍。
 
+\end{answernote}
+\end{answerred}
 \subsection*{1.40}
 
 \begin{figure}[H]
@@ -2020,6 +2062,7 @@ $G$ & $G$ & $G$
   \label{fig:hw_1_40}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设 $A$ 是正则语言，令
@@ -2106,6 +2149,7 @@ $G$ & $G$ & $G$
 
 综上，正则语言类在 $\operatorname{NOPREFIX}$ 与 $\operatorname{NOEXTEND}$ 运算下封闭。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 $\operatorname{NOPREFIX}(A)$ 要求“在接受当前串之前，不能已经接受过某个真前缀”，所以 DFA 只需在读入过程中检查是否提前进入过接受状态；若提前接受后还有输入，就进入死状态。
 
@@ -2138,6 +2182,8 @@ $\operatorname{NOEXTEND}(A)$ 要求“当前串虽然在 $A$ 中，但不能继�
 \]
 在本章里，$\mathcal C$ 就是正则语言类。因此 1.40 的结论是：若 $A$ 正则，则 $\operatorname{NOPREFIX}(A)$ 与 $\operatorname{NOEXTEND}(A)$ 仍正则。证明这类封闭性命题的常见方法，就是从识别原语言的 DFA 或 NFA 出发，直接构造识别新语言的自动机。
 
+\end{answernote}
+\end{answerred}
 \subsection*{1.42}
 
 \begin{figure}[H]
@@ -2147,6 +2193,7 @@ $\operatorname{NOEXTEND}(A)$ 要求“当前串虽然在 $A$ 中，但不能继�
   \label{fig:hw_1_42}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设 $A,B\subseteq\Sigma^*$ 都是正则语言。取识别它们的 DFA
@@ -2223,11 +2270,14 @@ $\operatorname{NOEXTEND}(A)$ 要求“当前串虽然在 $A$ 中，但不能继�
 \]
 所以正则语言类在完全间隔交叉运算下封闭。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这个构造的核心很直接：DFA 一边读输入，一边把奇数位送给识别 $A$ 的自动机，把偶数位送给识别 $B$ 的自动机；额外的一个二值状态只负责记录“当前该轮到哪一边读”。由于需要记住的信息只有两个分自动机的当前状态以及当前位置的奇偶性，所以总状态数仍然是有限的。
 
 就 1.42 而言，这里讨论的运算是“完全间隔交叉”：输入是两个语言 $A,B$，输出是由 $A$ 中字符串与 $B$ 中字符串按奇偶位交错得到的所有字符串组成的语言。所谓“正则语言类在这个运算下封闭”，意思正是：只要 $A$ 与 $B$ 都正则，那么它们的完全间隔交叉所得语言也仍然正则。上面的乘积 DFA 就给出了这一点的构造性证明。
 
+\end{answernote}
+\end{answerred}
 \subsection*{1.52}
 
 \begin{figure}[H]
@@ -2237,6 +2287,7 @@ $\operatorname{NOEXTEND}(A)$ 要求“当前串虽然在 $A$ 中，但不能继�
   \label{fig:hw_1_52}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 记
@@ -2387,6 +2438,7 @@ $\operatorname{NOEXTEND}(A)$ 要求“当前串虽然在 $A$ 中，但不能继�
     $\blacksquare$
 \end{enumerate}
 
+\begin{answernote}
 \paragraph{解释.}
 Myhill--Nerode 定理的核心是：DFA 的一个状态只代表“从这里继续往后读，未来会发生什么”。若两个前缀 $x,y$ 对所有后缀 $z$ 都表现完全一样，即
 \[
@@ -2394,6 +2446,8 @@ Myhill--Nerode 定理的核心是：DFA 的一个状态只代表“从这里继�
 \]
 那么自动机没有必要把它们分开；反之，只要存在某个后缀能把它们区分开，自动机就必须给它们不同的状态。因此，最小 DFA 的状态本质上就是这些“未来行为”不同的等价类。
 
+\end{answernote}
+\end{answerred}
 \subsection*{1.53}
 
 \begin{figure}[h]
@@ -2403,6 +2457,7 @@ Myhill--Nerode 定理的核心是：DFA 的一个状态只代表“从这里继�
   \label{fig:hw_1_53}
 \end{figure}
 
+\begin{answerred}
 \subsubsection*{证明}
 
 设
@@ -2464,6 +2519,7 @@ Myhill--Nerode 定理的核心是：DFA 的一个状态只代表“从这里继�
 \]
 不是正则语言。$\blacksquare$
 
+\begin{answernote}
 \paragraph{解释.}
 这个证明的关键是用正则语言 $R$ 把 $\mathrm{ADD}$ 限制到一种很简单的加法：
 \[
@@ -2474,5 +2530,7 @@ Myhill--Nerode 定理的核心是：DFA 的一个状态只代表“从这里继�
     \{10^n=10^n+0\mid n\ge 0\},
 \]
 而有限自动机无法记住等号左边有多少个 $0$，再在等号右边逐一比较。因此该语言非正则，从而 $\mathrm{ADD}$ 也不可能正则。
+\end{answernote}
+\end{answerred}
 
 \clearpage

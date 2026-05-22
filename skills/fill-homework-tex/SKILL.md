@@ -10,8 +10,9 @@ Use this skill for the `homework_cn` project when the user wants you to take a r
 ## Read First
 
 1. Read [references/homework-cn-layout.md](references/homework-cn-layout.md).
-2. Locate the target problem with an exact search for `\subsection*{<problem-number>}` inside `homework_cn/chapters`.
-3. Read the full target subsection and one nearby solved problem in the same chapter before editing.
+2. If the task asks for explanation quality, proof-writing style, or a solution is more than a short computation, read [references/homework-cn-writing-style.md](references/homework-cn-writing-style.md).
+3. Locate the target problem with an exact search for `\subsection*{<problem-number>}` inside `homework_cn/chapters`.
+4. Read the full target subsection and one nearby solved problem in the same chapter before editing.
 
 ## Workflow
 
@@ -32,6 +33,7 @@ Use this skill for the `homework_cn` project when the user wants you to take a r
 - Reuse the local heading style already present nearby:
   - `\paragraph{解答.}` for short or medium answers.
   - `\subsubsection*{解答}` or `\subsubsection*{证明}` for longer structured solutions.
+- When the nearby chapter uses `answernote`, use it for a final conceptual `\paragraph{解释.}` that explains why the construction or proof idea works; keep the main proof complete before the note.
 - Use project-native math environments such as `\[` `\]`, `align*`, `enumerate`, `proof`, and `myalgo` when appropriate.
 - Prefer existing packages and conventions over adding new macros.
 - For multi-part answers, prefer `enumerate` with `label=(\alph*)` and an explicit `leftmargin`.

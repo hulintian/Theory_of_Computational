@@ -1365,24 +1365,35 @@ SET\text{-}SPLITTING
 
 \begin{answerred}
 \paragraph{解答.}
-把该问题形式化为语言
+\paragraph{问题形式化.}
+定义语言
 \[
 \begin{aligned}
 EXAM\text{-}SCHEDULE
 =
-\{\,x \mid x=\langle F_1,\dots,F_k,\ S_1,\dots,S_\ell,\ h\rangle,\ \text{且}\\
-\text{存在一个把每门考试分配到 }h\text{ 个时段之一的安排，使得任一学生都不会在同一时段参加两门考试}\,\}.
+\{\langle F_1,\dots,F_m,\ S_1,\dots,S_\ell,\ h\rangle
+\mid \text{存在合法的 }h\text{-时段安排}\}.
 \end{aligned}
+\]
+其中合法安排要求：存在函数
+\[
+\tau:\{F_1,\dots,F_m\}\to\{1,\dots,h\},
+\]
+使得对每个学生 $S_i$ 和其选择的任意两门考试 $F_a,F_b$，都有
+\[
+\tau(F_a)\ne \tau(F_b).
 \]
 
 \paragraph{1. 证明 \(EXAM\text{-}SCHEDULE\in NP\).}
-证书是一个函数
+给定一个证书，即分配函数
 \[
-\sigma:\{F_1,\dots,F_k\}\to\{1,\dots,h\},
+\tau:\{F_1,\dots,F_m\}\to\{1,\dots,h\},
 \]
-表示每门考试所在的时段。验证时，对每个学生枚举他参加的考试对，
-检查这些考试是否被安排到不同的时段。检查次数至多为登记关系规模的平方，
-因此仍是输入规模的多项式，所以
+验证器检查：对所有学生 $S_i$，其选择的每对考试 $(F_a,F_b)$ 是否满足
+\[
+\tau(F_a)\ne \tau(F_b).
+\]
+验证时间至多为多项式时间，例如 $O(\ell\cdot m^2)$。因此
 \[
 EXAM\text{-}SCHEDULE\in NP.
 \]
@@ -1390,12 +1401,19 @@ EXAM\text{-}SCHEDULE\in NP.
 \paragraph{2. 证明 NP-hard.}
 从
 \[
-3COLOR
+k\text{-COLORING}
 \]
-归约。
-
-给定一个无向图
+规约。这里把颜色数 $k$ 作为输入，即
 \[
+k\text{-COLORING}
+=
+\{\langle G,k\rangle \mid G \text{ 可用 }k\text{ 种颜色合法着色}\}.
+\]
+
+给定一个图着色实例
+\[
+\langle G,k\rangle,
+\qquad
 G=(V,E),
 \]
 构造一个考试安排实例。对每个顶点
@@ -1420,94 +1438,91 @@ F_u\quad\text{和}\quad F_v.
 \]
 最后令
 \[
-h=3.
+h=k.
 \]
-该构造的规模也是多项式的。对输入图 $G=(V,E)$，考试数为 $|V|$，
-学生数为 $|E|$，每个学生只登记两门考试，所以登记关系一共有 $2|E|$ 项，
-并且 $h=3$ 是常数。因此输出实例大小为 $O(|V|+|E|)$，
-按顶点和边扫描即可构造完成，所需时间为多项式。
+也就是说，图中每个顶点对应一门考试，每条边对应一个同时选择这两门考试的学生，
+颜色数 $k$ 对应时段数 $h$。
+
+该构造只需扫描顶点集和边集一次，输出考试数为 $|V|$，学生数为 $|E|$，
+所以构造时间为 $O(|V|+|E|)$，是多项式时间。
 
 \paragraph{正确性.}
 
-\paragraph{若 \(G\) 可 3-着色，则该考试实例可在 3 个时段内安排.}
+\paragraph{若 \(G\) 有合法 \(k\)-着色，则考试实例有合法 \(k\)-时段安排.}
 设
 \[
-c:V\to\{1,2,3\}
+c:V\to\{1,\dots,k\}
 \]
-是一个合法 3-着色。把每门考试
+是一个合法 $k$-着色。定义考试安排
 \[
-F_v
+\tau(F_v)=c(v).
 \]
-安排到时段
+对任意学生
 \[
-c(v).
+S_{uv},
 \]
-若学生
+他对应图中的边
 \[
-S_{uv}
+\{u,v\}\in E.
 \]
-同时参加
-\[
-F_u,F_v,
-\]
-则因为
-\[
-\{u,v\}\in E,
-\]
-合法着色保证
+由着色合法性可知
 \[
 c(u)\ne c(v),
 \]
-所以这两门考试不会落在同一时段。故该安排合法。
+所以
+\[
+\tau(F_u)\ne \tau(F_v).
+\]
+故考试安排合法。
 
-\paragraph{若该考试实例可在 3 个时段内安排，则 \(G\) 可 3-着色.}
+\paragraph{若考试实例有合法 \(k\)-时段安排，则 \(G\) 有合法 \(k\)-着色.}
 设
 \[
-\sigma
+\tau
 \]
-是一组合法安排。定义顶点颜色为
+是一组合法安排。定义图着色
 \[
-c(v)=\sigma(F_v)\in\{1,2,3\}.
+c(v)=\tau(F_v).
 \]
-若
+对任意边
 \[
 \{u,v\}\in E,
 \]
-则学生
+对应学生 $S_{uv}$ 同时选择考试
 \[
-S_{uv}
+F_u\quad\text{和}\quad F_v.
 \]
-同时参加
+由于安排合法，有
 \[
-F_u,F_v,
-\]
-而安排合法意味着
-\[
-\sigma(F_u)\ne \sigma(F_v).
+\tau(F_u)\ne \tau(F_v),
 \]
 因此
 \[
 c(u)\ne c(v).
 \]
-故 $c$ 是 $G$ 的合法 3-着色。
+故 $c$ 是 $G$ 的合法 $k$-着色。
 
 \medskip
-于是
+综上，
 \[
-G\in 3COLOR
+\langle G,k\rangle\in k\text{-COLORING}
 \iff
-\langle F_1,\dots,F_k,S_1,\dots,S_\ell,3\rangle\in EXAM\text{-}SCHEDULE.
+\langle F_1,\dots,F_m,S_1,\dots,S_\ell,k\rangle\in EXAM\text{-}SCHEDULE.
 \]
 所以
 \[
-3COLOR\le_p EXAM\text{-}SCHEDULE.
+k\text{-COLORING}\le_p EXAM\text{-}SCHEDULE.
 \]
 
-结合
+由于 \(k\text{-COLORING}\) 是 NP 完全的，且
 \[
 EXAM\text{-}SCHEDULE\in NP,
 \]
-得到该语言是 NP 完全的。$\blacksquare$
+故
+\[
+EXAM\text{-}SCHEDULE
+\]
+是 NP 完全的。$\blacksquare$
 
 \end{answerred}
 \subsection*{7.30}
@@ -1542,126 +1557,151 @@ MINE\in NP.
 \paragraph{2. 证明 NP-hard.}
 从
 \[
-INDEPENDENT\text{-}SET
-=
-\{\langle G,k\rangle \mid G \text{ 有大小为 }k\text{ 的独立集}\}
+3SAT
 \]
 归约。
 
-给定实例
+给定一个 3CNF 公式
 \[
-\langle G,k\rangle,
-\qquad
-G=(V,E),
+\phi=C_1\wedge C_2\wedge\cdots\wedge C_m,
 \]
-构造一个新的带标号图 $G'$：
+其中变量为
+\[
+x_1,\dots,x_n,
+\]
+每个子句
+\[
+C_j=(\ell_{j1}\vee \ell_{j2}\vee \ell_{j3})
+\]
+含有三个文字。构造一个带数字标记的图 $G_\phi$。
 
-\begin{itemize}
-  \item 对每个原顶点
-  \[
-  v\in V
-  \]
-  建立一个未标记顶点，仍记为 $v$；
-  \item 加入一个新顶点 $c$，并把它标记为
-  \[
-  k;
-  \]
-  再把 $c$ 与每个原顶点 $v$ 相连；
-  \item 对每条边
-  \[
-  e=\{u,v\}\in E,
-  \]
-  加入一个新顶点 $a_e$，并把它标记为
-  \[
-  1;
-  \]
-  同时令 $a_e$ 与 $u,v$ 相连；
-  \item 对每条边
-  \[
-  e\in E,
-  \]
-  再加入一个未标记顶点 $b_e$，并令 $b_e$ 仅与 $a_e$ 相连。
-\end{itemize}
-该构造只把原图中的每个顶点保留一次，额外加入一个中心顶点 $c$，
-并且对每条边加入两个新顶点 $a_e,b_e$。因此
+\paragraph{变量构件.}
+对每个变量 $x_i$，建立两个未标记顶点
 \[
-|V(G')|=|V|+1+2|E|.
+x_i,\quad \neg x_i,
 \]
-边也只有三类：$c$ 与每个原顶点相连，$a_e$ 与边 $e$ 的两个端点相连，
-以及 $a_e$ 与 $b_e$ 相连，所以
+分别表示文字 $x_i$ 与 $\neg x_i$。再建立一个标号为 1 的顶点
 \[
-|E(G')|=|V|+3|E|.
+a_i,
 \]
-所有标号和边都可以在扫描 $V$ 与 $E$ 时直接写出，故构造可在多项式时间内完成。
+并把 $a_i$ 与
+\[
+x_i,\quad \neg x_i
+\]
+相连。由于 $a_i$ 的标号为 1，合法布雷时 $x_i$ 与 $\neg x_i$ 中恰有一个带雷，
+这正好表示变量只能在真、假两种取值中选择一个。
 
-\paragraph{若 \(G\) 有大小为 \(k\) 的独立集，则 \(G'\in MINE\).}
+\paragraph{子句构件.}
+对每个子句
+\[
+C_j=(\ell_{j1}\vee \ell_{j2}\vee \ell_{j3}),
+\]
+建立一个标号为 3 的顶点
+\[
+c_j,
+\]
+以及两个未标记的辅助顶点
+\[
+s_{j1},\quad s_{j2}.
+\]
+把 $c_j$ 与该子句的三个文字顶点以及这两个辅助顶点相连。具体地，如果
+\[
+\ell_{jr}=x_i,
+\]
+则连接 $c_j$ 与顶点 $x_i$；如果
+\[
+\ell_{jr}=\neg x_i,
+\]
+则连接 $c_j$ 与顶点 $\neg x_i$。此外连接
+\[
+c_j
+\]
+与
+\[
+s_{j1},s_{j2}.
+\]
+
+该构造中共有 $2n$ 个文字顶点、$n$ 个变量约束顶点、$m$ 个子句约束顶点和 $2m$ 个辅助顶点，
+边数也是 $O(n+m)$。因此 $G_\phi$ 可在多项式时间内构造。
+
+\paragraph{若 \(\phi\) 可满足，则 \(G_\phi\in MINE\).}
 设
 \[
-S\subseteq V,\qquad |S|=k
+\alpha
 \]
-是 $G$ 的一个独立集。我们在 $G'$ 中放雷如下：
+是 $\phi$ 的一个满足赋值。我们按照赋值给文字顶点放雷：
 
 \begin{itemize}
-  \item 对每个
+  \item 若
   \[
-  v\in S
+  \alpha(x_i)=\text{真},
   \]
-  的原顶点放雷；
-  \item 对每条边
+  则在顶点 $x_i$ 上放雷；
+  \item 若
   \[
-  e=\{u,v\},
+  \alpha(x_i)=\text{假},
   \]
-  若 $u,v$ 都不在 $S$ 中，则在 $b_e$ 上放雷；否则不在 $b_e$ 上放雷。
+  则在顶点 $\neg x_i$ 上放雷。
 \end{itemize}
+于是每个变量约束顶点 $a_i$ 的两个相邻文字顶点中恰有一个带雷，标号 1 被满足。
 
-验证：中心结点 $c$ 的相邻原顶点中恰有
+再看任意子句 $C_j$。设它的三个文字中有
 \[
-k
+t_j
 \]
-个带雷，因此 $c$ 的标号满足。再看每个标为 1 的顶点 $a_e$。由于 $S$ 是独立集，一条边的两个端点不可能都在 $S$ 中，所以在
+个在赋值 $\alpha$ 下为真。因为 $\alpha$ 满足 $\phi$，所以
 \[
-\{u,v,b_e\}
+t_j\in\{1,2,3\}.
 \]
-中恰有一个结点带雷。故 $a_e$ 的标号也满足。于是这是一个合法布雷方案。
+在两个辅助顶点
+\[
+s_{j1},s_{j2}
+\]
+中任意选择
+\[
+3-t_j
+\]
+个放雷。由于 $3-t_j\le 2$，这总是可以做到。这样，子句顶点 $c_j$ 的相邻顶点中共有
+\[
+t_j+(3-t_j)=3
+\]
+个带雷，正好满足标号 3。故得到一个合法布雷方案。
 
-\paragraph{若 \(G'\in MINE\)，则 \(G\) 有大小为 \(k\) 的独立集.}
-设 $G'$ 有一个合法布雷方案。记
+\paragraph{若 \(G_\phi\in MINE\)，则 \(\phi\) 可满足.}
+设 $G_\phi$ 存在一个合法布雷方案。对每个变量 $x_i$，由于 $a_i$ 标号为 1，且只与
 \[
-S=\{v\in V \mid v \text{ 这个原顶点带雷}\}.
+x_i,\quad \neg x_i
 \]
-因为中心顶点 $c$ 标号为
+相邻，所以二者中恰有一个带雷。定义赋值
 \[
-k
-\]
-且它只与原顶点相邻，所以
-\[
-|S|=k.
+\alpha(x_i)=
+\begin{cases}
+\text{真}, & x_i \text{ 带雷},\\
+\text{假}, & \neg x_i \text{ 带雷}.
+\end{cases}
 \]
 
-现在证明 $S$ 是独立集。任取边
+考虑任意子句
 \[
-e=\{u,v\}\in E.
+C_j=(\ell_{j1}\vee \ell_{j2}\vee \ell_{j3}).
 \]
-对应的顶点 $a_e$ 标号为 1，且它仅与
-\[
-u,\ v,\ b_e
-\]
-相邻。因此在这三个顶点中恰有一个带雷，特别地，不可能同时有
-\[
-u,v
-\]
-都带雷。于是对每条边，两个端点不可能都属于 $S$。故 $S$ 是大小为 $k$ 的独立集。
+顶点 $c_j$ 标号为 3，且它只与三个文字顶点以及两个辅助顶点 $s_{j1},s_{j2}$ 相邻。
+如果三个文字顶点都不带雷，那么即使两个辅助顶点都带雷，$c_j$ 的相邻带雷数也至多为 2，
+不可能满足标号 3。因此三个文字顶点中至少有一个带雷。
+
+按赋值 $\alpha$ 的定义，某个文字顶点带雷就表示该文字为真。因此每个子句至少有一个文字为真，
+所以 $\phi$ 可满足。
 
 \medskip
 综上，
 \[
-\langle G,k\rangle\in INDEPENDENT\text{-}SET
+\phi\in 3SAT
 \iff
-G'\in MINE.
+G_\phi\in MINE.
 \]
 故
 \[
-INDEPENDENT\text{-}SET\le_p MINE.
+3SAT\le_p MINE.
 \]
 再结合
 \[
